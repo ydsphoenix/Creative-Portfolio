@@ -1,0 +1,110 @@
+/* ===== Projects: museum wall ===== */
+
+.wall {
+  position: relative;
+  margin-block: var(--space-3) 0;
+  padding: var(--space-6) var(--space-5) 330px; /* bottom room for the shark */
+  background: var(--color-white);
+  border: var(--border);
+  border-bottom: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  overflow: hidden;
+}
+
+/* The "floor" line the shark stands on */
+.wall::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 70px;
+  border-top: var(--border);
+}
+
+/* 12-column grid; tiles span columns (width) and rows (height). */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 90px;
+  gap: var(--space-5) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.art--w2 { grid-column: span 2; }
+.art--w3 { grid-column: span 3; }
+.art--w4 { grid-column: span 4; }
+.art--w5 { grid-column: span 5; }
+.art--h1 { grid-row: span 1; }
+.art--h2 { grid-row: span 2; }
+.art--h3 { grid-row: span 3; }
+.art--low { margin-top: var(--space-4); } /* uneven hanging heights */
+
+.art a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+}
+
+/* PLACEHOLDER frame: swap for your drawn frame with border-image, e.g.
+   border-image: url(../assets/img/frame-1.webp) 40 / 20px stretch; */
+.art__frame {
+  flex: 1;
+  display: block;
+  padding: 10px;
+  background: #fdfaf4;
+  border: 10px solid var(--color-ink);
+  box-shadow: inset 0 0 0 3px #c9a46a, var(--shadow-pop);
+  transition: transform 0.2s;
+}
+.art:nth-child(3n) .art__frame { border-color: #c9a46a; box-shadow: inset 0 0 0 3px var(--color-ink), var(--shadow-pop); }
+
+.art__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Little museum plaque under each piece */
+.art__label {
+  align-self: center;
+  margin-top: var(--space-2);
+  padding: 2px var(--space-3);
+  font-size: var(--text-sm);
+  background: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.art__label strong { font-family: var(--font-display); font-weight: 600; margin-right: var(--space-1); }
+
+.art a:hover .art__frame,
+.art a:focus-visible .art__frame { transform: rotate(-1.5deg) scale(1.02); }
+
+/* ---------- Shark visitor ---------- */
+.visitor {
+  position: absolute;
+  left: 50%;
+  bottom: 60px;            /* feet on the floor line */
+  z-index: 1;
+  width: 250px;
+  aspect-ratio: 1211 / 1150;
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.visitor img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Fin sits behind the body. transform-origin is the shoulder,
+   measured from the artwork (keep in sync with PIVOT in js/projects.js). */
+.visitor__fin {
+  transform-origin: 17.2% 43.4%;
+  rotate: var(--fin-angle, 0deg);
+}

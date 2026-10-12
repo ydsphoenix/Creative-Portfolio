@@ -1,0 +1,230 @@
+/* ==========================================================================
+   Yuki Creative Portfolio — shared styles
+   Design tokens live in :root. Change a value here and it updates everywhere.
+   Values marked PLACEHOLDER are waiting for the final palette / fonts.
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-blue: #00c0f6;          /* logo blue (final) */
+  --color-blue-deep: #0a7fa8;     /* PLACEHOLDER: darker blue for text on light bg */
+  --color-ink: #3b2a1e;           /* PLACEHOLDER: warm brown, like the sketches */
+  --color-paper: #fff8ee;         /* PLACEHOLDER: cream page background */
+  --color-white: #ffffff;
+  --color-pink: #f6a8a2;          /* PLACEHOLDER: from the photobooth frame */
+  --color-mint: #bff3dc;          /* PLACEHOLDER: from the photobooth frame */
+  --color-dot: rgba(59, 42, 30, 0.12); /* dot grid on the background */
+
+  /* Fonts (PLACEHOLDER: candidates from the shortlist) */
+  --font-display: "Fredoka", "Baloo 2", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+
+  /* Type scale */
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.5rem;
+  --text-hero: clamp(3rem, 6vw, 5.5rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink); /* flat "sticker" shadow */
+
+  /* Layout */
+  --page-max: 1200px;
+  --header-h: 88px;
+}
+
+/* ---------- Reset-ish ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  /* dot grid, a nod to the sketchbook canvas */
+  background-image: radial-gradient(var(--color-dot) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+  min-height: 100vh;
+}
+
+img { max-width: 100%; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+/* Visible focus for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-blue);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: -100px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: var(--radius-sm);
+  z-index: 100;
+}
+.skip-link:focus { top: var(--space-3); }
+
+.container {
+  width: min(100% - 2 * var(--space-5), var(--page-max));
+  margin-inline: auto;
+}
+
+/* ---------- Header: logo left, nav pill centre ---------- */
+.site-header {
+  position: relative;
+  z-index: 10;
+  height: var(--header-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* keeps the pill truly centred */
+  align-items: center;
+  width: min(100% - 2 * var(--space-5), var(--page-max));
+  margin-inline: auto;
+}
+
+.logo { justify-self: start; display: inline-block; }
+.logo img { height: 52px; width: auto; }
+
+.nav-pill {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 5px;
+  list-style: none;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pop);
+}
+
+.nav-pill a {
+  display: block;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-pill);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-pill a:hover { background: var(--color-mint); }
+
+/* Active page: aria-current="page" is set in each page's HTML */
+.nav-pill a[aria-current="page"] {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* ---------- Case-study header: back button left, logo right ---------- */
+.case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-h);
+  width: min(100% - 2 * var(--space-5), var(--page-max));
+  margin-inline: auto;
+}
+.case-header .logo { justify-self: auto; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  text-decoration: none;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pop);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--color-ink); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--color-ink); }
+
+/* Round arrow button (featured work, back button) */
+.btn-round {
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: var(--color-blue);
+  color: var(--color-ink);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: var(--shadow-pop);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-round svg { width: 28px; height: 28px; }
+.btn-round:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--color-ink); }
+
+/* ---------- Placeholder blocks (swap for real images later) ---------- */
+.placeholder {
+  display: grid;
+  place-items: center;
+  padding: var(--space-3);
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-blue-deep);
+  background:
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(0, 192, 246, 0.08) 12px 24px),
+    #eaf9fe;
+  border: 2px dashed var(--color-blue-deep);
+}
+
+/* ---------- Reduced motion: switch off all animation ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About · Yuki</title>
+  <meta name="description" content="About Yuki: experience, education, software and languages.">
+  <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="logo" href="index.html"><img src="assets/icons/yuki-logo.svg" alt="Yuki, home"></a>
+    <nav aria-label="Main">
+      <ul class="nav-pill">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="container about">
+    <!-- ===== Intro ===== -->
+    <section class="intro" aria-labelledby="hello">
+      <h1 id="hello" class="intro__title">Hello!</h1>
+      <!-- Squiggle underline (swap for your own hand-drawn one later) -->
+      <svg class="intro__squiggle" viewBox="0 0 320 24" fill="none" aria-hidden="true">
+        <path d="M4 16 C 40 4, 70 22, 110 12 S 180 4, 220 14 S 290 20, 316 8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <p class="intro__text">
+        I'm Yuki, a software development student with a background in animation.
+        I design and build playful, user-friendly interfaces, and I draw everything
+        you see here by hand. <em>(Dummy intro: replace with your own words.)</em>
+      </p>
+      <!-- TODO: add your CV at assets/docs/yuki-cv.pdf -->
+      <a class="btn intro__cv" href="assets/docs/yuki-cv.pdf" download>
+        Download my CV
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg>
+      </a>
+    </section>
+
+    <!-- ===== Photobooth strips ===== -->
+    <!-- Photos sit behind the frame and show through its 3 holes.
+         PLACEHOLDER photos: replace each .placeholder with
+         <img src="assets/img/photobooth-1.webp" alt="..."> -->
+    <div class="booth" aria-label="Photobooth photos of Yuki" role="group">
+      <div class="strip strip--back" aria-hidden="true">
+        <div class="strip__photo placeholder"></div>
+        <div class="strip__photo placeholder"></div>
+        <div class="strip__photo placeholder"></div>
+        <img class="strip__frame" src="assets/img/photobooth-frame.webp" alt="">
+      </div>
+      <div class="strip strip--front">
+        <div class="strip__photo placeholder">Photo 1</div>
+        <div class="strip__photo placeholder">Photo 2</div>
+        <div class="strip__photo placeholder">Photo 3</div>
+        <img class="strip__frame" src="assets/img/photobooth-frame.webp" alt="">
+      </div>
+    </div>
+
+    <!-- ===== Pinned paper cards ===== -->
+    <section class="paper" aria-labelledby="exp-title">
+      <span class="pin" aria-hidden="true"></span> <!-- PLACEHOLDER pushpin -->
+      <h2 id="exp-title">Experiences</h2>
+      <ul>
+        <li><strong>Barista</strong>, coffee bar · 20XX–now</li>
+        <li><strong>Scrum Master</strong>, class project team · 20XX</li>
+        <li><strong>Role</strong>, company · 20XX</li>
+      </ul>
+    </section>
+
+    <section class="paper paper--tilt" aria-labelledby="edu-title">
+      <span class="pin" aria-hidden="true"></span>
+      <h2 id="edu-title">Education</h2>
+      <ul>
+        <li><strong>Software development</strong>, Thomas More · 20XX–now</li>
+        <li><strong>Animation film</strong>, LUCA School of Arts · 2 years</li>
+      </ul>
+    </section>
+
+    <img class="about__shark" src="assets/img/shark-lounging.webp" width="1423" height="947"
+         alt="Yuki's blue shark mascot lounging on its back, looking content">
+
+    <!-- ===== Taped banners ===== -->
+    <div class="banners">
+    <section class="banner" aria-labelledby="soft-title">
+      <span class="tape tape--tl" aria-hidden="true"></span> <!-- PLACEHOLDER tape -->
+      <span class="tape tape--br" aria-hidden="true"></span>
+      <h2 id="soft-title">Software</h2>
+      <ul class="chips">
+        <li>Figma</li><li>Procreate</li><li>Illustrator</li><li>After Effects</li>
+        <li>Premiere Pro</li><li>VS Code</li>
+      </ul>
+    </section>
+
+    <section class="banner banner--tilt" aria-labelledby="lang-title">
+      <span class="tape tape--tr" aria-hidden="true"></span>
+      <span class="tape tape--bl" aria-hidden="true"></span>
+      <h2 id="lang-title">Languages</h2>
+      <ul class="chips">
+        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Vue</li><li>Node.js</li>
+        <li>Dutch</li><li>English</li>
+      </ul>
+    </section>
+    </div>
+  </main>
+</body>
+</html>

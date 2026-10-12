@@ -1,0 +1,140 @@
+/* ===== Home ===== */
+
+.hero {
+  min-height: calc(100vh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+}
+
+/* Two columns: icons left, portrait right. The title spans the top. */
+.hero__inner {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+
+.hero__title {
+  grid-column: 1 / -1;
+  font-size: var(--text-hero);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.hero__title span { color: var(--color-blue); -webkit-text-stroke: 2px var(--color-ink); }
+
+.hero__portrait {
+  grid-column: 2;
+  align-self: end;
+  justify-self: center;
+  width: min(100%, 520px);
+  height: auto;
+}
+
+/* ---------- Floating program icons ---------- */
+.tools {
+  position: relative;
+  grid-column: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-height: 340px;
+}
+
+.tool {
+  --size: 112px;
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  place-items: center;
+  padding: calc(var(--size) * 0.2); /* breathing room so the official icon isn't cropped */
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: var(--shadow-pop);
+  animation: bob 4s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+.tool img { width: 100%; height: 100%; object-fit: contain; }
+.tool--lg { --size: 144px; }
+.tool--sm { --size: 88px; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-12px) rotate(2deg); }
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  overflow: hidden;
+  border-block: var(--border);
+  background: var(--color-blue);
+  padding-block: var(--space-3);
+}
+
+/* Two identical lists side by side; sliding the track by -50% lands
+   exactly on the start of the copy, so the loop has no visible jump. */
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
+
+.marquee__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marquee__list li {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-2xl);
+  text-transform: uppercase;
+  padding-inline: var(--space-6);
+  white-space: nowrap;
+}
+.marquee__list li::after { content: "✦"; margin-left: var(--space-6); font-size: 0.6em; vertical-align: middle; }
+
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Featured work ---------- */
+.featured { padding-block: var(--space-7); }
+
+.featured__heading {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-5);
+}
+
+.featured__card {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-5);
+  align-items: end;
+}
+
+.featured__preview {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  border: var(--border);
+  box-shadow: var(--shadow-pop);
+}
+
+.featured__info { display: grid; gap: var(--space-3); justify-items: start; }
+.featured__info p { margin: 0; }
+.featured__tag { font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); text-transform: uppercase; letter-spacing: 0.06em; }
+.featured__name { font-size: clamp(2.5rem, 4vw, 3.5rem); }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuki · Creative Portfolio</title>
+  <meta name="description" content="Yuki's creative portfolio: design, illustration, UI/UX and development.">
+  <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="logo" href="index.html"><img src="assets/icons/yuki-logo.svg" alt="Yuki, home"></a>
+    <nav aria-label="Main">
+      <ul class="nav-pill">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <h1 id="hero-title" class="hero__title">Yuki <span>Creative Portfolio</span></h1>
+
+        <!-- Program icons. PLACEHOLDER badges: drop the official icon
+             (unchanged) inside each .tool, e.g. <img src="assets/icons/figma.svg" alt="">.
+             --x / --y position each badge, --delay offsets the bob. -->
+        <ul class="tools" aria-label="Programs I use">
+          <li class="tool tool--lg" style="--x: 6%;  --y: 8%;  --delay: 0s">Procreate</li>
+          <li class="tool"          style="--x: 34%; --y: 22%; --delay: -1.2s">Figma</li>
+          <li class="tool tool--sm" style="--x: 58%; --y: 4%;  --delay: -2.4s">Pr</li>
+          <li class="tool tool--sm" style="--x: 52%; --y: 50%; --delay: -0.6s">Ae</li>
+          <li class="tool"          style="--x: 4%;  --y: 62%; --delay: -1.8s">VS Code</li>
+          <li class="tool"          style="--x: 30%; --y: 70%; --delay: -3s">Ai</li>
+        </ul>
+
+        <img class="hero__portrait" src="assets/img/yuki-hero.webp" width="1523" height="1508"
+             alt="Illustrated self-portrait of Yuki with round glasses and a blue t-shirt, holding a laptop">
+      </div>
+
+      <!-- Marquee: the list is duplicated so the loop is seamless.
+           The copy is aria-hidden so screen readers only read it once. -->
+      <div class="marquee">
+        <div class="marquee__track">
+          <ul class="marquee__list">
+            <li>Design</li><li>Illustration</li><li>UI/UX</li><li>Development</li>
+          </ul>
+          <ul class="marquee__list" aria-hidden="true">
+            <li>Design</li><li>Illustration</li><li>UI/UX</li><li>Development</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Featured work ===== -->
+    <section class="featured container" aria-labelledby="featured-title">
+      <h2 id="featured-title" class="featured__heading">Featured work</h2>
+
+      <article class="featured__card">
+        <div class="featured__preview placeholder">Project preview image<br>(mockup, 16:10)</div>
+        <div class="featured__info">
+          <p class="featured__tag">UI/UX · App design</p>
+          <h3 class="featured__name">Project name</h3>
+          <p>One or two lines about the problem this project solved and what you made.</p>
+          <a class="btn-round" href="case-study-example.html" aria-label="Read the Project name case study">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

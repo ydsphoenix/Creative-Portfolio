@@ -1,0 +1,46 @@
+/* ===== Case study pages ===== */
+
+.case {
+  max-width: 900px;
+  padding-block: var(--space-5) var(--space-7);
+}
+
+.case__tag { margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); text-transform: uppercase; letter-spacing: 0.06em; }
+.case__title { font-size: clamp(3rem, 6vw, 4.5rem); margin: var(--space-2) 0 var(--space-3); }
+.case__summary { font-size: var(--text-lg); max-width: 60ch; margin: 0; }
+
+/* Quick facts row: easy for recruiters to skim */
+.case__facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+  padding: var(--space-4);
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+}
+.case__facts dt { font-family: var(--font-display); font-weight: 600; }
+.case__facts dd { margin: 0; font-size: var(--text-sm); }
+
+.case__hero {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  margin-block: var(--space-5);
+}
+
+.case__section { margin-top: var(--space-7); }
+.case__section h2 { font-size: var(--text-2xl); margin-bottom: var(--space-3); }
+.case__section h2 span { color: var(--color-blue); -webkit-text-stroke: 1.5px var(--color-ink); margin-right: var(--space-2); }
+.case__section p { max-width: 65ch; }
+
+.case__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.case__grid .placeholder { aspect-ratio: 4 / 3; border-radius: var(--radius-sm); }
+
+.case__next { margin-top: var(--space-7); text-align: center; }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects · Yuki</title>
+  <meta name="description" content="All of Yuki's projects: UI/UX, app design, illustration and development.">
+  <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/projects.css">
+  <script src="js/projects.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="logo" href="index.html"><img src="assets/icons/yuki-logo.svg" alt="Yuki, home"></a>
+    <nav aria-label="Main">
+      <ul class="nav-pill">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+    <h1 class="visually-hidden">Projects</h1>
+
+    <!-- ===== Museum wall =====
+         Each tile: .art--w* / .art--h* set its size on the grid.
+         PLACEHOLDER: replace .placeholder with <img src="..." alt="..."> and
+         point href at the project's case study page. -->
+    <section class="wall" aria-label="All projects">
+      <ul class="gallery">
+        <li class="art art--w3 art--h2">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 1</span></span>
+            <span class="art__label"><strong>Project one</strong> UI/UX</span>
+          </a>
+        </li>
+        <li class="art art--w3 art--h2 art--low">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 2</span></span>
+            <span class="art__label"><strong>Project two</strong> App design</span>
+          </a>
+        </li>
+        <li class="art art--w3 art--h2">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 3</span></span>
+            <span class="art__label"><strong>Project three</strong> Illustration</span>
+          </a>
+        </li>
+        <li class="art art--w3 art--h2 art--low">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 4</span></span>
+            <span class="art__label"><strong>Project four</strong> Development</span>
+          </a>
+        </li>
+        <li class="art art--w4 art--h1">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 5</span></span>
+            <span class="art__label"><strong>Project five</strong> Animation</span>
+          </a>
+        </li>
+        <li class="art art--w3 art--h3 art--low">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 6</span></span>
+            <span class="art__label"><strong>Project six</strong> UI/UX</span>
+          </a>
+        </li>
+        <li class="art art--w5 art--h3">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Project 7</span></span>
+            <span class="art__label"><strong>Project seven</strong> Illustration</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Mascot looking at the wall. The fin is a separate image layered
+           behind the body; js/projects.js rotates it toward the mouse. -->
+      <div class="visitor" aria-hidden="true">
+        <img class="visitor__fin" src="assets/img/shark-museum-fin.webp" alt="" width="1211" height="1150">
+        <img class="visitor__body" src="assets/img/shark-museum-body.webp" alt="" width="1211" height="1150">
+      </div>
+    </section>
+  </main>
+</body>
+</html>
