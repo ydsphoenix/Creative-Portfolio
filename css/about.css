@@ -39,7 +39,33 @@
   position: relative;
   justify-self: center;
   width: min(100%, 260px);
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
+
+/* "@handle" sticker that pops up on hover/focus so people know it's clickable */
+.booth__tag {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: -4%;
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--color-mint);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pop);
+  translate: -50% 0;
+  rotate: -6deg;
+  opacity: 0;
+  scale: 0.5;
+  transition: opacity 0.2s, scale 0.35s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+.booth:hover .booth__tag,
+.booth:focus-visible .booth__tag { opacity: 1; scale: 1; }
 
 .strip {
   position: relative;
@@ -64,8 +90,10 @@
   transition: rotate 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), translate 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 /* Hover: fan the strips apart */
-.booth:hover .strip--front { rotate: 12deg; }
-.booth:hover .strip--back  { rotate: -26deg; translate: -55% 10%; }
+.booth:hover .strip--front,
+.booth:focus-visible .strip--front { rotate: 12deg; }
+.booth:hover .strip--back,
+.booth:focus-visible .strip--back  { rotate: -26deg; translate: -55% 10%; }
 
 @keyframes drop-in { from { transform: translateY(-120vh) rotate(-30deg); } }
 @keyframes sway {

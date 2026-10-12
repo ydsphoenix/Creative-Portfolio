@@ -50,10 +50,12 @@
     </section>
 
     <!-- ===== Photobooth strips ===== -->
-    <!-- Photos sit behind the frame and show through its 3 holes.
+    <!-- The whole photobooth links to Instagram.
+         Photos sit behind the frame and show through its 3 holes.
          PLACEHOLDER photos: replace each .placeholder with
          <img src="assets/img/photobooth-1.webp" alt="..."> -->
-    <div class="booth" aria-label="Photobooth photos of Yuki" role="group">
+    <a class="booth" href="https://www.instagram.com/yukijevelle/" target="_blank" rel="noopener"
+       aria-label="Photobooth photos of Yuki. See more on Instagram, @yukijevelle (opens in a new tab)">
       <div class="strip strip--back" aria-hidden="true">
         <div class="strip__photo placeholder"></div>
         <div class="strip__photo placeholder"></div>
@@ -66,7 +68,8 @@
         <div class="strip__photo placeholder">Photo 3</div>
         <img class="strip__frame" src="assets/img/photobooth-frame.webp" alt="">
       </div>
-    </div>
+      <span class="booth__tag" aria-hidden="true">@yukijevelle ↗</span>
+    </a>
 
     <!-- ===== Pinned paper cards ===== -->
     <section class="paper" aria-labelledby="exp-title" data-reveal style="--reveal-rotate: -8deg">
