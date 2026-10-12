@@ -140,18 +140,19 @@ html.js .paper.is-visible:hover,
 .paper h2 { font-size: var(--text-xl); margin-bottom: var(--space-3); }
 .paper ul { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }
 
-/* PLACEHOLDER pushpin: swap for your drawing with
-   background: url(../assets/img/pushpin.webp) center / contain no-repeat; */
+/* Hand-drawn pushpin. The needle tip (bottom-left of the drawing)
+   pokes into the top edge of the card; the wiggle pivots on that tip. */
 .pin {
   position: absolute;
-  top: -14px;
+  z-index: 1;
+  top: -46px;
   left: 50%;
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  aspect-ratio: 178 / 275;            /* size of pushpin.webp */
   translate: -50% 0;
-  background: var(--color-pink);
-  border: var(--border);
-  border-radius: 50%;
+  background: url(../assets/img/pushpin.webp) center / contain no-repeat;
+  filter: drop-shadow(3px 4px 0 rgba(59, 42, 30, 0.25));
+  transform-origin: 22% 96%;
 }
 
 .about__shark-wrap { position: relative; align-self: center; }
