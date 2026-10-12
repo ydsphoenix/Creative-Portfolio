@@ -307,46 +307,36 @@ html.show-loader .loader {
   z-index: 1000;
   display: grid;
   place-items: center;
+  overflow: hidden;
   background: var(--color-blue);
-  /* safety net: hides itself after 4s even if the JS never runs */
-  animation: loader-out 0.8s 4s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  /* safety net: pops away after 4s even if the JS never runs */
+  animation: loader-safety 0.3s 4s forwards;
 }
 html.show-loader body { overflow: hidden; }
 
-/* Hold the page's entrance animations until the loader starts lifting,
+/* Hold the page's entrance animations until the loader starts popping,
    so the letters and bubbles pop in while you're watching. */
 html.show-loader:not(:has(.loader.is-done)) :is(.site-header, .case-header, main) * {
   animation-play-state: paused !important;
 }
 
-/* Wavy bottom edge, visible while the screen lifts away */
-.loader::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: radial-gradient(circle at 50% 0, var(--color-blue) 70%, transparent 71%) 0 0 / 80px 40px repeat-x;
-}
-
-.loader__inner { position: relative; display: grid; justify-items: center; gap: var(--space-3); }
+.loader__inner { position: relative; z-index: 1; display: grid; justify-items: center; gap: var(--space-2); }
 
 /* filter turns the blue logo files white on the blue background */
 .loader__shark {
-  width: 210px;
+  width: 110px;
   filter: brightness(0) invert(1);
   animation:
-    shark-swim-in 0.8s cubic-bezier(0.3, 1.4, 0.5, 1) both,
-    shark-bob 1.2s 0.8s ease-in-out infinite;
+    pop-in 0.6s cubic-bezier(0.3, 1.8, 0.5, 1) backwards,
+    shark-bob 1.2s 0.6s ease-in-out infinite;
 }
 .loader__word {
-  width: 240px;
+  width: 320px;
   filter: brightness(0) invert(1);
-  clip-path: inset(0 100% 0 0);          /* hidden, then "written" left to right */
-  animation: write 0.9s 0.5s cubic-bezier(0.6, 0, 0.3, 1) forwards;
+  animation: pop-in 0.6s 0.35s cubic-bezier(0.3, 1.8, 0.5, 1) backwards, jelly 1.2s 1s ease-in-out;
 }
 
+/* Bubbles rising behind the shark */
 .loader__bubbles span {
   position: absolute;
   bottom: 55%;
@@ -356,25 +346,51 @@ html.show-loader:not(:has(.loader.is-done)) :is(.site-header, .case-header, main
   border: 2.5px solid #fff;
   border-radius: 50%;
   opacity: 0;
-  animation: loader-bubble 1.6s ease-in infinite;
+  animation: loader-bubble 1.4s ease-in infinite;
 }
-.loader__bubbles span:nth-child(1) { margin-left: 50px;  animation-delay: 0.6s; }
-.loader__bubbles span:nth-child(2) { margin-left: 70px;  animation-delay: 1s; width: 9px; height: 9px; }
-.loader__bubbles span:nth-child(3) { margin-left: 58px;  animation-delay: 1.4s; width: 18px; height: 18px; }
-.loader__bubbles span:nth-child(4) { margin-left: 80px;  animation-delay: 1.8s; }
+.loader__bubbles span:nth-child(1) { margin-left: 40px;  animation-delay: 0.3s; }
+.loader__bubbles span:nth-child(2) { margin-left: 58px;  animation-delay: 0.6s; width: 9px; height: 9px; }
+.loader__bubbles span:nth-child(3) { margin-left: 46px;  animation-delay: 0.9s; width: 18px; height: 18px; }
+.loader__bubbles span:nth-child(4) { margin-left: 64px;  animation-delay: 1.2s; }
 
-/* JS adds .is-done when the page has loaded */
-html.show-loader .loader.is-done { animation: loader-out 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+/* ---- Exit: js/main.js swaps the solid background for a sheet of bubbles
+        (.loader__pop) that pop outward from the logo like a ripple. ---- */
+html.show-loader .loader.is-done { background: transparent; animation: none; }
+.loader.is-done .loader__inner { animation: logo-pop 0.4s cubic-bezier(0.5, 0, 0.7, 0.4) forwards; }
 
-@keyframes shark-swim-in { from { transform: translateX(-60vw) rotate(-10deg); } }
+.loader__pop { position: absolute; inset: 0; }
+.loader__pop span {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-blue);
+  animation: bubble-pop 0.55s var(--d) cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes pop-in {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.15); }
+}
+@keyframes jelly {
+  20% { transform: scale(1.12, 0.88); }
+  40% { transform: scale(0.92, 1.08); }
+  60% { transform: scale(1.04, 0.96); }
+}
 @keyframes shark-bob { 50% { transform: translateY(-10px) rotate(4deg); } }
-@keyframes write { to { clip-path: inset(0 0 0 0); } }
 @keyframes loader-bubble {
   0%   { opacity: 0; transform: translate(0, 0) scale(0.5); }
   20%  { opacity: 1; }
   100% { opacity: 0; transform: translate(10px, -120px) scale(1.1); }
 }
-@keyframes loader-out { to { transform: translateY(calc(-100% - 40px)); visibility: hidden; } }
+@keyframes logo-pop {
+  40%  { transform: scale(1.2); }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes bubble-pop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.12); }
+  100% { transform: translateY(-40px) scale(0); }
+}
+@keyframes loader-safety { to { opacity: 0; visibility: hidden; } }
 
 /* ---------- Reduced motion: switch off all animation ---------- */
 @media (prefers-reduced-motion: reduce) {
