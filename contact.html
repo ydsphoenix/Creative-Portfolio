@@ -9,13 +9,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    // Show the loader only on the first page of a visit, and never for reduced motion.
+    document.documentElement.classList.add('js');
+    try {
+      if (!sessionStorage.getItem('yuki-loaded') &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('show-loader');
+        sessionStorage.setItem('yuki-loaded', '1');
+      }
+    } catch (e) { /* storage blocked: just skip the loader */ }
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/contact.css">
   <script src="js/contact.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <!-- Loading screen: only shown on the first page of a visit (see the script in <head>
+       and js/main.js). Without JavaScript it never appears. -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__bubbles"><span></span><span></span><span></span><span></span></span>
+      <img class="loader__shark" src="assets/icons/yuki-logomark-shark.svg" alt="">
+      <img class="loader__word" src="assets/icons/yuki-logo.svg" alt="">
+    </div>
+  </div>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">

@@ -129,6 +129,29 @@
   /* ------------------------------------------------------------------
      Run
      ------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------
+     6. Loading screen: lift it away once the page has loaded,
+        but keep it at least ~1.7s so the logo animation can finish.
+     ------------------------------------------------------------------ */
+  const loader = document.querySelector('.loader');
+  if (loader && document.documentElement.classList.contains('show-loader')) {
+    const MIN_TIME = 1700;
+    const start = performance.now();
+    const hide = () => {
+      const wait = Math.max(0, MIN_TIME - (performance.now() - start));
+      setTimeout(() => {
+        loader.classList.add('is-done');
+        loader.addEventListener('animationend', function done(e) {
+          if (e.animationName !== 'loader-out') return;   // ignore the logo's own animations
+          loader.removeEventListener('animationend', done);
+          document.documentElement.classList.remove('show-loader'); // removes the loader + unlocks scrolling
+        });
+      }, wait);
+    };
+    if (document.readyState === 'complete') hide();
+    else window.addEventListener('load', hide, { once: true });
+  }
+
   document.querySelectorAll('[data-split]').forEach(splitLetters);
   revealOnScroll();
 
