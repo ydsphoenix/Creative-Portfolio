@@ -54,11 +54,48 @@
       });
 
       const release = () => {
+        if (!b.dragging) return;
         b.dragging = false;
         b.el.classList.remove('is-grabbed');
+        // jelly wobble when you let go (Web Animations API, adds on top of the CSS bob)
+        b.el.animate(
+          [{ scale: '1' }, { scale: '1.18 0.84' }, { scale: '0.9 1.1' }, { scale: '1.05 0.96' }, { scale: '1' }],
+          { duration: 600, easing: 'ease-out' }
+        );
       };
       b.el.addEventListener('pointerup', release);
       b.el.addEventListener('pointercancel', release);
+
+      // Double-click: pop! The bubble bursts into droplets and comes back a moment later.
+      b.el.addEventListener('dblclick', () => {
+        if (b.el.classList.contains('is-popped')) return;
+        b.el.classList.add('is-popped');
+
+        const parent = b.el.parentElement;
+        const r = b.el.getBoundingClientRect();
+        const pr = parent.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+          const d = document.createElement('span');
+          d.className = 'droplet';
+          const angle = (i / 8) * Math.PI * 2;
+          const dist = r.width * 0.7;
+          d.style.cssText = `left:${r.left - pr.left + r.width / 2 - 4}px; top:${r.top - pr.top + r.height / 2 - 4}px;
+            --dx:${(Math.cos(angle) * dist).toFixed(0)}px; --dy:${(Math.sin(angle) * dist).toFixed(0)}px;`;
+          parent.append(d);
+          d.addEventListener('animationend', () => d.remove());
+        }
+
+        // burst away, stay gone ~0.9s, then pop back in
+        const burst = b.el.animate([{ opacity: 1, scale: '1' }, { opacity: 0, scale: '1.4' }], { duration: 180, fill: 'forwards' });
+        setTimeout(() => {
+          const back = b.el.animate(
+            [{ opacity: 0, scale: '0' }, { opacity: 1, scale: '1.15', offset: 0.7 }, { opacity: 1, scale: '1' }],
+            { duration: 450, easing: 'ease-out' }
+          );
+          burst.cancel();   // drop the "gone" state; the pop-in animation takes over
+          back.finished.then(() => b.el.classList.remove('is-popped'));
+        }, 1100);
+      });
     });
 
     /* ---------------- 2. Scroll-reactive marquee ---------------- */
