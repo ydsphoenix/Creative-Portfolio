@@ -23,15 +23,48 @@
   text-transform: uppercase;
   letter-spacing: 0.01em;
 }
-.hero__title span { color: var(--color-blue); -webkit-text-stroke: 2px var(--color-ink); }
+.hero__accent { color: var(--color-blue); -webkit-text-stroke: 2px var(--color-ink); }
 
-.hero__portrait {
+.hero__portrait-wrap {
+  position: relative;
   grid-column: 2;
   align-self: end;
   justify-self: center;
   width: min(100%, 520px);
-  height: auto;
 }
+
+.hero__portrait {
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 100%;
+  animation: breathe 4.5s ease-in-out infinite;   /* placeholder until the layered animation */
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50%      { transform: scale(1.012, 1.025); }
+}
+
+/* Little speech-bubble hint that disappears after the first throw */
+.hero__hint {
+  position: absolute;
+  top: 6%;
+  left: -14%;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md) var(--radius-md) 4px var(--radius-md);
+  box-shadow: var(--shadow-pop);
+  rotate: -6deg;
+  animation: hint-pop 0.6s 1.6s cubic-bezier(0.3, 1.6, 0.5, 1) both, hint-float 3s 2.2s ease-in-out infinite;
+  transition: opacity 0.3s, scale 0.3s;
+}
+.hero__hint.is-hidden { opacity: 0; scale: 0.6; }
+@keyframes hint-pop { from { opacity: 0; transform: scale(0.3); } }
+@keyframes hint-float { 50% { transform: translateY(-6px); } }
 
 /* ---------- Floating program icons ---------- */
 .tools {
@@ -61,9 +94,25 @@
   border: var(--border);
   border-radius: 50%;
   box-shadow: var(--shadow-pop);
-  animation: bob 4s ease-in-out infinite;
-  animation-delay: var(--delay);
+  cursor: grab;
+  touch-action: none;          /* lets touch users drag without scrolling */
+  user-select: none;
+  /* bob = gentle floating, boil = hand-drawn shimmer, pop = entrance */
+  animation:
+    tool-pop 0.6s cubic-bezier(0.3, 1.7, 0.5, 1) backwards,
+    bob 4s ease-in-out var(--delay) infinite,
+    boil 0.5s steps(1) infinite;
+  transition: scale 0.2s cubic-bezier(0.3, 1.8, 0.5, 1), background-color 0.2s;
 }
+.tool:nth-child(2) { animation-delay: 0.1s, var(--delay), 0s; }
+.tool:nth-child(3) { animation-delay: 0.2s, var(--delay), 0s; }
+.tool:nth-child(4) { animation-delay: 0.3s, var(--delay), 0s; }
+.tool:nth-child(5) { animation-delay: 0.4s, var(--delay), 0s; }
+.tool:nth-child(6) { animation-delay: 0.5s, var(--delay), 0s; }
+.tool:hover { scale: 1.08; background: var(--color-mint); }
+.tool.is-grabbed { cursor: grabbing; scale: 1.15; z-index: 5; background: var(--color-pink); }
+
+@keyframes tool-pop { from { opacity: 0; scale: 0; } }
 .tool img { width: 100%; height: 100%; object-fit: contain; }
 .tool--lg { --size: 144px; }
 .tool--sm { --size: 88px; }
@@ -73,20 +122,25 @@
   50%      { transform: translateY(-12px) rotate(2deg); }
 }
 
-/* ---------- Marquee ---------- */
+/* ---------- Marquee (moved by js/home.js) ---------- */
 .marquee {
+  position: relative;
   overflow: hidden;
-  border-block: var(--border);
-  background: var(--color-blue);
-  padding-block: var(--space-3);
+  padding-block: var(--space-3) var(--space-5);
 }
 
-/* Two identical lists side by side; sliding the track by -50% lands
-   exactly on the start of the copy, so the loop has no visible jump. */
+.marquee__row {
+  border-block: var(--border);
+  padding-block: var(--space-2);
+  margin-inline: -2%;
+}
+.marquee__row--main { background: var(--color-blue); rotate: -1.5deg; position: relative; z-index: 1; }
+.marquee__row--alt  { background: var(--color-pink); rotate: -1.5deg; margin-top: 6px; }
+
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee 22s linear infinite;
+  will-change: transform;
 }
 
 .marquee__list {
@@ -99,24 +153,40 @@
 .marquee__list li {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: var(--text-2xl);
   text-transform: uppercase;
-  padding-inline: var(--space-6);
+  padding-inline: var(--space-5);
   white-space: nowrap;
 }
-.marquee__list li::after { content: "✦"; margin-left: var(--space-6); font-size: 0.6em; vertical-align: middle; }
+.marquee__list li::after { content: "✦"; margin-left: var(--space-5); font-size: 0.6em; vertical-align: middle; }
+.marquee__row--main li { font-size: var(--text-2xl); }
+.marquee__row--alt li  { font-size: var(--text-lg); color: var(--color-ink); }
 
-.marquee:hover .marquee__track { animation-play-state: paused; }
-
-@keyframes marquee {
-  to { transform: translateX(-50%); }
+/* ---------- Scroll cue ---------- */
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + var(--space-2));   /* just under the marquee */
+  translate: -50% 0;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
+.scroll-cue svg { width: 22px; height: 22px; animation: nudge 1.4s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(6px); } }
+
+.hero { position: relative; }
 
 /* ---------- Featured work ---------- */
 .featured { padding-block: var(--space-7); }
 
 .featured__heading {
-  font-size: var(--text-2xl);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   margin-bottom: var(--space-5);
 }
 
@@ -127,12 +197,32 @@
   align-items: end;
 }
 
+.featured__card { perspective: 1200px; }
+
 .featured__preview {
+  position: relative;
   aspect-ratio: 16 / 10;
   border-radius: var(--radius-md);
   border: var(--border);
   box-shadow: var(--shadow-pop);
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.4s cubic-bezier(0.3, 1.4, 0.5, 1);
 }
+/* soft light that follows the mouse across the preview */
+.featured__preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.55), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.featured__preview:hover::after { opacity: 1; }
+
+.featured__info .btn-round svg { transition: transform 0.25s; }
+.featured__info .btn-round:hover svg { transform: translateX(4px); }
 
 .featured__info { display: grid; gap: var(--space-3); justify-items: start; }
 .featured__info p { margin: 0; }

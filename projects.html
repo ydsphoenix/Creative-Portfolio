@@ -9,9 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/projects.css">
   <script src="js/projects.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -22,20 +24,24 @@
       <ul class="nav-pill">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="projects.html" aria-current="page"><span class="nav-blob" aria-hidden="true"></span>Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="main" class="container">
-    <h1 class="visually-hidden">Projects</h1>
-
+    
     <!-- ===== Museum wall =====
          Each tile: .art--w* / .art--h* set its size on the grid.
          PLACEHOLDER: replace .placeholder with <img src="..." alt="..."> and
          point href at the project's case study page. -->
-    <section class="wall" aria-label="All projects">
+    <section class="wall" aria-labelledby="wall-title">
+      <!-- Museum plaque. The wall dims and a spotlight follows the cursor (js/projects.js). -->
+      <header class="wall__sign">
+        <h1 id="wall-title" data-split>Projects</h1>
+        <p>The collection · hover a piece to take a closer look</p>
+      </header>
       <ul class="gallery">
         <li class="art art--w3 art--h2">
           <a href="case-study-example.html">

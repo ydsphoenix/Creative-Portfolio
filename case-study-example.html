@@ -9,11 +9,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/case-study.css">
+  <script src="js/case-study.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Reading progress: the shark swims along as you scroll (js/case-study.js) -->
+  <div class="progress" aria-hidden="true">
+    <span class="progress__bar"></span>
+    <img class="progress__shark" src="assets/icons/yuki-logomark-shark.svg" alt="">
+  </div>
 
   <!-- Case studies: no nav pill. Back button left, logo right. -->
   <header class="case-header">
@@ -27,9 +36,9 @@
     <!-- Template page: copy this file for each new case study. -->
     <header class="case__intro">
       <p class="case__tag">UI/UX · App design · 2026</p>
-      <h1 class="case__title">Project name</h1>
+      <h1 class="case__title" data-split>Project name</h1>
       <p class="case__summary">One sentence a recruiter can read in five seconds: what it is, who it's for, and what you did.</p>
-      <dl class="case__facts">
+      <dl class="case__facts" data-reveal data-reveal-delay="300">
         <div><dt>Role</dt><dd>UI/UX designer &amp; front-end developer</dd></div>
         <div><dt>Tools</dt><dd>Figma, Procreate, HTML/CSS/JS</dd></div>
         <div><dt>Duration</dt><dd>X weeks</dd></div>
@@ -37,14 +46,14 @@
       </dl>
     </header>
 
-    <div class="case__hero placeholder">Hero image / mockup</div>
+    <div class="case__hero placeholder" data-reveal>Hero image / mockup</div>
 
-    <section class="case__section" aria-labelledby="problem">
+    <section class="case__section" data-reveal aria-labelledby="problem">
       <h2 id="problem"><span>01</span> Problem</h2>
       <p>What was wrong or missing, and for whom? Keep it to two or three sentences.</p>
     </section>
 
-    <section class="case__section" aria-labelledby="process">
+    <section class="case__section" data-reveal aria-labelledby="process">
       <h2 id="process"><span>02</span> Process</h2>
       <p>Research, sketches, wireframes, testing. Show the key decisions and why you made them.</p>
       <div class="case__grid">
@@ -54,7 +63,7 @@
       </div>
     </section>
 
-    <section class="case__section" aria-labelledby="outcome">
+    <section class="case__section" data-reveal aria-labelledby="outcome">
       <h2 id="outcome"><span>03</span> Outcome</h2>
       <p>The final result, plus any numbers or feedback. What would you do next?</p>
       <div class="case__hero placeholder">Final design</div>

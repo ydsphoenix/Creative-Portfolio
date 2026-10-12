@@ -217,12 +217,93 @@ a { color: inherit; }
   border: 2px dashed var(--color-blue-deep);
 }
 
+
+/* ==========================================================================
+   MOTION LAYER
+   All of this is switched off by the reduced-motion block at the bottom.
+   ========================================================================== */
+
+/* ---------- Page transitions (works over http, e.g. Live Server / GitHub Pages) ---------- */
+@view-transition { navigation: auto; }
+
+.site-header .logo { view-transition-name: logo; }
+.nav-pill { view-transition-name: nav; }
+.nav-blob { view-transition-name: nav-blob; } /* the dark highlight slides between pages */
+
+::view-transition-old(root) { animation: page-out 0.3s ease-in both; }
+::view-transition-new(root) { animation: page-in 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.25) both; }
+::view-transition-group(nav-blob) { animation-duration: 0.5s; animation-timing-function: cubic-bezier(0.3, 1.4, 0.5, 1); }
+
+@keyframes page-out { to { opacity: 0; transform: translateY(-24px) rotate(-1deg); } }
+@keyframes page-in  { from { opacity: 0; transform: translateY(40px) rotate(1deg); } }
+
+/* ---------- Nav highlight blob ---------- */
+.nav-pill a { position: relative; isolation: isolate; transition: translate 0.2s ease-out, background-color 0.2s; }
+.nav-pill a[aria-current="page"] { background: transparent; }
+.nav-blob {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-ink);
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- Line boil (hand-drawn shimmer) ---------- */
+.boil-defs { position: absolute; width: 0; height: 0; }
+
+@keyframes boil {
+  0%   { filter: url(#boil-0); }
+  33%  { filter: url(#boil-1); }
+  66%  { filter: url(#boil-2); }
+}
+.nav-pill,
+.btn-round,
+.boil { animation: boil 0.5s steps(1) infinite; }
+
+/* ---------- Bouncy letters (data-split) ---------- */
+.word { display: inline-block; white-space: nowrap; }
+.char {
+  display: inline-block;
+  animation: letter-in 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) backwards;
+  animation-delay: calc(var(--i) * 40ms + 150ms);
+  transition: transform 0.25s cubic-bezier(0.3, 1.8, 0.5, 1), color 0.2s;
+}
+.char:hover { transform: translateY(-0.18em) rotate(-8deg) scale(1.1); color: var(--color-blue); }
+
+@keyframes letter-in {
+  from { opacity: 0; transform: translateY(0.6em) rotate(12deg) scale(0.6); }
+}
+
+/* ---------- Reveal on scroll (data-reveal) ---------- */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(40px) rotate(var(--reveal-rotate, -2deg)) scale(0.96);
+  transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+html.js [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* ---------- Bubble trail ---------- */
+.bubble {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  border: 2px solid var(--color-blue);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff 0 20%, rgba(0, 192, 246, 0.15) 21%);
+  translate: -50% -50%;
+  animation: bubble-up 1.2s ease-out forwards;
+}
+@keyframes bubble-up {
+  to { transform: translate(var(--drift), -70px) scale(0.4); opacity: 0; }
+}
+
 /* ---------- Reduced motion: switch off all animation ---------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;

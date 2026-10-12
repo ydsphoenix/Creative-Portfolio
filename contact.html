@@ -9,8 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/contact.css">
+  <script src="js/contact.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -22,19 +25,27 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="projects.html">Projects</a></li>
-        <li><a href="contact.html" aria-current="page">Contact</a></li>
+        <li><a href="contact.html" aria-current="page"><span class="nav-blob" aria-hidden="true"></span>Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="main" class="container contact">
     <div class="contact__text">
-      <h1 class="contact__title">Get in touch</h1>
-      <p class="contact__sub">or just say hi~</p>
+      <h1 class="contact__title" data-split>Get in touch</h1>
+      <p class="contact__sub" data-split>or just say hi~</p>
 
-      <a class="contact__email" href="mailto:yukijewelle@gmail.com">yukijewelle@gmail.com</a>
+      <div class="contact__email-row" data-reveal data-reveal-delay="600">
+        <a class="contact__email" href="mailto:yuki.j120303@gmail.com">yuki.j120303@gmail.com</a>
+        <!-- Copies the address; js/contact.js shows a toast. Hidden if the browser can't copy. -->
+        <button class="copy-btn" type="button" data-copy="yuki.j120303@gmail.com" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          Copy
+        </button>
+      </div>
+      <p class="toast" role="status" aria-live="polite"></p>
 
-      <ul class="socials">
+      <ul class="socials" data-reveal data-reveal-delay="800">
         <li>
           <!-- TODO: check the Instagram handle -->
           <a href="https://www.instagram.com/ydsphoenix/" target="_blank" rel="noopener">
@@ -46,14 +57,18 @@
           <!-- TODO: paste your LinkedIn profile URL -->
           <a href="https://www.linkedin.com/" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" stroke-linecap="round"/></svg>
-            <span><span class="visually-hidden">LinkedIn: </span>Yuki Jewelle Jurado</span>
+            <span><span class="visually-hidden">LinkedIn: </span>Yuki Jevelle Jurado</span>
           </a>
         </li>
       </ul>
     </div>
 
-    <img class="contact__shark" src="assets/img/shark-telephone.webp" width="1078" height="1139"
-         alt="Yuki's blue shark mascot holding an old rotary phone to its ear">
+    <div class="contact__shark-wrap">
+      <img class="contact__shark" src="assets/img/shark-telephone.webp" width="1078" height="1139"
+           alt="Yuki's blue shark mascot holding an old rotary phone to its ear">
+      <!-- "ring ring" lines next to the phone, synced with the wiggle -->
+      <span class="ring" aria-hidden="true"><span></span><span></span><span></span></span>
+    </div>
   </main>
 </body>
 </html>

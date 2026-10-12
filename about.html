@@ -9,8 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/about.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -20,7 +22,7 @@
     <nav aria-label="Main">
       <ul class="nav-pill">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a href="about.html" aria-current="page"><span class="nav-blob" aria-hidden="true"></span>About</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -30,18 +32,18 @@
   <main id="main" class="container about">
     <!-- ===== Intro ===== -->
     <section class="intro" aria-labelledby="hello">
-      <h1 id="hello" class="intro__title">Hello!</h1>
+      <h1 id="hello" class="intro__title" data-split>Hello!</h1>
       <!-- Squiggle underline (swap for your own hand-drawn one later) -->
       <svg class="intro__squiggle" viewBox="0 0 320 24" fill="none" aria-hidden="true">
-        <path d="M4 16 C 40 4, 70 22, 110 12 S 180 4, 220 14 S 290 20, 316 8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        <path pathLength="1" d="M4 16 C 40 4, 70 22, 110 12 S 180 4, 220 14 S 290 20, 316 8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
       </svg>
-      <p class="intro__text">
+      <p class="intro__text" data-reveal data-reveal-delay="500">
         I'm Yuki, a software development student with a background in animation.
         I design and build playful, user-friendly interfaces, and I draw everything
         you see here by hand. <em>(Dummy intro: replace with your own words.)</em>
       </p>
       <!-- TODO: add your CV at assets/docs/yuki-cv.pdf -->
-      <a class="btn intro__cv" href="assets/docs/yuki-cv.pdf" download>
+      <a class="btn intro__cv" data-reveal data-reveal-delay="700" href="assets/docs/yuki-cv.pdf" download>
         Download my CV
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg>
       </a>
@@ -67,7 +69,7 @@
     </div>
 
     <!-- ===== Pinned paper cards ===== -->
-    <section class="paper" aria-labelledby="exp-title">
+    <section class="paper" aria-labelledby="exp-title" data-reveal style="--reveal-rotate: -8deg">
       <span class="pin" aria-hidden="true"></span> <!-- PLACEHOLDER pushpin -->
       <h2 id="exp-title">Experiences</h2>
       <ul>
@@ -77,7 +79,7 @@
       </ul>
     </section>
 
-    <section class="paper paper--tilt" aria-labelledby="edu-title">
+    <section class="paper paper--tilt" aria-labelledby="edu-title" data-reveal data-reveal-delay="150" style="--reveal-rotate: 8deg">
       <span class="pin" aria-hidden="true"></span>
       <h2 id="edu-title">Education</h2>
       <ul>
@@ -86,12 +88,15 @@
       </ul>
     </section>
 
-    <img class="about__shark" src="assets/img/shark-lounging.webp" width="1423" height="947"
-         alt="Yuki's blue shark mascot lounging on its back, looking content">
+    <div class="about__shark-wrap" data-reveal data-reveal-delay="300">
+      <img class="about__shark" src="assets/img/shark-lounging.webp" width="1423" height="947"
+           alt="Yuki's blue shark mascot lounging on its back, looking content">
+      <span class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>Z</span></span>
+    </div>
 
     <!-- ===== Taped banners ===== -->
     <div class="banners">
-    <section class="banner" aria-labelledby="soft-title">
+    <section class="banner" aria-labelledby="soft-title" data-reveal style="--reveal-rotate: -4deg">
       <span class="tape tape--tl" aria-hidden="true"></span> <!-- PLACEHOLDER tape -->
       <span class="tape tape--br" aria-hidden="true"></span>
       <h2 id="soft-title">Software</h2>
@@ -101,7 +106,7 @@
       </ul>
     </section>
 
-    <section class="banner banner--tilt" aria-labelledby="lang-title">
+    <section class="banner banner--tilt" aria-labelledby="lang-title" data-reveal data-reveal-delay="150" style="--reveal-rotate: 4deg">
       <span class="tape tape--tr" aria-hidden="true"></span>
       <span class="tape tape--bl" aria-hidden="true"></span>
       <h2 id="lang-title">Languages</h2>

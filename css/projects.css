@@ -80,16 +80,92 @@
 }
 .art__label strong { font-family: var(--font-display); font-weight: 600; margin-right: var(--space-1); }
 
+/* Each frame hangs from a nail on a string (drawn with gradients) */
+.art a { position: relative; }
+.art a::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 46%;
+  height: 22px;
+  translate: -50% 0;
+  background:
+    radial-gradient(circle at 50% 3px, var(--color-ink) 0 3.5px, transparent 4.5px),
+    linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink) 50%, transparent calc(50% + 1px)) left / 50% 100% no-repeat,
+    linear-gradient(to top left,  transparent calc(50% - 1px), var(--color-ink) 50%, transparent calc(50% + 1px)) right / 50% 100% no-repeat;
+}
+
+/* Frames swing into place on load, staggered, then swing again on hover */
+.art__frame {
+  transform-origin: 50% -22px;          /* the nail */
+  animation: hang-in 1.4s cubic-bezier(0.3, 1.2, 0.4, 1) backwards, boil 0.5s steps(1) infinite;
+  animation-delay: calc(var(--i, 0) * 90ms), 0s;
+}
+.art:nth-child(1) { --i: 0; } .art:nth-child(2) { --i: 1; } .art:nth-child(3) { --i: 2; }
+.art:nth-child(4) { --i: 3; } .art:nth-child(5) { --i: 4; } .art:nth-child(6) { --i: 5; }
+.art:nth-child(7) { --i: 6; }
+
 .art a:hover .art__frame,
-.art a:focus-visible .art__frame { transform: rotate(-1.5deg) scale(1.02); }
+.art a:focus-visible .art__frame { animation: swing 1.6s ease-out, boil 0.5s steps(1) infinite; }
+
+@keyframes hang-in {
+  0%   { opacity: 0; transform: translateY(-40px) rotate(-14deg); }
+  30%  { opacity: 1; transform: rotate(9deg); }
+  55%  { transform: rotate(-5deg); }
+  75%  { transform: rotate(2.5deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes swing {
+  15% { transform: rotate(6deg) scale(1.03); }
+  35% { transform: rotate(-4deg) scale(1.03); }
+  55% { transform: rotate(2deg) scale(1.03); }
+  75% { transform: rotate(-1deg) scale(1.03); }
+  100% { transform: rotate(0deg) scale(1.03); }
+}
+
+.art__label { transition: background-color 0.2s, translate 0.25s cubic-bezier(0.3, 1.8, 0.5, 1); }
+.art a:hover .art__label { background: var(--color-blue); translate: 0 4px; }
+
+/* ---------- Museum sign ---------- */
+.wall__sign {
+  width: fit-content;
+  margin: 0 auto var(--space-6);
+  padding: var(--space-2) var(--space-5);
+  text-align: center;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 4px var(--color-white), 0 0 0 6.5px var(--color-ink);
+}
+.wall__sign h1 { font-size: var(--text-2xl); text-transform: uppercase; letter-spacing: 0.08em; }
+.wall__sign p { margin: 0; font-size: var(--text-sm); opacity: 0.85; }
+
+/* ---------- Spotlight ----------
+   A dark layer over the wall with a warm hole of light at the cursor.
+   js/projects.js sets --spot-x / --spot-y and toggles .is-lit. */
+.wall::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle 340px at var(--spot-x, 50%) var(--spot-y, 40%),
+    rgba(255, 236, 190, 0.3), transparent 75%, rgba(35, 22, 10, 0.15));
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.wall.is-lit::before { opacity: 1; }
 
 /* ---------- Shark visitor ---------- */
 .visitor {
   position: absolute;
   left: 50%;
   bottom: 60px;            /* feet on the floor line */
-  z-index: 1;
+  z-index: 3;
   width: 250px;
+  rotate: var(--lean, 0deg);
+  transform-origin: 50% 100%;
   aspect-ratio: 1211 / 1150;
   translate: -50% 0;
   pointer-events: none;

@@ -44,3 +44,30 @@
 .case__grid .placeholder { aspect-ratio: 4 / 3; border-radius: var(--radius-sm); }
 
 .case__next { margin-top: var(--space-7); text-align: center; }
+
+/* ---------- Reading progress with swimming shark ---------- */
+.progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  height: 6px;
+  background: rgba(59, 42, 30, 0.1);
+}
+.progress__bar {
+  display: block;
+  height: 100%;
+  width: calc(var(--progress, 0) * 100%);
+  background: var(--color-blue);
+  border-right: 2px solid var(--color-ink);
+}
+.progress__shark {
+  position: absolute;
+  top: 2px;
+  left: calc(var(--progress, 0) * (100% - 46px));
+  width: 46px;
+  animation: swim 0.8s ease-in-out infinite;
+}
+@keyframes swim { 50% { transform: translateY(3px) rotate(4deg); } }
+
+.case__section h2 span { display: inline-block; transition: transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1); }
+.case__section:hover h2 span { transform: rotate(-10deg) scale(1.15); }
