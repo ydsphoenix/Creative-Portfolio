@@ -285,3 +285,41 @@
 .featured__info p { margin: 0; }
 .featured__tag { font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); text-transform: uppercase; letter-spacing: 0.06em; }
 .featured__name { font-size: clamp(2.5rem, 4vw, 3.5rem); }
+
+
+/* ===== Responsive (breakpoints explained in style.css) ===== */
+@media (max-width: 900px) {
+  .featured__card { grid-template-columns: 1fr; align-items: start; }
+  .tool { --size: 92px; }
+  .tool--lg { --size: 116px; }
+  .tool--sm { --size: 72px; }
+}
+
+@media (max-width: 640px) {
+  .hero { min-height: auto; }
+  .hero__inner { grid-template-columns: 1fr; grid-template-rows: auto; gap: var(--space-3); }
+  .hero__title { font-size: clamp(2.25rem, 12vw, 3.5rem); }
+
+  /* Bubbles get a full-width strip above the portrait.
+     --mx / --my take over from the desktop --x / --y set inline in index.html. */
+  .tools { min-height: 210px; }
+  .tool { left: var(--mx); top: var(--my); --size: 70px; }
+  .tool--lg { --size: 88px; }
+  .tool--sm { --size: 56px; }
+  .tool:nth-child(1) { --mx: 2%;  --my: 6%; }
+  .tool:nth-child(2) { --mx: 30%; --my: 34%; }
+  .tool:nth-child(3) { --mx: 56%; --my: 2%; }
+  .tool:nth-child(4) { --mx: 78%; --my: 30%; }
+  .tool:nth-child(5) { --mx: 6%;  --my: 62%; }
+  .tool:nth-child(6) { --mx: 56%; --my: 62%; }
+
+  .hero__portrait-wrap { grid-column: 1; width: min(100%, 360px); }
+  .hero__hint { left: auto; right: 0; top: -2%; }
+
+  .marquee__row--main li { font-size: var(--text-xl); }
+  .marquee__row--alt li  { font-size: var(--text-base); }
+  .marquee__list li { padding-inline: var(--space-3); }
+  .marquee__list li::after { margin-left: var(--space-3); }
+
+  .featured { padding-block: var(--space-7) var(--space-6); }
+}

@@ -138,3 +138,26 @@
   86%, 95% { opacity: 1; transform: scale(1) rotate(-20deg); }
   100%     { opacity: 0; transform: scale(1.15) rotate(-20deg); }
 }
+
+
+/* ===== Responsive (breakpoints explained in style.css) ===== */
+@media (max-width: 900px) {
+  .contact {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: var(--space-4);
+    padding-block: var(--space-4) var(--space-6);
+  }
+  .contact__shark-wrap { width: min(70%, 320px); }
+}
+
+@media (max-width: 760px) {
+  .toast { bottom: 6rem; }   /* above the floating nav */
+}
+
+@media (max-width: 640px) {
+  .contact__title { font-size: clamp(3rem, 15vw, 4.5rem); }
+  .contact__sub { margin: var(--space-2) 0 var(--space-5) 30%; }
+  .contact__email { font-size: clamp(1.2rem, 6.2vw, 1.5rem); overflow-wrap: anywhere; }
+  .socials { flex-direction: column; gap: var(--space-3); }
+}

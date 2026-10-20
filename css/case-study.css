@@ -71,3 +71,15 @@
 
 .case__section h2 span { display: inline-block; transition: transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1); }
 .case__section:hover h2 span { transform: rotate(-10deg) scale(1.15); }
+
+
+/* ===== Responsive (breakpoints explained in style.css) ===== */
+@media (max-width: 760px) {
+  .case__facts { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .case__hero { aspect-ratio: 4 / 3; }
+  .case__section { margin-top: var(--space-6); }
+  .case__grid { grid-template-columns: 1fr; }
+}

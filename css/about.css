@@ -252,3 +252,26 @@ html.js .banner.is-visible .chips li:nth-child(6) { transition-delay: 560ms, 560
 html.js .banner.is-visible .chips li:nth-child(7) { transition-delay: 620ms, 620ms, 0s, 0s; }
 html.js .banner.is-visible .chips li:nth-child(8) { transition-delay: 680ms, 680ms, 0s, 0s; }
 .chips li:hover { transition-delay: 0s !important; }
+
+
+/* ===== Responsive (breakpoints explained in style.css) ===== */
+@media (max-width: 900px) {
+  /* 2 columns: intro + photobooth, the two cards, shark centred, banners */
+  .about { grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-5); }
+  .intro { grid-column: 1; }
+  .booth { grid-column: 2; width: min(100%, 220px); }
+  .about__shark-wrap { grid-column: 1 / -1; justify-self: center; width: min(100%, 380px); }
+}
+
+@media (max-width: 640px) {
+  .about { grid-template-columns: 1fr; row-gap: var(--space-6); } /* row gap leaves room for the pins */
+  .intro, .booth, .about__shark-wrap, .banners { grid-column: 1; }
+  .intro__title { font-size: clamp(3.5rem, 18vw, 5rem); }
+  .intro__text { font-size: var(--text-base); }
+
+  /* After the intro instead of beside it. Nudged right because the back strip fans out to the left. */
+  .booth { grid-row: auto; width: min(58%, 200px); translate: 14% 0; margin-block: var(--space-3); }
+
+  .banners { grid-template-columns: 1fr; gap: var(--space-6); margin-top: 0; }
+  .banner { padding: var(--space-4); }
+}

@@ -184,3 +184,44 @@
   transform-origin: 17.2% 43.4%;
   rotate: var(--fin-angle, 0deg);
 }
+
+
+/* ===== Responsive (breakpoints explained in style.css) ===== */
+@media (max-width: 900px) {
+  /* 6-column wall: pieces pair up, the wide one gets its own row */
+  .gallery { grid-template-columns: repeat(6, 1fr); }
+  .art--w3, .art--w5 { grid-column: span 3; }
+  .art--w4 { grid-column: span 6; }
+}
+
+@media (max-width: 640px) {
+  .wall { padding: var(--space-5) var(--space-4) 240px; }
+  .wall::after { bottom: 50px; }
+  .wall__sign { margin-bottom: var(--space-5); padding-inline: var(--space-4); }
+
+  /* One piece per row. Frame shape comes from aspect-ratio instead of grid rows. */
+  .gallery { grid-template-columns: 1fr; grid-auto-rows: auto; gap: var(--space-6); }
+  .gallery > .art { grid-column: 1; grid-row: auto; }
+  .art--low { margin-top: 0; }
+  .art__frame { flex: none; aspect-ratio: 4 / 3; }
+  .art--h1 .art__frame { aspect-ratio: 16 / 9; }
+  .art--w3.art--h3 .art__frame { aspect-ratio: 4 / 5; }
+
+  /* salon-style hanging: pieces alternate a little left and right */
+  .art:nth-child(odd)  { margin-right: 10%; }
+  .art:nth-child(even) { margin-left: 10%; }
+  .art__label { white-space: normal; text-align: center; }
+
+  .visitor { width: 170px; bottom: 40px; }
+}
+
+/* Touch screens have no mouse to follow, so the shark waves its fin instead.
+   (The animation overrides the rotate that js/projects.js sets.) */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .visitor__fin { animation: fin-wave 4s ease-in-out infinite; }
+}
+@keyframes fin-wave {
+  0%, 55%, 100% { rotate: 0deg; }
+  64%, 80% { rotate: 12deg; }
+  72%, 88% { rotate: -30deg; }
+}

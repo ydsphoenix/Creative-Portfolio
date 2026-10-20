@@ -45,6 +45,7 @@
 
   /* Layout */
   --page-max: 1200px;
+  --gutter: var(--space-5);       /* space between the page edge and the content */
   --header-h: 88px;
 }
 
@@ -105,7 +106,7 @@ a { color: inherit; }
 .skip-link:focus { top: var(--space-3); }
 
 .container {
-  width: min(100% - 2 * var(--space-5), var(--page-max));
+  width: min(100% - 2 * var(--gutter), var(--page-max));
   margin-inline: auto;
 }
 
@@ -117,7 +118,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 1fr auto 1fr; /* keeps the pill truly centred */
   align-items: center;
-  width: min(100% - 2 * var(--space-5), var(--page-max));
+  width: min(100% - 2 * var(--gutter), var(--page-max));
   margin-inline: auto;
 }
 
@@ -162,7 +163,7 @@ a { color: inherit; }
   justify-content: space-between;
   align-items: center;
   height: var(--header-h);
-  width: min(100% - 2 * var(--space-5), var(--page-max));
+  width: min(100% - 2 * var(--gutter), var(--page-max));
   margin-inline: auto;
 }
 .case-header .logo { justify-self: auto; }
@@ -391,6 +392,55 @@ html.show-loader .loader.is-done { background: transparent; animation: none; }
   100% { transform: translateY(-40px) scale(0); }
 }
 @keyframes loader-safety { to { opacity: 0; visibility: hidden; } }
+
+/* ==========================================================================
+   RESPONSIVE
+   Desktop-first: these blocks only kick in on smaller screens.
+     ≤ 900px  tablet: layouts lose a column
+     ≤ 760px  the nav pill floats at the bottom of the screen (easy thumb reach)
+     ≤ 640px  phone: single-column layouts, smaller type and mascots
+   Media queries can't read custom properties, so each page's CSS repeats
+   these numbers. Keep them in sync if you change one.
+   ========================================================================== */
+@media (max-width: 900px) {
+  .nav-pill a { padding-inline: var(--space-3); }   /* keeps the pill clear of the logo on tablets */
+}
+
+@media (max-width: 760px) {
+  :root { --header-h: 72px; }
+  .logo img { height: 42px; }
+
+  /* Tilted/offset decorations (tape, photo strips) may stick out a bit:
+     clip them sideways so the page never scrolls horizontally. */
+  main { overflow-x: clip; }
+
+  .nav-pill {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+    translate: -50% 0;
+    z-index: 40;
+  }
+  .nav-pill a { padding: var(--space-2) 14px; font-size: var(--text-sm); letter-spacing: 0.02em; }
+  /* room at the end of the page so the floating nav never covers content */
+  body:has(.nav-pill) { padding-bottom: 5.5rem; }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 1.25rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2rem;
+  }
+  .btn-round { width: 56px; height: 56px; }
+  .btn-round svg { width: 24px; height: 24px; }
+  .loader__word { width: min(320px, 70vw); }
+}
+
+/* most phones: squeeze the nav a little more so it never touches the screen edges */
+@media (max-width: 420px) {
+  .nav-pill a { padding-inline: 9px; font-size: 0.8125rem; letter-spacing: 0; }
+}
 
 /* ---------- Reduced motion: switch off all animation ---------- */
 @media (prefers-reduced-motion: reduce) {
