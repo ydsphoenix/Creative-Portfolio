@@ -79,6 +79,7 @@ body.theme-letsdive {
 .case__facts dt { font-family: var(--font-display); font-weight: 600; }
 .case__facts dd { margin: 0; font-size: var(--text-sm); }
 
+.case__hero img { width: 100%; height: auto; border: var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-pop); }
 .case__hero {
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-md);

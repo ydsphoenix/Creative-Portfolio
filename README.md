@@ -36,6 +36,14 @@ assets/docs/       CV (add yuki-cv.pdf)
   only overrides color tokens (see the block in `css/case-study.css`); fonts, borders,
   shadows and buttons stay the portfolio style.
 
+## Adding a new case study
+1. Copy `case-study-example.html` to `case-<project>.html`.
+2. Add a theme: put `class="theme-<project>"` on `<body>` and copy the `body.theme-letsdive`
+   block in `css/case-study.css` (colors only).
+3. Put images in `assets/img/<project>/` (WebP, about 800px wide; a short GIF plus a still for the hero).
+4. Replace the placeholders and `TODO` comments, delete any link button the project doesn't have,
+   and link the project from `projects.html`.
+
 ## Run locally
 Open `index.html` in a browser, or use the VS Code **Live Server** extension.
 
