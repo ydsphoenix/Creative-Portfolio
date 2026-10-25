@@ -1,9 +1,64 @@
 /* ===== Case study pages ===== */
 
+/* ---------- Project themes ----------
+   A theme ONLY swaps colors. Fonts, borders, radius, shadows and spacing stay the same.
+   To theme a new project:
+     1. Copy the block below, rename it (body.theme-myproject).
+     2. Put class="theme-myproject" on that case study's <body>.
+     3. Change the hex values. Keep text colors readable (WCAG AA = 4.5:1 for text).
+   Token roles: paper = page background, blue = accent / primary button / progress bar,
+   ink = text + borders + sticker shadow, white = cards + secondary button,
+   pink = step number dots / highlights.
+   --border and --shadow-pop are repeated on purpose: they are built from --color-ink
+   in :root, and a custom property is resolved where it is declared, so without
+   repeating them the new ink color would not reach borders and shadows.            */
+body.theme-letsdive {
+  --color-paper: #e9f7f8;      /* light sea, page background */
+  --color-blue: #60cbd7;       /* sea glass, accent / primary button */
+  --color-ink: #064d63;        /* deep teal: text, borders, sticker shadow (8.5:1 on paper) */
+  --color-white: #fffbe8;      /* cream, cards and secondary button */
+  --color-pink: #ffe9a8;       /* spark, step number dots / highlights */
+  --color-blue-deep: #0a6f80;  /* darker sea glass for small text; 5:1 on paper (see contrast notes) */
+  --color-mint: #c9eff2;       /* soft hover tint */
+  --color-dot: rgba(6, 77, 99, 0.12);  /* dot grid, same as ink at 12% */
+  --color-focus: var(--color-ink);     /* sea glass is too pale (1.7:1) for a focus ring */
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink);
+}
+
 .case {
-  max-width: 900px;
+  max-width: 1040px;
   padding-block: var(--space-5) var(--space-7);
 }
+
+.case__intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5) var(--space-6);
+  align-items: center;
+}
+.case__intro-text { min-width: 0; }
+.case__facts { grid-column: 1 / -1; }  /* facts row sits under both columns */
+
+/* Hero media: calm, sits in the right column. The <img> inside gets width/height
+   attributes in the HTML so the page doesn't jump while it loads. */
+.case__media { margin: 0; }
+.case__media img,
+.case__media .placeholder {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+.case__media img { border: var(--border); box-shadow: var(--shadow-pop); }
+
+/* Link buttons (Live demo / View code) */
+.case__links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-4); }
+.btn svg { width: 1.1em; height: 1.1em; flex: none; }
+.btn--primary { background: var(--color-blue); }   /* ink on sea glass = 4.9:1 */
+.btn--secondary { background: var(--color-white); }
+.case__links--end { margin-top: var(--space-4); }
 
 .case__tag { margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); text-transform: uppercase; letter-spacing: 0.06em; }
 .case__title { font-size: clamp(3rem, 6vw, 4.5rem); margin: var(--space-2) 0 var(--space-3); }
@@ -35,15 +90,86 @@
 .case__section h2 span { color: var(--color-blue); -webkit-text-stroke: 1.5px var(--color-ink); margin-right: var(--space-2); }
 .case__section p { max-width: 65ch; }
 
-.case__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.case__next {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-3);
-  margin-top: var(--space-4);
+  margin-top: var(--space-7);
 }
-.case__grid .placeholder { aspect-ratio: 4 / 3; border-radius: var(--radius-sm); }
 
-.case__next { margin-top: var(--space-7); text-align: center; }
+/* ---------- Process: visual step-by-step ----------
+   Desktop: 3-column zigzag (media | dot | text), odd steps media-left, even steps media-right.
+   The dashed line is one SVG stretched over the whole list, behind the dots.        */
+.steps-wrap { position: relative; margin-top: var(--space-5); --dot: 56px; }
+
+.steps {
+  position: relative;
+  z-index: 1;                    /* above the line */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  display: grid;
+  grid-template-columns: 1fr var(--dot) 1fr;
+  grid-template-areas: "media dot text";
+  align-items: center;
+  column-gap: var(--space-5);
+}
+.step:nth-child(even) { grid-template-areas: "text dot media"; }
+.step + .step { margin-top: var(--space-6); }
+
+.step__media { grid-area: media; margin: 0; }
+.step__media img,
+.step__media .placeholder {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+.step__media img { border: var(--border); box-shadow: var(--shadow-pop); }
+
+.step__dot {
+  grid-area: dot;
+  display: grid;
+  place-items: center;
+  width: var(--dot);
+  height: var(--dot);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  background: var(--color-pink);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: var(--shadow-pop);
+}
+
+.step__text { grid-area: text; }
+.step__text h3 { font-size: var(--text-xl); margin-bottom: var(--space-2); }
+.step__text p { margin: 0; }
+
+/* The wobbly line. preserveAspectRatio="none" stretches it to the list height;
+   vector-effect="non-scaling-stroke" (in the HTML) keeps the dashes the same size.
+   The mask fades both ends so it doesn't poke out above step 1 or below the last step. */
+.steps__line {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 50%;
+  width: 40px;
+  height: 100%;
+  translate: -50% 0;
+  overflow: visible;
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1 12;        /* round caps turn short dashes into dots */
+  -webkit-mask-image: linear-gradient(transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(transparent, #000 8%, #000 92%, transparent);
+}
 
 /* ---------- Reading progress with swimming shark ---------- */
 .progress {
@@ -51,7 +177,7 @@
   inset: 0 0 auto;
   z-index: 20;
   height: 6px;
-  background: rgba(59, 42, 30, 0.1);
+  background: color-mix(in srgb, var(--color-ink) 10%, transparent);
 }
 .progress__bar {
   display: block;
@@ -76,10 +202,26 @@
 /* ===== Responsive (breakpoints explained in style.css) ===== */
 @media (max-width: 760px) {
   .case__facts { grid-template-columns: 1fr 1fr; }
+  .case__intro { grid-template-columns: 1fr; }
+  .case__media { order: -1; }          /* hero first on small screens */
+
+  /* Steps: one column, dots and line on the left */
+  .steps-wrap { --dot: 40px; }
+  .step,
+  .step:nth-child(even) {
+    grid-template-columns: var(--dot) 1fr;
+    grid-template-areas:
+      "dot media"
+      "dot text";
+    align-items: start;
+    column-gap: var(--space-3);
+    row-gap: var(--space-3);
+  }
+  .step__dot { font-size: var(--text-base); }
+  .steps__line { left: calc(var(--dot) / 2); }
 }
 
 @media (max-width: 640px) {
   .case__hero { aspect-ratio: 4 / 3; }
   .case__section { margin-top: var(--space-6); }
-  .case__grid { grid-template-columns: 1fr; }
 }

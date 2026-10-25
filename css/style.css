@@ -14,6 +14,7 @@
   --color-pink: #f6a8a2;          /* PLACEHOLDER: from the photobooth frame */
   --color-mint: #bff3dc;          /* PLACEHOLDER: from the photobooth frame */
   --color-dot: rgba(59, 42, 30, 0.12); /* dot grid on the background */
+  --color-focus: var(--color-blue); /* keyboard focus ring (themes can darken it) */
 
   /* Fonts (PLACEHOLDER: candidates from the shortlist) */
   --font-display: "Fredoka", "Baloo 2", system-ui, sans-serif;
@@ -80,7 +81,7 @@ a { color: inherit; }
 
 /* Visible focus for keyboard users */
 :focus-visible {
-  outline: 3px solid var(--color-blue);
+  outline: 3px solid var(--color-focus);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
@@ -212,9 +213,10 @@ a { color: inherit; }
   font-size: var(--text-sm);
   font-weight: 700;
   color: var(--color-blue-deep);
+  /* tints are mixed from --color-blue so they follow a project theme */
   background:
-    repeating-linear-gradient(45deg, transparent 0 12px, rgba(0, 192, 246, 0.08) 12px 24px),
-    #eaf9fe;
+    repeating-linear-gradient(45deg, transparent 0 12px, color-mix(in srgb, var(--color-blue) 8%, transparent) 12px 24px),
+    color-mix(in srgb, var(--color-blue) 8%, var(--color-white));
   border: 2px dashed var(--color-blue-deep);
 }
 
@@ -290,7 +292,7 @@ html.js [data-reveal].is-visible { opacity: 1; transform: none; }
   pointer-events: none;
   border: 2px solid var(--color-blue);
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff 0 20%, rgba(0, 192, 246, 0.15) 21%);
+  background: radial-gradient(circle at 30% 30%, #fff 0 20%, color-mix(in srgb, var(--color-blue) 15%, transparent) 21%);
   translate: -50% -50%;
   animation: bubble-up 1.2s ease-out forwards;
 }
