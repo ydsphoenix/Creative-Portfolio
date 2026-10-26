@@ -296,6 +296,12 @@ body.theme-ecomarkt {
 
 /* "Meet the mascot" chapter (EcoMarkt): line-up, four seasons, country screens */
 .mascot > p { max-width: 62ch; }
+.mascot__intro { display: grid; grid-template-columns: 1fr 260px; gap: var(--space-5); align-items: center; }
+.mascot__intro p { max-width: 62ch; }
+.mascot__intro p + p { margin-top: var(--space-3); }
+.mascot__spin { margin: 0; justify-self: center; }
+.mascot__spin img { display: block; width: 100%; max-width: 240px; height: auto; }
+@media (max-width: 768px) { .mascot__intro { grid-template-columns: 1fr; } }
 .mascot__lineup { margin: var(--space-5) 0 0; }
 .mascot__lineup img { display: block; width: 100%; height: auto; }   /* transparent PNG, no frame */
 .mascot__heading { margin-top: var(--space-6); }
