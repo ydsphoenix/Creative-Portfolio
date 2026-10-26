@@ -68,6 +68,20 @@ body.theme-tagay {
   --shadow-pop: 4px 4px 0 var(--color-ink);
 }
 
+body.theme-ecomarkt {
+  --color-paper: #efe3c2;      /* Cloud of Cream, page background */
+  --color-blue: #85a947;       /* Greenery, accent / primary button (ink on it: 5.0:1) */
+  --color-ink: #123524;        /* Phthalo Green: text, borders, sticker shadow (10.5:1 on paper) */
+  --color-white: #fbf8ee;      /* warm white, cards and secondary button */
+  --color-pink: #f7c566;       /* Sunset Gold, step number dots / highlights (ink on it: 8.4:1) */
+  --color-blue-deep: #2f5e1d;  /* darker green for small text; 6.0:1 on paper */
+  --color-mint: #e3eed0;       /* soft hover tint */
+  --color-dot: rgba(18, 53, 36, 0.12);  /* dot grid, same as ink at 12% */
+  --color-focus: var(--color-ink);
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink);
+}
+
 .case {
   max-width: 1040px;
   padding-block: var(--space-5) var(--space-7);
@@ -279,3 +293,34 @@ body.theme-tagay {
 .motion__item figcaption { margin-top: var(--space-3); font-size: 0.95rem; }
 .motion__item figcaption strong { display: block; font-family: var(--font-display); font-size: 1.1rem; }
 @media (max-width: 768px) { .motion__grid { grid-template-columns: 1fr; } }
+
+/* "Meet the mascot" chapter (EcoMarkt): line-up, four seasons, country screens */
+.mascot > p { max-width: 62ch; }
+.mascot__lineup { margin: var(--space-5) 0 0; }
+.mascot__lineup img { display: block; width: 100%; height: auto; }   /* transparent PNG, no frame */
+.mascot__heading { margin-top: var(--space-6); }
+.mascot__seasons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.season img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 313 / 363;
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+}
+.season p { margin-top: var(--space-3); font-size: 0.95rem; }
+.season strong { display: block; font-family: var(--font-display); font-size: 1.1rem; }
+/* Gentle wiggle on hover, like the mascot is saying hi (off for reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .season img { transition: transform 0.25s; }
+  .season:hover img { transform: rotate(-2deg) scale(1.03); }
+}
+@media (max-width: 768px) { .mascot__seasons { grid-template-columns: repeat(2, 1fr); } }
