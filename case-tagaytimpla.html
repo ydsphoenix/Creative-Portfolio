@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tagay Timpla — Yuki</title>
+  <meta name="description" content="Case study: Tagay Timpla, a first-year app design and branding project that helps you discover coffee shops in Quezon City.">
+  <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Show the loader only on the first page of a visit, and never for reduced motion.
+    document.documentElement.classList.add('js');
+    try {
+      if (!sessionStorage.getItem('yuki-loaded') &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('show-loader');
+        sessionStorage.setItem('yuki-loaded', '1');
+      }
+    } catch (e) { /* storage blocked: just skip the loader */ }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/case-study.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body class="theme-tagay">
+  <!-- Loading screen: only shown on the first page of a visit (see the script in <head>
+       and js/main.js). Without JavaScript it never appears. -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__bubbles"><span></span><span></span><span></span><span></span></span>
+      <img class="loader__shark" src="assets/icons/yuki-logomark-shark.svg" alt="">
+      <img class="loader__word" src="assets/icons/yuki-logo.svg" alt="">
+    </div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Case studies: no nav pill. Back button left, logo right. -->
+  <header class="case-header">
+    <a class="btn-round" href="projects.html" aria-label="Back to all projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    </a>
+    <a class="logo" href="index.html"><img src="assets/icons/yuki-logo.svg" alt="Yuki, home"></a>
+  </header>
+
+  <main id="main" class="container case">
+
+    <header class="case__intro">
+      <div class="case__intro-text">
+        <!-- REVIEW: check the tag (year?) -->
+        <p class="case__tag">UI/UX · App design · Branding · First-year project</p>
+        <h1 class="case__title" data-split>Tagay Timpla</h1>
+        <!-- REVIEW: drafted by AI, Yuki to check. Maybe add what the name means. -->
+        <p class="case__summary">An app for finding your next favourite coffee shop in Quezon City. Explore your city, one coffee shop at a time.</p>
+      </div>
+      <figure class="case__media" data-reveal>
+        <img src="assets/img/tagaytimpla/hero.webp" alt="Three Tagay Timpla app screens on blush pink: the home page with café lists, a map of the Philippines with coffee pins, and the Palpitate Coffee page with a five-star rating" width="1600" height="1200">
+      </figure>
+      <dl class="case__facts" data-reveal data-reveal-delay="300">
+        <!-- REVIEW: drafted by AI from the Figma file. Fill in Duration and Team. -->
+        <div><dt>Role</dt><dd>Branding, logo &amp; UI design</dd></div>
+        <div><dt>Tools</dt><dd>Figma, sketchbook</dd></div>
+        <div><dt>Duration</dt><dd>[X weeks]</dd></div>
+        <div><dt>Team</dt><dd>[Solo] · First-year school project</dd></div>
+      </dl>
+    </header>
+
+    <section class="case__section" data-reveal aria-labelledby="problem">
+      <h2 id="problem"><span>01</span> Problem</h2>
+      <!-- REVIEW: drafted by AI from the Figma file. Add the exact brief if you have it. -->
+      <p>Quezon City is full of great coffee shops, but finding one that fits your mood is hard: a quiet spot to study, a place with brunch, a pet-friendly terrace or something affordable. Map apps show you everything at once. Tagay Timpla helps you discover cafés by what matters to you.</p>
+    </section>
+
+    <section class="case__section" aria-labelledby="process">
+      <h2 id="process" data-reveal><span>02</span> Process</h2>
+      <!-- Zigzag steps. The dashed line is one SVG behind the list (css/case-study.css). -->
+      <div class="steps-wrap">
+        <svg class="steps__line" viewBox="0 0 40 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path vector-effect="non-scaling-stroke" d="M20 0 C 6 30, 34 60, 20 100 S 6 170, 20 200 S 34 270, 20 300 S 8 370, 20 400"/>
+      </svg>
+        <ol class="steps" role="list">
+        <li class="step" data-reveal>
+          <figure class="step__media">
+            <img src="assets/img/tagaytimpla/step-1-moodboard.webp" alt="Moodboard of cosy coffee shops, latte art, a café-finder app and a palette of warm browns, next to five colour dots from dark espresso to cream" width="1200" height="900" loading="lazy">
+          </figure>
+          <span class="step__dot" aria-hidden="true">1</span>
+          <div class="step__text">
+            <h3>Moodboard</h3>
+            <!-- REVIEW: drafted by AI, Yuki to check -->
+            <p>I collected cosy cafés, coffee textures and map-based apps, and pulled a palette from them that goes from dark espresso to milky cream.</p>
+          </div>
+        </li>
+        <li class="step" data-reveal>
+          <figure class="step__media">
+            <img src="assets/img/tagaytimpla/step-2-logo.webp" alt="Four steps of the logo: thumbnail sketches in a sketchbook, a pencil sketch of the T-shaped mark, a clean line version with a coffee bean, and the final brown logo" width="1200" height="900" loading="lazy">
+          </figure>
+          <span class="step__dot" aria-hidden="true">2</span>
+          <div class="step__text">
+            <h3>Logo</h3>
+            <!-- REVIEW: drafted by AI, Yuki to check -->
+            <p>The mark started as thumbnails in my sketchbook: the T of Tagay and Timpla doubles as a coffee table, with a bean on top. I refined it from pencil to clean lines to the final bold version.</p>
+          </div>
+        </li>
+        <li class="step" data-reveal>
+          <figure class="step__media">
+            <img src="assets/img/tagaytimpla/step-3-brand.webp" alt="Brand sheet: the Tagay Timpla wordmark and logo variations, five brown palette swatches with hex codes, and Nunito as the typeface" width="1200" height="900" loading="lazy">
+          </figure>
+          <span class="step__dot" aria-hidden="true">3</span>
+          <div class="step__text">
+            <h3>Brand guidelines</h3>
+            <!-- REVIEW: drafted by AI, Yuki to check -->
+            <p>I put it together in a brand sheet: logo variations, five coffee browns and Nunito as the only typeface, so the app feels warm and consistent.</p>
+          </div>
+        </li>
+        <li class="step" data-reveal>
+          <figure class="step__media">
+            <img src="assets/img/tagaytimpla/step-4-wireframes.webp" alt="Four mid-fidelity wireframes in flat browns: a map of Quezon City with café pins, a filters page, an empty coffee shop page and a favourites page" width="1200" height="900" loading="lazy">
+          </figure>
+          <span class="step__dot" aria-hidden="true">4</span>
+          <div class="step__text">
+            <h3>Wireframes</h3>
+            <!-- REVIEW: drafted by AI, Yuki to check -->
+            <p>I mapped the app in flat wireframes first: a map of Quezon City with café pins, filters, a coffee shop page, favourites and a profile.</p>
+          </div>
+        </li>
+        <li class="step" data-reveal>
+          <figure class="step__media">
+            <img src="assets/img/tagaytimpla/step-5-ui.webp" alt="Three final screens: the home page with café lists for Most Popular, Best Brunch and Local Favourite, the filters page, and the Liked Cafés page with photos" width="1200" height="900" loading="lazy">
+          </figure>
+          <span class="step__dot" aria-hidden="true">5</span>
+          <div class="step__text">
+            <h3>Final screens</h3>
+            <!-- REVIEW: drafted by AI, Yuki to check -->
+            <p>Then I added real café photos and my own icon set, and organised the home page into lists like Most Popular, Best Brunch and Affordable.</p>
+          </div>
+        </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="case__section" data-reveal aria-labelledby="outcome">
+      <h2 id="outcome"><span>03</span> Outcome</h2>
+      <!-- REVIEW: drafted by AI, Yuki to check. A line on how you'd do it now shows how much you've grown since first year. -->
+      <p>A Figma design of the full app: a map with café pins, curated lists, filters for ambiance, amenities, menu and price, café pages with ratings, photos and reviews, plus favourites and a profile. [Add one or two sentences: what you learned and what you would do differently now.]</p>
+      <div class="case__hero"><img src="assets/img/tagaytimpla/outcome.webp" alt="The Palpitate Coffee page from top to bottom, with photo, rating, description, location, extra photos and a review form, next to the profile page" width="1600" height="900" loading="lazy"></div>
+      <p class="case__note">Café names and photos are used as example content and belong to their owners.</p>
+    </section>
+
+    <nav class="case__next" aria-label="More projects">
+      <a class="btn" href="case-lilbao.html">Next project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="projects.html">See all projects</a>
+    </nav>
+  </main>
+</body>
+</html>

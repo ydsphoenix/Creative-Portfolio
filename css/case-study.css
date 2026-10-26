@@ -54,6 +54,20 @@ body.theme-mira {
   --shadow-pop: 4px 4px 0 var(--color-ink);
 }
 
+body.theme-tagay {
+  --color-paper: #f0d2c8;      /* blush, page background */
+  --color-blue: #e5b493;       /* latte, accent / primary button (ink on it: 8.2:1) */
+  --color-ink: #35201e;        /* espresso: text, borders, sticker shadow (10.7:1 on paper) */
+  --color-white: #fdf7f3;      /* milk, cards and secondary button */
+  --color-pink: #be8c6b;       /* caramel, step number dots / highlights (ink on it: 5.2:1) */
+  --color-blue-deep: #7a4229;  /* darker coffee brown for small text; 5.6:1 on paper */
+  --color-mint: #f6e2d9;       /* soft hover tint */
+  --color-dot: rgba(53, 32, 30, 0.12);  /* dot grid, same as ink at 12% */
+  --color-focus: var(--color-ink);
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink);
+}
+
 .case {
   max-width: 1040px;
   padding-block: var(--space-5) var(--space-7);

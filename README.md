@@ -14,6 +14,7 @@ Plain HTML, CSS and vanilla JavaScript — no build step.
 | `case-letsdive.html` | Case study: Let's Dive |
 | `case-lilbao.html` | Case study: Lil Bāo |
 | `case-mira.html` | Case study: MIRA (Netflix sub-brand shopping app) |
+| `case-tagaytimpla.html` | Case study: Tagay Timpla (first-year coffee shop finder app) |
 
 ## Structure
 ```
