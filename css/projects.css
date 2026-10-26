@@ -106,8 +106,18 @@
 .art:nth-child(4) { --i: 3; } .art:nth-child(5) { --i: 4; } .art:nth-child(6) { --i: 5; }
 .art:nth-child(7) { --i: 6; }
 
+/* Hover adds "swing" as a third animation. hang-in and boil stay in the same
+   positions with the same settings, so the browser keeps them running instead of
+   restarting them. Restarting hang-in made the frame vanish and drop in again
+   when the mouse left. */
 .art a:hover .art__frame,
-.art a:focus-visible .art__frame { animation: swing 1.6s ease-out, boil 0.5s steps(1) infinite; }
+.art a:focus-visible .art__frame {
+  animation:
+    hang-in 1.4s cubic-bezier(0.3, 1.2, 0.4, 1) backwards,
+    boil 0.5s steps(1) infinite,
+    swing 1.6s ease-out;
+  animation-delay: calc(var(--i, 0) * 90ms), 0s, 0s;
+}
 
 @keyframes hang-in {
   0%   { opacity: 0; transform: translateY(-40px) rotate(-14deg); }
