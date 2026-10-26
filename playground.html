@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Playground · Yuki</title>
+  <meta name="description" content="The Playground: Yuki's side projects, made just for fun outside of school.">
+  <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Show the loader only on the first page of a visit, and never for reduced motion.
+    document.documentElement.classList.add('js');
+    try {
+      if (!sessionStorage.getItem('yuki-loaded') &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('show-loader');
+        sessionStorage.setItem('yuki-loaded', '1');
+      }
+    } catch (e) { /* storage blocked: just skip the loader */ }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/projects.css">
+  <script src="js/projects.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Loading screen: only shown on the first page of a visit (see the script in <head>
+       and js/main.js). Without JavaScript it never appears. -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__bubbles"><span></span><span></span><span></span><span></span></span>
+      <img class="loader__shark" src="assets/icons/yuki-logomark-shark.svg" alt="">
+      <img class="loader__word" src="assets/icons/yuki-logo.svg" alt="">
+    </div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="logo" href="index.html"><img src="assets/icons/yuki-logo.svg" alt="Yuki, home"></a>
+    <nav aria-label="Main">
+      <ul class="nav-pill">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html" aria-current="page"><span class="nav-blob" aria-hidden="true"></span>Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+    
+    <!-- ===== The Playground: second room of the museum =====
+         Side projects made just for fun, outside of school. Same museum wall as
+         projects.html (css/projects.css), with a brighter wall colour.
+         PLACEHOLDER: replace each .placeholder with <img class="art__img" src="..." alt="...">,
+         point href at the case study or live link, and fill in the plaque. -->
+    <section class="wall wall--playground" aria-labelledby="wall-title">
+      <header class="wall__sign">
+        <h1 id="wall-title" data-split>The Playground</h1>
+        <p>Room 2 · side projects, just for fun</p>
+      </header>
+      <ul class="gallery">
+        <li class="art art--w4 art--h3">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Extra 1</span></span>
+            <span class="art__label"><strong>Extra one</strong> Just for fun</span>
+          </a>
+        </li>
+        <li class="art art--w3 art--h2 art--low">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Extra 2</span></span>
+            <span class="art__label"><strong>Extra two</strong> Just for fun</span>
+          </a>
+        </li>
+        <li class="art art--w5 art--h3">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Extra 3</span></span>
+            <span class="art__label"><strong>Extra three</strong> Just for fun</span>
+          </a>
+        </li>
+        <li class="art art--w4 art--h2">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Extra 4</span></span>
+            <span class="art__label"><strong>Extra four</strong> Just for fun</span>
+          </a>
+        </li>
+        <li class="art art--w4 art--h2 art--low">
+          <a href="case-study-example.html">
+            <span class="art__frame"><span class="art__img placeholder">Extra 5</span></span>
+            <span class="art__label"><strong>Extra five</strong> Just for fun</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Doorway to the other room. The door swings open on hover/focus (css/projects.css). -->
+      <a class="door door--left" href="projects.html" aria-label="Back to room 1: the main collection">
+        <span class="door__sign" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>The collection</span>
+        <span class="door__frame" aria-hidden="true"><span class="door__panel"><span class="door__knob"></span></span></span>
+      </a>
+
+      <!-- Mascot looking at the wall. The fin is a separate image layered
+           behind the body; js/projects.js rotates it toward the mouse. -->
+      <div class="visitor" aria-hidden="true">
+        <img class="visitor__fin" src="assets/img/shark-museum-fin.webp" alt="" width="1211" height="1150">
+        <img class="visitor__body" src="assets/img/shark-museum-body.webp" alt="" width="1211" height="1150">
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -219,3 +219,103 @@
   64%, 80% { rotate: 12deg; }
   72%, 88% { rotate: -30deg; }
 }
+
+
+/* ---------- Doorway to the next room (projects.html <-> playground.html) ----------
+   An arched door standing on the floor line. The panel swings open on hover/focus,
+   showing the light of the other room behind it. Off for reduced motion (it just
+   changes colour). */
+.door {
+  position: absolute;
+  z-index: 2;
+  bottom: 70px;                         /* on the floor line (.wall::after) */
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  width: 150px;
+  text-decoration: none;
+}
+.door--right { right: var(--space-6); }
+.door--left  { left: var(--space-6); }
+
+.door__sign {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s, color 0.2s;
+}
+.door__sign svg { width: 1.1em; height: 1.1em; }
+
+.door__frame {
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 190px;
+  border: var(--border);
+  border-bottom: 0;
+  border-radius: 60px 60px 0 0;
+  /* the other room, seen through the open door */
+  background:
+    radial-gradient(circle at 50% 35%, #fff 0 18%, transparent 60%),
+    var(--color-mint);
+  perspective: 500px;
+}
+.door__panel {
+  position: absolute;
+  inset: 0;
+  border-radius: 57px 57px 0 0;
+  background:
+    linear-gradient(transparent 48%, rgba(0, 0, 0, 0.08) 48% 50%, transparent 50%),
+    var(--color-pink);
+  box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.35);
+  transform-origin: 0 50%;              /* hinge on the left */
+  transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.door--left .door__panel { transform-origin: 100% 50%; }   /* hinge on the right */
+.door__knob {
+  position: absolute;
+  top: 55%;
+  right: 14px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-blue);
+  border: 2px solid var(--color-ink);
+  border-radius: 50%;
+}
+.door--left .door__knob { right: auto; left: 14px; }
+
+.door:hover .door__sign,
+.door:focus-visible .door__sign { background: var(--color-blue); color: var(--color-ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .door:hover .door__panel,
+  .door:focus-visible .door__panel { transform: rotateY(-62deg); }
+  .door--left:hover .door__panel,
+  .door--left:focus-visible .door__panel { transform: rotateY(62deg); }
+}
+
+/* Room 2 gets a brighter wall so you can tell the rooms apart */
+.wall--playground {
+  background:
+    radial-gradient(color-mix(in srgb, var(--color-blue) 22%, transparent) 2px, transparent 2.5px) 0 0 / 28px 28px,
+    #fffdf7;
+}
+.wall--playground .wall__sign { background: var(--color-blue); color: var(--color-ink); }
+.wall--playground .art__frame { border-color: var(--color-blue); box-shadow: inset 0 0 0 3px var(--color-ink), var(--shadow-pop); }
+.wall--playground .art:nth-child(even) .art__frame { border-color: var(--color-pink); }
+
+@media (max-width: 640px) {
+  .door { bottom: 50px; width: 96px; }
+  .door--right { right: var(--space-2); }
+  .door--left  { left: var(--space-2); }
+  .door__frame { width: 74px; height: 118px; }
+  .door__panel { border-radius: 35px 35px 0 0; }
+  .door__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
+}
