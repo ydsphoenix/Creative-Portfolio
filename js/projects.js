@@ -1,5 +1,4 @@
-// Projects page: the shark's fin follows the mouse, the shark leans toward it,
-// and a spotlight follows the cursor across the wall.
+// Projects page: the shark's fin follows the mouse and the shark leans toward it.
 // The fin image is the same size as the body image, so the shoulder pivot can be
 // given as a percentage of the image box (matches transform-origin in projects.css).
 
@@ -13,7 +12,6 @@
 
   const fin = document.querySelector('.visitor__fin');
   const visitor = document.querySelector('.visitor');
-  const wall = document.querySelector('.wall');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (fin && !reduceMotion) {
@@ -40,15 +38,6 @@
       const lean = ((event.clientX / window.innerWidth) - 0.5) * 8;
       visitor.style.setProperty('--lean', `${lean.toFixed(2)}deg`);
     });
-
-    // Spotlight: position relative to the wall
-    wall.addEventListener('pointermove', (event) => {
-      const r = wall.getBoundingClientRect();
-      wall.style.setProperty('--spot-x', `${event.clientX - r.left}px`);
-      wall.style.setProperty('--spot-y', `${event.clientY - r.top}px`);
-      wall.classList.add('is-lit');
-    });
-    wall.addEventListener('pointerleave', () => wall.classList.remove('is-lit'));
 
     // Smoothly ease toward the target every frame.
     const tick = () => {

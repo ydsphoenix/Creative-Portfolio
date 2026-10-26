@@ -141,22 +141,6 @@
 .wall__sign h1 { font-size: var(--text-2xl); text-transform: uppercase; letter-spacing: 0.08em; }
 .wall__sign p { margin: 0; font-size: var(--text-sm); opacity: 0.85; }
 
-/* ---------- Spotlight ----------
-   A dark layer over the wall with a warm hole of light at the cursor.
-   js/projects.js sets --spot-x / --spot-y and toggles .is-lit. */
-.wall::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: radial-gradient(circle 340px at var(--spot-x, 50%) var(--spot-y, 40%),
-    rgba(255, 236, 190, 0.3), transparent 75%, rgba(35, 22, 10, 0.15));
-  opacity: 0;
-  transition: opacity 0.6s;
-}
-.wall.is-lit::before { opacity: 1; }
-
 /* ---------- Shark visitor ---------- */
 .visitor {
   position: absolute;
