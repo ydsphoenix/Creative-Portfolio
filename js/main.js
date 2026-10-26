@@ -182,7 +182,7 @@
      with native controls (like MIRA's) don't need one.
   ------------------------------------------------------------------ */
   function heroVideos() {
-    document.querySelectorAll('.case__media video').forEach((video) => {
+    document.querySelectorAll('.case__media video, .motion video').forEach((video) => {
       const button = video.parentElement.querySelector('.media-toggle');
       const setPaused = (paused) => {
         if (!button) return;

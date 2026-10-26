@@ -260,3 +260,22 @@ body.theme-tagay {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-pop);
 }
+
+/* Motion principles (MIRA): three small looping videos with captions */
+.motion { margin-top: var(--space-6); }
+.motion > p { max-width: 60ch; }
+.motion__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-top: var(--space-4); }
+.motion__item { margin: 0; }
+.motion__item video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #1b263b;          /* same navy as the animations */
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+}
+.motion__item figcaption { margin-top: var(--space-3); font-size: 0.95rem; }
+.motion__item figcaption strong { display: block; font-family: var(--font-display); font-size: 1.1rem; }
+@media (max-width: 768px) { .motion__grid { grid-template-columns: 1fr; } }
