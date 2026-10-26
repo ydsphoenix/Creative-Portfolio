@@ -235,6 +235,7 @@
   width: 150px;
   text-decoration: none;
 }
+.door[hidden] { display: none; }        /* a door can be hidden until its room is ready */
 .door--right { right: var(--space-6); }
 .door--left  { left: var(--space-6); }
 
