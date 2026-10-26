@@ -246,9 +246,3 @@ body.theme-mira {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-pop);
 }
-/* Small pause / play button on the video's bottom-right corner */
-.media-toggle { position: absolute; right: -20px; bottom: 24px; width: 48px; height: 48px; }
-.media-toggle svg { width: 20px; height: 20px; }
-.media-toggle .icon-play,
-.media-toggle[aria-pressed="true"] .icon-pause { display: none; }
-.media-toggle[aria-pressed="true"] .icon-play { display: block; }

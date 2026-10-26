@@ -55,17 +55,13 @@
           <a class="btn btn--primary" href="https://www.figma.com/proto/pQwKIWRRY3KQkSNMnZnIIS/-Netflix-MIRA-Yuki-Jevelle-Jurado?page-id=988%3A1726&amp;node-id=1054-1832&amp;starting-point-node-id=1061%3A3044&amp;scaling=scale-down&amp;content-scaling=fixed" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>View prototype <span class="visually-hidden">(opens Figma in a new tab)</span></a>
         </div>
       </div>
-      <!-- Hero: screen recording of the Figma prototype. No autoplay attribute on purpose:
-           js/main.js starts it only when the visitor doesn't prefer reduced motion,
-           otherwise the still (poster) shows. The round button pauses / plays it. -->
+      <!-- Hero: screen recording of the Figma prototype, with the browser's own controls
+           (play / pause / scrub). No autoplay attribute on purpose: js/main.js starts it
+           only when the visitor doesn't prefer reduced motion, otherwise the still shows. -->
       <figure class="case__media case__media--phone" data-reveal>
-        <video muted loop playsinline preload="metadata" poster="assets/img/mira/hero-still.webp" width="560" height="1080" aria-label="Screen recording of the MIRA prototype: the logo animates in, you sign in and pick a profile, open the Bridgerton page, tap the blue sofa, scroll to Get the look, then open the wishlist">
+        <video controls muted loop playsinline preload="metadata" poster="assets/img/mira/hero-still.webp" width="560" height="1080" aria-label="Screen recording of the MIRA prototype: the logo animates in, you sign in and pick a profile, open the Bridgerton page, tap the blue sofa, scroll to Get the look, then open the wishlist">
           <source src="assets/img/mira/hero.mp4" type="video/mp4">
         </video>
-        <button class="btn-round media-toggle" type="button" aria-label="Pause video" hidden>
-          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
-        </button>
       </figure>
       <dl class="case__facts" data-reveal data-reveal-delay="300">
         <div><dt>Role</dt><dd>Research, branding &amp; UI/UX design</dd></div>

@@ -177,8 +177,9 @@
   /* ------------------------------------------------------------------
      Hero videos (case studies)
      Videos have no autoplay attribute, so reduced-motion visitors (and visitors
-     without JS) just see the poster still. Everyone else gets the loop, plus a
-     pause / play button (needed for anything that moves longer than 5 seconds).
+     without JS) see the poster still and can press play themselves. Everyone else
+     gets the loop. An optional .media-toggle button can pause / play it; videos
+     with native controls (like MIRA's) don't need one.
   ------------------------------------------------------------------ */
   function heroVideos() {
     document.querySelectorAll('.case__media video').forEach((video) => {
