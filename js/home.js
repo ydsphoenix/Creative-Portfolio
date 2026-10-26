@@ -1,6 +1,6 @@
 // Home page motion:
 // 1. program icon bubbles follow the mouse (parallax) and can be grabbed and thrown
-// 2. two marquee rows that speed up while you scroll
+// 2. (the wavy marquee lives in js/marquee.js)
 // 3. featured preview tilts in 3D toward the mouse
 
 // Wrapped in { } so this file's variables don't clash with the other scripts.
@@ -98,23 +98,6 @@
       });
     });
 
-    /* ---------------- 2. Scroll-reactive marquee ---------------- */
-    const rows = [...document.querySelectorAll('.marquee__row')].map((row) => ({
-      track: row.querySelector('.marquee__track'),
-      speed: parseFloat(row.dataset.speed) || 0.5,
-      offset: 0,
-    }));
-    let boost = 0;
-    let direction = 1;
-    let lastScroll = window.scrollY;
-
-    window.addEventListener('scroll', () => {
-      const delta = window.scrollY - lastScroll;
-      lastScroll = window.scrollY;
-      direction = delta >= 0 ? 1 : -1;               // scrolling up reverses the rows
-      boost = Math.min(boost + Math.abs(delta) * 0.15, 14);
-    }, { passive: true });
-
     /* ---------------- Animation loop ---------------- */
     const tick = () => {
       bubbles.forEach((b) => {
@@ -134,13 +117,6 @@
         portrait.style.translate = `${(mouse.x * 10).toFixed(1)}px ${(mouse.y * 6).toFixed(1)}px`;
       }
 
-      rows.forEach((r) => {
-        const half = r.track.scrollWidth / 2;          // width of one copy of the list
-        r.offset += r.speed * (1 + boost) * direction;
-        r.offset = ((r.offset % half) + half) % half;  // wrap around seamlessly
-        r.track.style.transform = `translateX(${-r.offset}px)`;
-      });
-      boost *= 0.92;                                   // scroll boost fades out
 
       requestAnimationFrame(tick);
     };
