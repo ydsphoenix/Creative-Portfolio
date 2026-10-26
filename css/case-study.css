@@ -233,3 +233,22 @@ body.theme-mira {
 
 /* Small credit / disclaimer line under a case study's outcome (e.g. MIRA's Netflix note) */
 .case__note { margin-top: var(--space-3); font-size: 0.875rem; }
+
+/* Portrait hero (phone screen recording, e.g. MIRA). Replaces the 4:3 crop. */
+.case__media--phone { position: relative; justify-self: center; width: min(100%, 300px); }
+.case__media--phone video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 560 / 1080;
+  background: #febf4c;          /* same gold as the recording's background */
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+}
+/* Small pause / play button on the video's bottom-right corner */
+.media-toggle { position: absolute; right: -20px; bottom: 24px; width: 48px; height: 48px; }
+.media-toggle svg { width: 20px; height: 20px; }
+.media-toggle .icon-play,
+.media-toggle[aria-pressed="true"] .icon-pause { display: none; }
+.media-toggle[aria-pressed="true"] .icon-play { display: block; }

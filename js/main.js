@@ -174,8 +174,34 @@
     else window.addEventListener('load', hide, { once: true });
   }
 
+  /* ------------------------------------------------------------------
+     Hero videos (case studies)
+     Videos have no autoplay attribute, so reduced-motion visitors (and visitors
+     without JS) just see the poster still. Everyone else gets the loop, plus a
+     pause / play button (needed for anything that moves longer than 5 seconds).
+  ------------------------------------------------------------------ */
+  function heroVideos() {
+    document.querySelectorAll('.case__media video').forEach((video) => {
+      const button = video.parentElement.querySelector('.media-toggle');
+      const setPaused = (paused) => {
+        if (!button) return;
+        button.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        button.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+      };
+      if (button) {
+        button.hidden = false;
+        button.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
+        video.addEventListener('play', () => setPaused(false));
+        video.addEventListener('pause', () => setPaused(true));
+      }
+      setPaused(true);
+      if (!reduceMotion) video.play().catch(() => {}); // browsers may block it: the poster stays
+    });
+  }
+
   document.querySelectorAll('[data-split]').forEach(splitLetters);
   revealOnScroll();
+  heroVideos();
 
   if (!reduceMotion) {
     addBoilFilters();
