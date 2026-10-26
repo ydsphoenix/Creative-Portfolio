@@ -330,3 +330,186 @@ body.theme-ecomarkt {
   .season:hover img { transform: rotate(-2deg) scale(1.03); }
 }
 @media (max-width: 768px) { .mascot__seasons { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- Mahal Beauty (case-mahalbeauty.html) ----------
+   Theme from the approved client palette: soft blue page, deep blue text,
+   light blue accent, yellow sparkle dots. Mahal Blue (#1612D3) is used for small
+   text and highlights; red and yellow stay tiny accents, like on the real site. */
+body.theme-mahal {
+  --color-paper: #eef0fd;      /* soft blue, page background */
+  --color-blue: #c9cdf5;       /* light blue, accent / round button (ink on it: 12:1) */
+  --color-ink: #13114a;        /* deep blue: text, borders, sticker shadow (15:1 on paper) */
+  --color-white: #ffffff;      /* white, cards and secondary button */
+  --color-pink: #ffde59;       /* sparkle yellow, step number dots (ink on it: 13:1) */
+  --color-blue-deep: #1612d3;  /* Mahal Blue for small text; 8.4:1 on paper */
+  --color-mint: #dfe2fb;       /* soft hover tint */
+  --color-dot: rgba(22, 18, 211, 0.1);   /* dot grid in Mahal Blue */
+  --color-focus: #1612d3;
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink);
+}
+
+/* Small "status" line under the summary */
+.case__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pop);
+}
+.case__status span { color: #e0b100; }   /* sparkle, decorative only */
+
+/* Two users side by side */
+.users { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.users__card,
+.reasons__item {
+  padding: var(--space-4);
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+}
+.users__card h3,
+.reasons__item h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
+.users__card p,
+.reasons__item p { margin: 0; }
+
+/* Before / after */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); margin-top: var(--space-4); }
+.compare__item { position: relative; margin: 0; }
+.compare__item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+}
+.compare__item figcaption { margin-top: var(--space-3); font-size: var(--text-sm); }
+.compare__label {
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  left: var(--space-3);
+  rotate: -4deg;
+  padding: 2px var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 600;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+}
+.compare__label--new { background: var(--color-pink); rotate: 3deg; }
+
+.reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin: var(--space-6) 0 var(--space-5); padding: 0; list-style: none; }
+
+/* What I learned */
+.learn__heading { font-size: var(--text-xl); margin-top: var(--space-5); }
+.learn { display: grid; gap: var(--space-3); margin: var(--space-3) 0 0; padding-left: 1.2em; max-width: 70ch; }
+.learn li::marker { content: "✦  "; color: var(--color-blue-deep); }
+.learn strong { font-family: var(--font-display); font-weight: 600; }
+
+/* ---------- Teaser: website in process ---------- */
+.teaser { display: grid; grid-template-columns: 1fr 1.15fr; gap: var(--space-6); align-items: center; }
+.build { display: grid; gap: var(--space-3); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.build__step { display: flex; align-items: center; gap: var(--space-3); font-weight: 600; }
+.build__step small { font-weight: 400; color: var(--color-blue-deep); }
+.build__dot {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  font-size: 0.9rem;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--color-white);
+}
+.build__heart { color: #fa0000; }   /* the red ♡ accent from the Mahal palette */
+.build__step--done .build__dot { background: var(--color-pink); }
+.build__step--now .build__dot { background: var(--color-blue-deep); box-shadow: 0 0 0 4px var(--color-blue); }
+
+.browser {
+  position: relative;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 8px 8px 0 var(--color-ink);
+}
+.browser__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border);
+}
+.browser__bar i { width: 11px; height: 11px; border: 2px solid var(--color-ink); border-radius: 50%; }
+.browser__bar i:first-child { background: #fa0000; }
+.browser__bar i:nth-child(2) { background: var(--color-pink); }
+.browser__bar span {
+  flex: 1;
+  margin-left: var(--space-2);
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+  background: var(--color-paper);
+  border-radius: var(--radius-pill);
+}
+.browser__view {
+  --view-h: 420px;
+  height: var(--view-h);
+  overflow: hidden;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+.browser__view img { width: 100%; height: auto; }
+.browser__sticker {
+  position: absolute;
+  z-index: 2;
+  top: -18px;
+  right: -14px;
+  rotate: 6deg;
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 600;
+  background: var(--color-pink);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pop);
+}
+
+/* The page design scrolls slowly up and back down. Hover or focus pauses it.
+   Reduced motion: no animation, the window becomes a normal scroll box instead. */
+@media (prefers-reduced-motion: no-preference) {
+  .browser__view img { animation: teaser-scroll 24s ease-in-out 1s infinite alternate; }
+  .browser__view:hover img,
+  .browser__view:focus-visible img { animation-play-state: paused; }
+  .browser__sticker { animation: sticker-bob 3s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .browser__view { overflow-y: auto; }
+}
+@keyframes teaser-scroll {
+  0%, 8% { transform: translateY(0); }
+  92%, 100% { transform: translateY(calc(-100% + var(--view-h))); }
+}
+@keyframes sticker-bob {
+  50% { translate: 0 -5px; }
+}
+
+@media (max-width: 900px) {
+  .reasons { grid-template-columns: 1fr; }
+  .teaser { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .users,
+  .compare { grid-template-columns: 1fr; }
+  .browser__view { --view-h: 340px; }
+  .browser__sticker { right: -6px; }
+}

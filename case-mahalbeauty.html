@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahal Beauty — Yuki</title>
+  <meta name="description" content="Case study: a new website for Mahal Beauty, a lash and waxing studio in Antwerpen. Why the design changed, how it was made, and a peek at the build in progress.">
+  <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Show the loader only on the first page of a visit, and never for reduced motion.
+    document.documentElement.classList.add('js');
+    try {
+      if (!sessionStorage.getItem('yuki-loaded') &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('show-loader');
+        sessionStorage.setItem('yuki-loaded', '1');
+      }
+    } catch (e) { /* storage blocked: just skip the loader */ }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/case-study.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body class="theme-mahal">
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__bubbles"><span></span><span></span><span></span><span></span></span>
+      <img class="loader__shark" src="assets/icons/yuki-logomark-shark.svg" alt="">
+      <img class="loader__word" src="assets/icons/yuki-logo.svg" alt="">
+    </div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Case studies: no nav pill. Back button left, logo right. -->
+  <header class="case-header">
+    <a class="btn-round" href="projects.html" aria-label="Back to all projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    </a>
+    <a class="logo" href="index.html"><img src="assets/icons/yuki-logo.svg" alt="Yuki, home"></a>
+  </header>
+
+  <main id="main" class="container case">
+
+    <header class="case__intro">
+      <div class="case__intro-text">
+        <p class="case__tag">UI/UX · Web design · Client project</p>
+        <h1 class="case__title" data-split>Mahal Beauty</h1>
+        <p class="case__summary">A website of her own for Mahal Beauty, a one-woman lash and waxing studio in Antwerpen: her brand, her words, and booking in a few taps.</p>
+        <p class="case__status"><span aria-hidden="true">✦</span> Design approved by the client · build in progress</p>
+      </div>
+      <figure class="case__media" data-reveal>
+        <img src="assets/img/mahal/hero.webp" alt="The new Mahal Beauty home page on a laptop and a phone: the headline Soft, lifted and beautifully you in cobalt blue next to a photo of a lash lift treatment" width="1600" height="1200">
+      </figure>
+      <dl class="case__facts" data-reveal data-reveal-delay="300">
+        <div><dt>Role</dt><dd>Sole designer &amp; developer: requirements, UX, UI, client contact</dd></div>
+        <div><dt>Tools</dt><dd>Figma, Canva (client's logo), Claude as AI partner</dd></div>
+        <div><dt>Duration</dt><dd>1 week of design (20–26 Oct 2026)</dd></div>
+        <div><dt>Team</dt><dd>Solo, with the studio owner Gigi as client</dd></div>
+      </dl>
+    </header>
+
+    <section class="case__section" data-reveal aria-labelledby="problem">
+      <h2 id="problem"><span>01</span> Problem</h2>
+      <p>Gigi's studio lived on third-party platforms (Salonized and Treatwell), which looked generic and did not reflect her brand. She wanted a site of her own that replaces both, with its own booking, emails and reviews, while still feeling as easy as the tool she already knew. And the design had to serve two very different users:</p>
+      <ul class="users" role="list">
+        <li class="users__card">
+          <h3>Clients</h3>
+          <p>Mostly arrive from Instagram, on their phone. They need to understand the services and prices quickly, trust the studio, and book in a few taps.</p>
+        </li>
+        <li class="users__card">
+          <h3>Gigi</h3>
+          <p>Works alone, isn't technical and does her admin on her laptop. She needs a calm agenda like Salonized's, simpler where possible, in Dutch.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- The redesign "why": old Salonized page next to the new design, then the reasons. -->
+    <section class="case__section" aria-labelledby="why">
+      <h2 id="why" data-reveal><span>02</span> Why the design changed</h2>
+      <div class="compare" data-reveal>
+        <figure class="compare__item">
+          <span class="compare__label">Before</span>
+          <img src="assets/img/mahal/before.webp" alt="The old Mahal Beauty page on Salonized: a standard platform header with six links, three photos and a long Dutch welcome text in a generic black font" width="1200" height="750" loading="lazy">
+          <figcaption>The old page, a Salonized template "powered by Treatwell"</figcaption>
+        </figure>
+        <figure class="compare__item">
+          <span class="compare__label compare__label--new">After</span>
+          <img src="assets/img/mahal/after.webp" alt="The new home page: Mahal Beauty logo, four links and a Book now button, the headline Soft, lifted and beautifully you in an elegant serif, and a large lash treatment photo" width="1200" height="750" loading="lazy">
+          <figcaption>The new design, built around her logo and her words</figcaption>
+        </figure>
+      </div>
+      <ul class="reasons" role="list">
+        <li class="reasons__item" data-reveal>
+          <h3>It looked like everyone else</h3>
+          <p>A platform template with the platform's fonts and layout. Nothing on the page said "Mahal Beauty" except the small logo.</p>
+        </li>
+        <li class="reasons__item" data-reveal>
+          <h3>It didn't feel like her brand</h3>
+          <p>"Mahal" means love and precious in Tagalog. The brand draws on the warmth of Filipino hospitality, and every client should feel valued. That had to show in the colours, the type and the tone.</p>
+        </li>
+        <li class="reasons__item" data-reveal>
+          <h3>She wanted her own booking</h3>
+          <p>Booking, emails and reviews all ran through other platforms. A site of her own lets clients book, pay a €10 deposit and leave a review in one place.</p>
+        </li>
+      </ul>
+      <p data-reveal>I started from what already worked for Gigi rather than a blank page. Her Salonized page gave me the services, prices and policies, and she wrote the aftercare, tips and FAQ texts herself, so the site speaks in her own words. The rest came from short question rounds by chat and a screen recording of how she sets her hours. Each answer became a design decision.</p>
+    </section>
+
+    <section class="case__section" aria-labelledby="process">
+      <h2 id="process" data-reveal><span>03</span> Process</h2>
+      <!-- Zigzag steps. The dashed line is one SVG behind the list (css/case-study.css). -->
+      <div class="steps-wrap">
+        <svg class="steps__line" viewBox="0 0 40 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path vector-effect="non-scaling-stroke" d="M20 0 C 6 30, 34 60, 20 100 S 6 170, 20 200 S 34 270, 20 300 S 8 370, 20 400"/>
+        </svg>
+        <ol class="steps" role="list">
+          <li class="step" data-reveal>
+            <figure class="step__media">
+              <img src="assets/img/mahal/step-1-proposal.webp" alt="First colour proposal: two phone mock-ups in navy, ivory and oat, options A and B, with a portrait photo and a list of lash services" width="1200" height="900" loading="lazy">
+            </figure>
+            <span class="step__dot" aria-hidden="true">1</span>
+            <div class="step__text">
+              <h3>A first palette that wasn't her</h3>
+              <p>My first proposal was navy, ivory and oat, based on the luxury lash sites Gigi liked. It looked calm and premium, but it did not look like her.</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <figure class="step__media">
+              <img src="assets/img/mahal/step-2-palette.webp" alt="Three palette sheets side by side: a beige draft demo, version 1 in navy and oat with colour blocks instead of photos, and the approved version 2 in cobalt blue, white, red and yellow" width="1200" height="900" loading="lazy">
+            </figure>
+            <span class="step__dot" aria-hidden="true">2</span>
+            <div class="step__text">
+              <h3>The turning point: her logo</h3>
+              <p>Gigi wanted the site to match her logo and Instagram: cobalt blue and white with red and yellow, colours that echo the Philippine flag. Four rounds later, v2 was approved: blue and white lead, red and yellow are tiny accents. I made the mock-ups with colour blocks so she judged colours, not content, and checked every text colour against WCAG AA.</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <figure class="step__media">
+              <img src="assets/img/mahal/step-3-navigation.webp" alt="Site map: a top navigation with Home, Services, Gallery, Contact and a Book now button, the four-step booking flow that starts only from Book now, and secondary pages reached from the home page and footer" width="1200" height="900" loading="lazy">
+            </figure>
+            <span class="step__dot" aria-hidden="true">3</span>
+            <div class="step__text">
+              <h3>A simpler navigation</h3>
+              <p>The only change Gigi asked for: I cut the menu down to four links and one "Book now" button. Booking starts only from there, so there is one clear path instead of booking links under every service.</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <figure class="step__media">
+              <img src="assets/img/mahal/step-4-booking.webp" alt="Four phone screens of the booking flow: choose your treatment, pick a day and time, your details with a note for Gigi, and almost done with the €10 deposit" width="1200" height="900" loading="lazy">
+            </figure>
+            <span class="step__dot" aria-hidden="true">4</span>
+            <div class="step__text">
+              <h3>Booking in four taps</h3>
+              <p>Service, date and time, details, payment, designed mobile-first. The calendar only shows times that fit around Gigi's clean-up and rest, the deposit is explained up front, and an optional "Note for Gigi" lets nervous first-timers say hi.</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <figure class="step__media">
+              <img src="assets/img/mahal/step-5-admin.webp" alt="Admin agenda on a laptop: a week calendar with blue confirmed bookings, a yellow booking awaiting payment, dashed clean-up and rest blocks, and a booking detail panel on the right" width="1200" height="900" loading="lazy">
+            </figure>
+            <span class="step__dot" aria-hidden="true">5</span>
+            <div class="step__text">
+              <h3>Admin: from phone to laptop</h3>
+              <p>My first admin screens were for a phone. When Gigi told me she does all her admin on her laptop, I redesigned it around a week calendar like the one she knows from Salonized, with the clean-up and rest time drawn in.</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <figure class="step__media">
+              <img src="assets/img/mahal/step-6-availability.webp" alt="Availability screen: one column per day with exact start times like 10:00 and 15:00, Add time buttons, a Copy last week button and a Repeat weekly option" width="1200" height="900" loading="lazy">
+            </figure>
+            <span class="step__dot" aria-hidden="true">6</span>
+            <div class="step__text">
+              <h3>"Just put a timeslot"</h3>
+              <p>Watching her Salonized screen recording changed availability from opening hours to fixed start times she types per day, with "Copy last week". For clients who book by Instagram DM, she can create a payment link to paste in the chat.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="case__section" data-reveal aria-labelledby="outcome">
+      <h2 id="outcome"><span>04</span> Outcome</h2>
+      <p>A client-approved design system and 59 hi-fi screens in Figma: the public site on mobile and desktop, the booking flow, a laptop admin in Dutch and English, and seven emails that all end with "Liefs, Gigi".</p>
+      <div class="case__hero"><img src="assets/img/mahal/outcome.webp" alt="The home page on desktop, the booking confirmation email with the appointment details, and the pick a day and time screen on a phone" width="1600" height="900" loading="lazy"></div>
+      <h3 class="learn__heading">What I learned</h3>
+      <ul class="learn" role="list">
+        <li><strong>The client's brand beats my taste.</strong> My first palette was tasteful, but it wasn't Gigi. Her own colours make the site instantly recognisable to her clients.</li>
+        <li><strong>Watch how people work.</strong> One screen recording told me more about availability than any question did.</li>
+        <li><strong>Ask where the work happens.</strong> Designing the admin for a phone first cost me a round of screens. One question about her laptop would have saved it.</li>
+        <li><strong>Placeholders are honest.</strong> Marking missing content clearly kept the design moving without inventing business details.</li>
+      </ul>
+      <p class="case__note">Photos are Gigi's own; the clients in them gave permission. Names and bookings in the screens are fictional example data.</p>
+    </section>
+
+    <!-- Teaser: the build is in progress. The home page design scrolls slowly inside a
+         browser window (paused on hover; a normal scroll box for reduced motion). -->
+    <section class="case__section teaser" aria-labelledby="teaser">
+      <div class="teaser__text" data-reveal>
+        <h2 id="teaser"><span>05</span> Website in process…</h2>
+        <p>The design is approved, so now I'm building it. Here's a sneak peek of what's coming to life.</p>
+        <ol class="build" role="list">
+          <li class="build__step build__step--done"><span class="build__dot" aria-hidden="true">✓</span>Design approved <small>22 Oct</small></li>
+          <li class="build__step build__step--now"><span class="build__dot" aria-hidden="true"></span>Building the site in Nuxt 4, English first <small>now</small></li>
+          <li class="build__step"><span class="build__dot" aria-hidden="true"></span>Dutch translation, checked by Gigi</li>
+          <li class="build__step"><span class="build__dot" aria-hidden="true"></span>Launch <span class="build__heart" aria-hidden="true">♡</span></li>
+        </ol>
+      </div>
+      <div class="browser" data-reveal>
+        <span class="browser__sticker">Coming soon <span aria-hidden="true">✦</span></span>
+        <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i><span>mahalbeauty.be</span></div>
+        <div class="browser__view" tabindex="0" aria-label="Preview of the full Mahal Beauty home page design">
+          <img src="assets/img/mahal/teaser-home.webp" alt="The full Mahal Beauty home page design, top to bottom: hero, numbered services, Hi I'm Gigi, a 5.0 review score, aftercare tips and FAQ cards, and a deep blue footer" width="1000" height="3076" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <nav class="case__next" aria-label="More projects">
+      <a class="btn" href="case-lilbao.html">Next project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="projects.html">See all projects</a>
+    </nav>
+  </main>
+</body>
+</html>
