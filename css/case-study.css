@@ -26,6 +26,20 @@ body.theme-letsdive {
   --shadow-pop: 4px 4px 0 var(--color-ink);
 }
 
+body.theme-lilbao {
+  --color-paper: #fff4d1;      /* very pale yellow, page background */
+  --color-blue: #f5a524;       /* bao-stall orange, accent / primary button (ink on it: 7.1:1) */
+  --color-ink: #3b2412;        /* dark wood brown: text, borders, sticker shadow (13:1 on paper) */
+  --color-white: #fffdf5;      /* warm white, cards and secondary button */
+  --color-pink: #ffd84d;       /* maize, step number dots / highlights */
+  --color-blue-deep: #9a4f0c;  /* darker orange for small text; 5.5:1 on paper */
+  --color-mint: #ffe9a8;       /* soft hover tint */
+  --color-dot: rgba(59, 36, 18, 0.12);  /* dot grid, same as ink at 12% */
+  --color-focus: var(--color-ink);
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink);
+}
+
 .case {
   max-width: 1040px;
   padding-block: var(--space-5) var(--space-7);
