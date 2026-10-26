@@ -12,6 +12,8 @@ Plain HTML, CSS and vanilla JavaScript — no build step.
 | `contact.html` | Contact: email and socials |
 | `case-study-example.html` | Template for a case study (copy it for each project) |
 | `case-letsdive.html` | Case study: Let's Dive |
+| `case-lilbao.html` | Case study: Lil Bāo |
+| `case-mira.html` | Case study: MIRA (Netflix sub-brand shopping app) |
 
 ## Structure
 ```

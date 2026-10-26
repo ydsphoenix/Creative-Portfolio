@@ -40,6 +40,20 @@ body.theme-lilbao {
   --shadow-pop: 4px 4px 0 var(--color-ink);
 }
 
+body.theme-mira {
+  --color-paper: #fef3de;      /* Mira Cream, page background */
+  --color-blue: #f2a931;       /* Mira Gold, accent / primary button (ink on it: 6.6:1) */
+  --color-ink: #063257;        /* Mira Blue: text, borders, sticker shadow (11.9:1 on paper) */
+  --color-white: #fcfcf7;      /* Mira White, cards and secondary button */
+  --color-pink: #ffc857;       /* Mira Light gold, step number dots / highlights */
+  --color-blue-deep: #8a5a00;  /* darker gold for small text; 5.4:1 on paper */
+  --color-mint: #ffe3a3;       /* soft hover tint */
+  --color-dot: rgba(6, 50, 87, 0.12);  /* dot grid, same as ink at 12% */
+  --color-focus: var(--color-ink);
+  --border: 2.5px solid var(--color-ink);
+  --shadow-pop: 4px 4px 0 var(--color-ink);
+}
+
 .case {
   max-width: 1040px;
   padding-block: var(--space-5) var(--space-7);
@@ -216,3 +230,6 @@ body.theme-lilbao {
   .case__hero { aspect-ratio: 4 / 3; }
   .case__section { margin-top: var(--space-6); }
 }
+
+/* Small credit / disclaimer line under a case study's outcome (e.g. MIRA's Netflix note) */
+.case__note { margin-top: var(--space-3); font-size: 0.875rem; }
