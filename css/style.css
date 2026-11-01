@@ -189,6 +189,11 @@ a { color: inherit; }
 .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--color-ink); }
 .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--color-ink); }
 
+/* Filled main action (e.g. "Email me") */
+.btn--primary { background: var(--color-ink); color: var(--color-paper); box-shadow: 4px 4px 0 var(--color-blue); }
+.btn--primary:hover { box-shadow: 6px 6px 0 var(--color-blue); }
+.btn--primary:active { box-shadow: 1px 1px 0 var(--color-blue); }
+
 /* Round arrow button (featured work, back button) */
 .btn-round {
   display: inline-grid;

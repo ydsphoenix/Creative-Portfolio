@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yuki · Creative Portfolio</title>
-  <meta name="description" content="Yuki's creative portfolio: design, illustration, UI/UX and development.">
+  <title>Yuki · UI/UX designer portfolio</title>
+  <meta name="description" content="Hi! I'm Yuki, a UI/UX designer who draws and codes. Portfolio with app, web and illustration work.">
   <link rel="icon" href="assets/icons/yuki-logomark-shark.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,18 +55,24 @@
     <!-- ===== Hero ===== -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__inner">
-        <h1 id="hero-title" class="hero__title" data-split>Yuki <span class="hero__accent">Creative Portfolio</span></h1>
+        <!-- Availability pill -->
+        <p class="hero__open"><span class="hero__dot" aria-hidden="true"></span><span>Open to a UI/UX internship · <span class="nowrap">Feb–May 2027</span></span></p>
 
-        <!-- Who / what / available: the 10-second answer for recruiters -->
+        <h1 id="hero-title" class="hero__title" data-split>Hi! I'm <span class="hero__accent">Yuki.</span></h1>
+
+        <!-- Who / what: the 10-second answer for recruiters -->
         <div class="hero__intro">
           <p class="hero__lead">UI/UX designer who draws and codes.</p>
-          <p class="hero__open"><span class="hero__dot" aria-hidden="true"></span>Looking for a UI/UX internship · <span class="nowrap">Feb–May 2027</span></p>
+          <p class="hero__desc">I study Interaction Design at Thomas More, with two years of animation film behind me. I design playful, user-friendly apps and websites, draw my own illustrations and build them in code.</p>
           <div class="hero__actions">
-            <a class="btn" href="#featured-title">
-              See my work
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <a class="btn btn--primary" href="mailto:yuki.j120303@gmail.com">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              Email me
             </a>
-            <a class="hero__cv" href="assets/docs/yuki-cv.pdf" download>Download CV</a>
+            <a class="btn" href="assets/docs/yuki-cv.pdf" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg>
+              Resume
+            </a>
           </div>
         </div>
 
@@ -111,53 +117,67 @@
           </g>
         </svg>
       </div>
-      <a class="scroll-cue" href="#featured-title">
+      <a class="scroll-cue" href="#work-title">
         <span>Scroll</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
       </a>
     </section>
 
-    <!-- ===== Featured work ===== -->
-    <section class="featured container" aria-labelledby="featured-title">
-      <h2 id="featured-title" class="featured__heading" data-split>Featured work</h2>
+    <!-- ===== Selected work: 2x2 grid of case studies =====
+         To swap a project: change the link, image, name and tags of one <li>. -->
+    <section class="work container" aria-labelledby="work-title">
+      <div class="work__head">
+        <h2 id="work-title" class="work__heading" data-split>Selected work</h2>
+        <a class="btn work__all" href="projects.html">
+          All projects
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
 
-      <article class="featured__card" data-reveal>
-        <div class="featured__preview" data-tilt>
-          <img src="assets/img/mahal-beauty-featured.webp" alt="Mahal Beauty: the blue and red mahal beauty logo next to two tilted phone screens of the new website, the home page and the pick a day and time booking step" width="1600" height="1000" loading="lazy">
-        </div>
-        <div class="featured__info">
-          <p class="featured__tag">UI/UX · Web design · Client project</p>
-          <h3 class="featured__name">Mahal Beauty</h3>
-          <p>A website of her own for a lash and waxing studio in Antwerpen: her brand instead of a generic booking platform, with booking in a few taps.</p>
-          <p class="featured__status"><span aria-hidden="true">✦</span> Website in process</p>
-          <a class="btn-round" href="case-mahalbeauty.html" aria-label="Read the Mahal Beauty case study">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <ul class="work__grid">
+        <li class="work-card" data-reveal>
+          <a href="case-mahalbeauty.html">
+            <span class="work-card__img"><img src="assets/img/mahal-beauty.webp" alt="Mahal Beauty: the blue and red mahal beauty logo on white, next to two tilted phone screens of the new website on a cobalt blue circle" width="1200" height="675" loading="lazy"></span>
+            <span class="work-card__info">
+              <span class="work-card__name">Mahal Beauty</span>
+              <span class="work-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </span>
+            <span class="work-card__status"><span aria-hidden="true">✦</span> Website in process</span>
           </a>
-        </div>
-      </article>
-
-      <!-- Two more projects in museum frames (same look as the Projects page) -->
-      <ul class="more-work">
-        <li class="more-work__item" data-reveal style="--reveal-rotate: -3deg">
-          <a href="case-mira.html">
-            <span class="more-work__frame"><img src="assets/img/mira.webp" alt="MIRA: the gold MIRA logo with the tagline See it, own it on navy, next to two tilted app screens showing a Bridgerton interior and an antique blue sofa" loading="lazy"></span>
-            <span class="more-work__label"><strong>MIRA</strong> App design · Branding</span>
-          </a>
+          <ul class="chips-sm" aria-label="Mahal Beauty tags"><li>Client project</li><li>UI/UX</li><li>Web design</li></ul>
         </li>
-        <li class="more-work__item" data-reveal data-reveal-delay="150" style="--reveal-rotate: 3deg">
-          <a href="case-ecomarkt.html">
-            <span class="more-work__frame"><img src="assets/img/ecomarkt.webp" alt="EcoMarkt: the hand-lettered ecomarkt logo in cream on dark green, next to Egg, the round brown mascot, and two of its seasonal versions on a green circle" loading="lazy"></span>
-            <span class="more-work__label"><strong>EcoMarkt</strong> App design · Illustration</span>
+        <li class="work-card" data-reveal data-reveal-delay="120">
+          <a href="case-mira.html">
+            <span class="work-card__img"><img src="assets/img/mira.webp" alt="MIRA: the gold MIRA logo with the tagline See it, own it on navy, next to two tilted app screens showing a Bridgerton interior and an antique blue sofa" width="1200" height="675" loading="lazy"></span>
+            <span class="work-card__info">
+              <span class="work-card__name">MIRA</span>
+              <span class="work-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </span>
           </a>
+          <ul class="chips-sm" aria-label="MIRA tags"><li>App design</li><li>Branding</li><li>UI/UX</li></ul>
+        </li>
+        <li class="work-card" data-reveal>
+          <a href="case-ecomarkt.html">
+            <span class="work-card__img"><img src="assets/img/ecomarkt.webp" alt="EcoMarkt: the hand-lettered ecomarkt logo in cream on dark green, next to Egg, the round brown mascot, and two of its seasonal versions on a green circle" width="1200" height="900" loading="lazy"></span>
+            <span class="work-card__info">
+              <span class="work-card__name">EcoMarkt</span>
+              <span class="work-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </span>
+          </a>
+          <ul class="chips-sm" aria-label="EcoMarkt tags"><li>UI/UX</li><li>Illustration</li><li>Branding</li></ul>
+        </li>
+        <li class="work-card" data-reveal data-reveal-delay="120">
+          <a href="case-tagaytimpla.html">
+            <span class="work-card__img"><img src="assets/img/tagaytimpla.webp" alt="Tagay Timpla: the coffee-table logo and script wordmark in blush on espresso brown, next to two tilted app screens with a café map and a coffee shop page" width="1200" height="675" loading="lazy"></span>
+            <span class="work-card__info">
+              <span class="work-card__name">Tagay Timpla</span>
+              <span class="work-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </span>
+          </a>
+          <ul class="chips-sm" aria-label="Tagay Timpla tags"><li>App design</li><li>Branding</li><li>UI/UX</li></ul>
         </li>
       </ul>
-
-      <a class="btn more-work__all" href="projects.html">
-        See all projects
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
     </section>
-
   </main>
 
   <!-- ===== Footer: same on every page (copy changes to all .html files).

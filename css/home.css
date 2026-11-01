@@ -11,14 +11,16 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto 1fr;   /* title, intro, bubbles */
+  grid-template-rows: auto auto auto 1fr;   /* pill, title, intro, bubbles */
+  row-gap: var(--space-3);
   gap: var(--space-4);
   padding-block: var(--space-4);
 }
 
 .hero__title {
   grid-column: 1 / -1;
-  font-size: var(--text-hero);
+  margin-bottom: var(--space-2);
+  font-size: clamp(3.5rem, 8vw, 7rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
@@ -39,18 +41,30 @@
 @keyframes intro-in { from { opacity: 0; transform: translateY(16px); } }
 
 .hero__intro p { margin: 0; }
+.hero__desc { max-width: 48ch; }
 .hero__lead {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(1.5rem, 2.4vw, 2rem);
   line-height: 1.2;
 }
+/* availability pill above the title */
 .hero__open {
+  grid-column: 1 / -1;
+  justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  margin: 0;
+  padding: 4px var(--space-3);
+  font-size: var(--text-sm);
   font-weight: 700;
-  color: var(--color-blue-deep);
+  background: var(--color-white);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  rotate: -2deg;
+  animation: intro-in 0.6s 0.1s cubic-bezier(0.3, 1.4, 0.5, 1) backwards;
 }
 /* little "available" light */
 .hero__dot {
@@ -72,7 +86,7 @@
 .hero__portrait-wrap {
   position: relative;
   grid-column: 2;
-  grid-row: 2 / span 2;
+  grid-row: 3 / span 2;
   align-self: end;
   justify-self: center;
   width: min(100%, 520px);
@@ -280,111 +294,96 @@
 
 .hero { position: relative; }
 
-/* ---------- Featured work ---------- */
-.featured { padding-block: var(--space-7); }
-
-.featured__heading {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+/* ---------- Selected work: 2x2 grid ---------- */
+.work { padding-block: var(--space-7); }
+.work__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
   margin-bottom: var(--space-5);
 }
+.work__heading { font-size: clamp(2.5rem, 5vw, 4rem); }
+.work__all svg { transition: transform 0.25s; }
+.work__all:hover svg { transform: translateX(4px); }
 
-.featured__card {
+.work__grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--space-5);
-  align-items: end;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6) var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.featured__card { perspective: 1200px; }
-
-.featured__preview {
+.work-card a {
   position: relative;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-md);
+  display: block;
+  text-decoration: none;
+  background: var(--color-white);
   border: var(--border);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-pop);
-  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-  transition: transform 0.4s cubic-bezier(0.3, 1.4, 0.5, 1);
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1), box-shadow 0.2s;
 }
-/* soft light that follows the mouse across the preview */
-.featured__preview::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.55), transparent 45%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-.featured__preview:hover::after { opacity: 1; }
-.featured__preview img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.work-card a:hover,
+.work-card a:focus-visible { transform: translate(-3px, -3px) rotate(-0.6deg); box-shadow: 8px 8px 0 var(--color-ink); }
+.work-card:nth-child(even) a:hover,
+.work-card:nth-child(even) a:focus-visible { transform: translate(-3px, -3px) rotate(0.6deg); }
 
-/* Small "in progress" sticker on the featured card */
-.featured__status {
+.work-card__img { display: block; aspect-ratio: 16 / 9; border-bottom: var(--border); overflow: hidden; }
+.work-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.3, 1); }
+.work-card a:hover .work-card__img img { transform: scale(1.04); }
+
+.work-card__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+.work-card__name { font-family: var(--font-display); font-weight: 600; font-size: var(--text-xl); }
+.work-card__arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  background: var(--color-blue);
+  border: var(--border);
+  border-radius: 50%;
+}
+.work-card__arrow svg { width: 20px; height: 20px; transition: transform 0.25s; }
+.work-card a:hover .work-card__arrow svg { transform: translateX(3px); }
+
+/* "in progress" sticker in the image corner */
+.work-card__status {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
   padding: 2px var(--space-3);
   font-size: var(--text-sm);
   font-weight: 700;
   background: #ffde59;          /* Mahal Beauty sparkle yellow */
-  border: var(--border);
-  border-radius: var(--radius-pill);
-  rotate: -3deg;
-}
-
-.featured__info .btn-round svg { transition: transform 0.25s; }
-.featured__info .btn-round:hover svg { transform: translateX(4px); }
-
-.featured__info { display: grid; gap: var(--space-3); justify-items: start; }
-.featured__info p { margin: 0; }
-.featured__tag { font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); text-transform: uppercase; letter-spacing: 0.06em; }
-.featured__name { font-size: clamp(2.5rem, 4vw, 3.5rem); }
-
-
-/* ---------- More work: two framed projects under the featured one ---------- */
-.more-work {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-6);
-  margin: var(--space-7) 0 0;
-  padding: 0;
-  list-style: none;
-}
-.more-work a { display: grid; gap: var(--space-3); justify-items: center; text-decoration: none; }
-
-/* Same museum frame as the Projects page (css/projects.css .art__frame) */
-.more-work__frame {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  padding: 10px;
-  background: #fdfaf4;
-  border: 10px solid var(--color-ink);
-  box-shadow: inset 0 0 0 3px #c9a46a, var(--shadow-pop);
-  transform-origin: 50% 0;
-  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-.more-work__item:nth-child(2) .more-work__frame { border-color: #c9a46a; box-shadow: inset 0 0 0 3px var(--color-ink), var(--shadow-pop); }
-.more-work__frame img { width: 100%; height: 100%; object-fit: cover; }
-.more-work a:hover .more-work__frame,
-.more-work a:focus-visible .more-work__frame { transform: rotate(-1.5deg) scale(1.02); }
-
-.more-work__label {
-  padding: 2px var(--space-3);
-  background: var(--color-paper);
   border: 2px solid var(--color-ink);
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  border-radius: var(--radius-pill);
+  rotate: 3deg;
 }
-.more-work__label strong { font-family: var(--font-display); font-weight: 600; margin-right: var(--space-1); }
-.more-work a:hover .more-work__label { background: var(--color-blue); }
 
-.more-work__all { display: flex; width: fit-content; margin: var(--space-6) auto 0; }
-.more-work__all svg { transition: transform 0.25s; }
-.more-work__all:hover svg { transform: translateX(4px); }
+/* small tag chips under each card */
+.chips-sm { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
+.chips-sm li {
+  padding: 1px var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--color-blue) 10%, var(--color-white));
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+}
 
 /* ===== Responsive (breakpoints explained in style.css) ===== */
 @media (max-width: 900px) {
-  .featured__card { grid-template-columns: 1fr; align-items: start; }
   .tool { --size: 92px; }
   .tool--lg { --size: 116px; }
   .tool--sm { --size: 72px; }
@@ -408,7 +407,7 @@
   .tool:nth-child(5) { --mx: 6%;  --my: 62%; }
   .tool:nth-child(6) { --mx: 56%; --my: 62%; }
 
-  .hero__intro, .tools, .hero__portrait-wrap { grid-column: 1; grid-row: auto; }
+  .hero__open, .hero__title, .hero__intro, .tools, .hero__portrait-wrap { grid-column: 1; grid-row: auto; }
   .hero__portrait-wrap { width: min(100%, 360px); }
   .hero__hint { left: auto; right: 0; top: -2%; }
 
@@ -420,6 +419,11 @@
   .wave--main .wave__text { font-size: 28px; }
   .wave--alt .wave__text  { font-size: 16px; }
 
-  .featured { padding-block: var(--space-7) var(--space-6); }
-  .more-work { grid-template-columns: 1fr; gap: var(--space-5); margin-top: var(--space-6); }
+  .work { padding-block: var(--space-7) var(--space-5); }
+  .work__grid { grid-template-columns: 1fr; gap: var(--space-5); }
+  .work__head { flex-wrap: wrap; }
+  .hero__desc { font-size: var(--text-base); }
+  .hero__open { font-size: 0.8125rem; rotate: -1deg; }
+  .hero__actions { gap: var(--space-3); }
+  .hero__actions .btn { font-size: var(--text-base); padding-inline: var(--space-3); }
 }
