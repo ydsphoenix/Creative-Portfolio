@@ -133,25 +133,6 @@
 .marquee__icons .marquee__set { gap: var(--space-7); padding-right: var(--space-7); }
 .marquee__icons img { width: 48px; height: 48px; object-fit: contain; }
 
-/* ---------- Scroll cue ---------- */
-.scroll-cue {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + var(--space-2));   /* just under the marquee */
-  translate: -50% 0;
-  z-index: 2;
-  display: grid;
-  justify-items: center;
-  gap: 2px;
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.scroll-cue svg { width: 22px; height: 22px; animation: nudge 1.4s ease-in-out infinite; }
-@keyframes nudge { 50% { transform: translateY(6px); } }
-
 .hero { position: relative; }
 
 /* ---------- Selected work: 2x2 grid ---------- */
