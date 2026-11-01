@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/home.css">
   <script src="js/home.js" defer></script>
   <script src="js/marquee.js" defer></script>
+  <script src="js/contact.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -55,6 +56,19 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__inner">
         <h1 id="hero-title" class="hero__title" data-split>Yuki <span class="hero__accent">Creative Portfolio</span></h1>
+
+        <!-- Who / what / available: the 10-second answer for recruiters -->
+        <div class="hero__intro">
+          <p class="hero__lead">UI/UX designer who draws and codes.</p>
+          <p class="hero__open"><span class="hero__dot" aria-hidden="true"></span>Looking for a UI/UX internship · <span class="nowrap">Feb–May 2027</span></p>
+          <div class="hero__actions">
+            <a class="btn" href="#featured-title">
+              See my work
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            </a>
+            <a class="hero__cv" href="assets/docs/yuki-cv.pdf" download>Download CV</a>
+          </div>
+        </div>
 
         <!-- Program icons as soap bubbles. The official icons are used unchanged
              (sources: Wikimedia Commons, Procreate brand kit).
@@ -121,6 +135,54 @@
           </a>
         </div>
       </article>
+
+      <!-- Two more projects in museum frames (same look as the Projects page) -->
+      <ul class="more-work">
+        <li class="more-work__item" data-reveal style="--reveal-rotate: -3deg">
+          <a href="case-mira.html">
+            <span class="more-work__frame"><img src="assets/img/mira.webp" alt="MIRA: the gold MIRA logo with the tagline See it, own it on navy, next to two tilted app screens showing a Bridgerton interior and an antique blue sofa" loading="lazy"></span>
+            <span class="more-work__label"><strong>MIRA</strong> App design · Branding</span>
+          </a>
+        </li>
+        <li class="more-work__item" data-reveal data-reveal-delay="150" style="--reveal-rotate: 3deg">
+          <a href="case-ecomarkt.html">
+            <span class="more-work__frame"><img src="assets/img/ecomarkt.webp" alt="EcoMarkt: the hand-lettered ecomarkt logo in cream on dark green, next to Egg, the round brown mascot, and two of its seasonal versions on a green circle" loading="lazy"></span>
+            <span class="more-work__label"><strong>EcoMarkt</strong> App design · Illustration</span>
+          </a>
+        </li>
+      </ul>
+
+      <a class="btn more-work__all" href="projects.html">
+        See all projects
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </section>
+
+    <!-- ===== Closing strip: one place to get in touch ===== -->
+    <section class="say-hi container" aria-labelledby="say-hi-title">
+      <div class="say-hi__card" data-reveal style="--reveal-rotate: -2deg">
+        <div class="say-hi__text">
+          <h2 id="say-hi-title">Let's work together!</h2>
+          <p>I'm looking for a UI/UX internship from February to May 2027. Send me a message, or just say hi~</p>
+
+          <div class="say-hi__email-row">
+            <a class="say-hi__email" href="mailto:yuki.j120303@gmail.com">yuki.j120303@gmail.com</a>
+            <!-- Copies the address; js/contact.js shows a toast. Hidden if the browser can't copy. -->
+            <button class="copy-btn" type="button" data-copy="yuki.j120303@gmail.com" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Copy
+            </button>
+          </div>
+          <p class="toast" role="status" aria-live="polite"></p>
+
+          <ul class="say-hi__links">
+            <li><a href="https://www.linkedin.com/in/yuki-jevelle-jurado/" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span> ↗</a></li>
+            <li><a href="https://www.instagram.com/ydsphoenix/" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> (opens in a new tab)</span> ↗</a></li>
+            <li><a href="assets/docs/yuki-cv.pdf" download>Download CV ↓</a></li>
+          </ul>
+        </div>
+        <img class="say-hi__shark" src="assets/img/shark-telephone.webp" width="1078" height="1139" alt="" loading="lazy">
+      </div>
     </section>
   </main>
 </body>

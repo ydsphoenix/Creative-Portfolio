@@ -204,6 +204,45 @@ a { color: inherit; }
 .btn-round svg { width: 28px; height: 28px; }
 .btn-round:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--color-ink); }
 
+/* ---------- Copy-email button + toast (Home closing strip, Contact; js/contact.js) ---------- */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font: 700 var(--text-sm) var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-white);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background-color 0.2s;
+}
+.copy-btn svg { width: 16px; height: 16px; }
+.copy-btn:hover { background: var(--color-mint); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--color-ink); }
+.copy-btn:active { transform: translate(1px, 1px); box-shadow: 0 0 0 var(--color-ink); }
+
+/* Toast that pops up after copying */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-5);
+  z-index: 60;
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: var(--radius-pill);
+  translate: -50% 150%;
+  opacity: 0;
+  transition: translate 0.45s cubic-bezier(0.3, 1.6, 0.5, 1), opacity 0.3s;
+  pointer-events: none;
+}
+.toast.is-shown { translate: -50% 0; opacity: 1; }
+
 /* ---------- Placeholder blocks (swap for real images later) ---------- */
 .placeholder {
   display: grid;
