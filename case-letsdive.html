@@ -141,10 +141,54 @@
         </div>
     </section>
 
+    <!-- ===== Let's work together (same card as on Home) ===== -->
+    <section class="say-hi" aria-labelledby="say-hi-title">
+      <div class="say-hi__card" data-reveal style="--reveal-rotate: -2deg">
+        <div class="say-hi__text">
+          <h2 id="say-hi-title">Let's work together!</h2>
+          <p>I'm looking for a UI/UX internship from February to May 2027. Send me a message, or just say hi~</p>
+
+          <div class="say-hi__email-row">
+            <a class="say-hi__email" href="mailto:yuki.j120303@gmail.com">yuki.j120303@gmail.com</a>
+            <!-- Copies the address; js/contact.js shows a toast. Hidden if the browser can't copy. -->
+            <button class="copy-btn" type="button" data-copy="yuki.j120303@gmail.com" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Copy
+            </button>
+          </div>
+          <p class="toast" role="status" aria-live="polite"></p>
+
+          <ul class="say-hi__links">
+            <li><a href="https://www.linkedin.com/in/yuki-jevelle-jurado/" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span> ↗</a></li>
+            <li><a href="https://www.instagram.com/ydsphoenix/" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> (opens in a new tab)</span> ↗</a></li>
+            <li><a href="assets/docs/yuki-cv.pdf" download>Download CV ↓</a></li>
+          </ul>
+        </div>
+        <img class="say-hi__shark" src="assets/img/shark-telephone.webp" width="1078" height="1139" alt="" loading="lazy">
+      </div>
+    </section>
+
     <nav class="case__next" aria-label="More projects">
       <a class="btn" href="case-lilbao.html">Next project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a class="btn" href="projects.html">See all projects</a>
     </nav>
   </main>
+
+  <!-- ===== Slim footer: same on every page (copy changes to all .html files) ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__credit">Designed, drawn &amp; coded by <strong>Yuki Jevelle Jurado</strong> · © 2026</p>
+      <ul class="site-footer__links">
+        <li><a href="mailto:yuki.j120303@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/yuki-jevelle-jurado/" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.instagram.com/ydsphoenix/" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        <li><a href="assets/docs/yuki-cv.pdf" download>CV</a></li>
+      </ul>
+      <a class="site-footer__top" href="#">
+        <img src="assets/icons/yuki-logomark-shark.svg" alt="" width="40" height="22">
+        Back to top
+      </a>
+    </div>
+  </footer>
 </body>
 </html>
