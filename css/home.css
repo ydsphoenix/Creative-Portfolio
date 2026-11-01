@@ -107,45 +107,31 @@
   50%      { transform: scale(1.012, 1.025); }
 }
 
-/* ---------- Wavy marquee (built and moved by js/marquee.js) ----------
-   Two ribbons that follow a sine wave. Each ribbon = a thick ink stroke (outline)
-   with the coloured stroke on top, 5px thinner, so 2.5px of ink shows on each side.
-   The --wave-* numbers are read by js/marquee.js (all in px).                  */
-.marquee {
-  position: relative;
-  overflow: hidden;
-  padding-block: var(--space-2) var(--space-4);
-}
-.wave-marquee {
-  --wave-amp: 16;        /* how high the waves go */
-  --wave-length: 520;    /* length of one wave */
-  --wave-gap: 64;        /* distance between the two ribbon centres */
-  --wave-top: 58;        /* centre of the first ribbon */
-  --wave-bottom: 36;     /* space under the second ribbon */
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-.wave path { fill: none; stroke-linejoin: round; }
-.wave--main .wave__edge { stroke: var(--color-ink); stroke-width: 67px; }
-.wave--main .wave__fill { stroke: var(--color-blue); stroke-width: 62px; }
-.wave--alt .wave__edge  { stroke: var(--color-ink); stroke-width: 55px; }
-.wave--alt .wave__fill  { stroke: var(--color-pink); stroke-width: 50px; }
+/* ---------- Marquee: straight band of words + a row of program icons ----------
+   js/marquee.js repeats each .marquee__set and slides the track sideways. */
+.marquee { position: relative; overflow: hidden; padding-block: var(--space-3) var(--space-5); }
 
-.wave__text {
+.marquee__track { display: flex; width: max-content; will-change: transform; }
+.marquee__set { display: flex; align-items: center; flex: none; }
+
+.marquee__band {
+  background: var(--color-blue);
+  border-block: var(--border);
+  padding-block: var(--space-2);
+}
+.marquee__word {
   font-family: var(--font-display);
   font-weight: 600;
-  fill: var(--color-ink);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
-.wave--main .wave__text { font-size: 40px; }
-.wave--alt .wave__text  { font-size: 19px; }
-.wave__star { font-size: 0.6em; }
+.marquee__star { margin-inline: var(--space-5); font-size: 1.25rem; }
 
-/* Program icons on the pink ribbon (placed along the wave by js/marquee.js).
-   --icon-size: icon bubble size, --icon-gap: distance from one icon to the next (px). */
-.wave--alt { --icon-size: 36; --icon-gap: 100; }
-.wave__icon circle { fill: var(--color-white); stroke: var(--color-ink); stroke-width: 2px; }
+.marquee__icons { padding-block: var(--space-4) 0; }
+.marquee__icons .marquee__set { gap: var(--space-7); padding-right: var(--space-7); }
+.marquee__icons img { width: 48px; height: 48px; object-fit: contain; }
 
 /* ---------- Scroll cue ---------- */
 .scroll-cue {
@@ -265,13 +251,9 @@
   .hero__open, .hero__title, .hero__intro, .hero__portrait-wrap { grid-column: 1; grid-row: auto; }
   .hero__portrait-wrap { width: min(100%, 360px); }
 
-  .wave-marquee { --wave-amp: 10; --wave-length: 340; --wave-gap: 50; --wave-top: 42; --wave-bottom: 26; }
-  .wave--main .wave__edge { stroke-width: 51px; }
-  .wave--main .wave__fill { stroke-width: 46px; }
-  .wave--alt .wave__edge  { stroke-width: 39px; }
-  .wave--alt .wave__fill  { stroke-width: 34px; }
-  .wave--main .wave__text { font-size: 28px; }
-  .wave--alt { --icon-size: 28; --icon-gap: 76; }
+  .marquee__star { margin-inline: var(--space-4); font-size: 1rem; }
+  .marquee__icons img { width: 38px; height: 38px; }
+  .marquee__icons .marquee__set { gap: var(--space-6); padding-right: var(--space-6); }
 
   .work { padding-block: var(--space-7) var(--space-5); }
   .work__grid { grid-template-columns: 1fr; gap: var(--space-5); }
