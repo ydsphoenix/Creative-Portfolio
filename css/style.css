@@ -15,6 +15,7 @@
   --color-mint: #bff3dc;          /* PLACEHOLDER: from the photobooth frame */
   --color-dot: rgba(59, 42, 30, 0.12); /* dot grid on the background */
   --color-focus: var(--color-blue); /* keyboard focus ring (themes can darken it) */
+  --color-footer: #063257;        /* navy footer, the same on every page (not themed) */
 
   /* Fonts (PLACEHOLDER: candidates from the shortlist) */
   --font-display: "Fredoka", "Baloo 2", system-ui, sans-serif;
@@ -262,14 +263,14 @@ a { color: inherit; }
 
 /* ==========================================================================
    Footer (every page): "Let's work together" + a bar with credit and links.
-   Dark ink block so it clearly reads as the end of the page.
-   Case-study themes recolour it automatically through --color-ink.
+   Navy block (--color-footer) so it clearly reads as the end of the page.
+   Text uses fixed light/blue colours so case-study themes don't change it.
    .site-footer--slim (Contact) only shows the bar.
    ========================================================================== */
 .site-footer {
   margin-top: var(--space-7);
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-footer);
+  color: #fff8ee;
   border-radius: 28px 28px 0 0;
 }
 /* Projects: the museum wall stands right on the footer */
@@ -298,12 +299,12 @@ body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
   font-size: clamp(1.25rem, 2.4vw, 2rem);
   text-decoration: none;
   padding-bottom: 4px;
-  background: linear-gradient(var(--color-blue), var(--color-blue)) 0 100% / 100% 4px no-repeat;
+  background: linear-gradient(#00c0f6, #00c0f6) 0 100% / 100% 4px no-repeat;
   transition: background-size 0.35s cubic-bezier(0.3, 1.3, 0.5, 1), color 0.2s;
 }
-.site-footer__email:hover { background-size: 100% 100%; color: var(--color-ink); }
-.site-footer .copy-btn { box-shadow: 2px 2px 0 var(--color-blue); }
-.site-footer .copy-btn:hover { box-shadow: 3px 3px 0 var(--color-blue); }
+.site-footer__email:hover { background-size: 100% 100%; color: var(--color-footer); }
+.site-footer .copy-btn { color: var(--color-footer); border-color: var(--color-footer); box-shadow: 2px 2px 0 #00c0f6; }
+.site-footer .copy-btn:hover { background: #bff3dc; box-shadow: 3px 3px 0 #00c0f6; }
 
 /* the shark stands on the divider line */
 .site-footer__shark { width: min(100%, 280px); height: auto; justify-self: center; margin-bottom: -2px; }
@@ -315,7 +316,7 @@ body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
   justify-content: space-between;
   gap: var(--space-3) var(--space-5);
   padding-block: var(--space-4);
-  border-top: 2px solid color-mix(in srgb, var(--color-paper) 35%, transparent);
+  border-top: 2px solid rgba(255, 248, 238, 0.35);
   font-size: var(--text-sm);
 }
 .site-footer--slim .site-footer__bar { border-top: 0; }
@@ -323,8 +324,8 @@ body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
 .site-footer__credit strong { font-family: var(--font-display); font-weight: 600; }
 .site-footer__links { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: 0; padding: 0; list-style: none; }
 .site-footer__bar a { font-weight: 700; text-underline-offset: 3px; text-decoration-thickness: 2px; }
-.site-footer__bar a:hover { color: var(--color-blue); }
-.site-footer :focus-visible { outline-color: var(--color-blue); }
+.site-footer__bar a:hover { color: #00c0f6; }
+.site-footer :focus-visible { outline-color: #00c0f6; }
 
 .site-footer__top { display: inline-flex; align-items: center; gap: var(--space-2); text-decoration: none; }
 .site-footer__top img { width: 40px; height: auto; transition: transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1); }
