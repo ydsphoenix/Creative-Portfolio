@@ -11,16 +11,17 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto 1fr;   /* pill, title, intro, bubbles */
+  grid-template-rows: auto auto 1fr;   /* left column: pill, title, intro. Portrait on the right. */
   row-gap: var(--space-3);
   gap: var(--space-4);
   padding-block: var(--space-4);
 }
 
 .hero__title {
-  grid-column: 1 / -1;
+  grid-column: 1;
   margin-bottom: var(--space-2);
-  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-size: clamp(3.5rem, 6.4vw, 6.25rem);
+  white-space: nowrap;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
@@ -33,6 +34,7 @@
 /* ---------- Intro line under the title: who, what, available ---------- */
 .hero__intro {
   grid-column: 1;
+  align-self: start;
   display: grid;
   gap: var(--space-2);
   justify-items: start;
@@ -50,8 +52,9 @@
 }
 /* availability pill above the title */
 .hero__open {
-  grid-column: 1 / -1;
+  grid-column: 1;
   justify-self: start;
+  align-self: end;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -86,10 +89,10 @@
 .hero__portrait-wrap {
   position: relative;
   grid-column: 2;
-  grid-row: 3 / span 2;
+  grid-row: 1 / -1;
   align-self: end;
   justify-self: center;
-  width: min(100%, 520px);
+  width: min(100%, 540px);
 }
 
 .hero__portrait {
@@ -103,140 +106,6 @@
   0%, 100% { transform: scale(1, 1); }
   50%      { transform: scale(1.012, 1.025); }
 }
-
-/* Little speech-bubble hint that disappears after the first throw */
-.hero__hint {
-  position: absolute;
-  top: 6%;
-  left: -14%;
-  padding: var(--space-2) var(--space-3);
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: var(--text-sm);
-  background: var(--color-white);
-  border: var(--border);
-  border-radius: var(--radius-md) var(--radius-md) 4px var(--radius-md);
-  box-shadow: var(--shadow-pop);
-  rotate: -6deg;
-  animation: hint-pop 0.6s 1.6s cubic-bezier(0.3, 1.6, 0.5, 1) both, hint-float 3s 2.2s ease-in-out infinite;
-  transition: opacity 0.3s, scale 0.3s;
-}
-.hero__hint.is-hidden { opacity: 0; scale: 0.6; }
-@keyframes hint-pop { from { opacity: 0; transform: scale(0.3); } }
-@keyframes hint-float { 50% { transform: translateY(-6px); } }
-
-/* ---------- Floating program icons ---------- */
-.tools {
-  position: relative;
-  grid-column: 1;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  min-height: 300px;
-}
-
-.tool {
-  --size: 112px;
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--size);
-  height: var(--size);
-  display: grid;
-  place-items: center;
-  padding: calc(var(--size) * 0.24); /* room around the icon so it floats inside the bubble */
-  border-radius: 50%;
-  /* Soap bubble: see-through middle, rainbow-ish rim, thin ink outline */
-  background:
-    radial-gradient(circle at 50% 50%,
-      rgba(255, 255, 255, 0.25) 0 52%,
-      rgba(0, 192, 246, 0.16) 66%,
-      rgba(246, 168, 162, 0.32) 80%,
-      rgba(191, 243, 220, 0.55) 92%,
-      rgba(255, 255, 255, 0.7) 100%);
-  border: 2px solid var(--color-ink);
-  box-shadow:
-    inset 6px 8px 14px rgba(191, 243, 220, 0.55),
-    inset -8px -10px 16px rgba(0, 192, 246, 0.25),
-    0 10px 18px -8px rgba(10, 127, 168, 0.35);
-  cursor: grab;
-  touch-action: none;          /* lets touch users drag without scrolling */
-  user-select: none;
-  animation:
-    tool-pop 0.6s cubic-bezier(0.3, 1.7, 0.5, 1) backwards,
-    bob 4s ease-in-out var(--delay) infinite;
-  transition: scale 0.25s cubic-bezier(0.3, 1.8, 0.5, 1);
-}
-.tool:nth-child(2) { animation-delay: 0.1s, var(--delay); }
-.tool:nth-child(3) { animation-delay: 0.2s, var(--delay); }
-.tool:nth-child(4) { animation-delay: 0.3s, var(--delay); }
-.tool:nth-child(5) { animation-delay: 0.4s, var(--delay); }
-.tool:nth-child(6) { animation-delay: 0.5s, var(--delay); }
-
-.tool img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  animation: icon-float 3s ease-in-out var(--delay) infinite; /* icon drifts a little inside */
-}
-
-/* Cartoon shine: a curved white highlight on the top-left of the glass */
-.tool::after {
-  content: "";
-  position: absolute;
-  inset: 9%;
-  border-radius: 50%;
-  border: calc(var(--size) * 0.05) solid transparent;
-  border-top-color: rgba(255, 255, 255, 0.95);
-  border-left-color: rgba(255, 255, 255, 0.6);
-  rotate: -18deg;
-  pointer-events: none;
-}
-/* tiny sparkle dot */
-.tool::before {
-  content: "";
-  position: absolute;
-  top: 16%;
-  right: 22%;
-  width: 9%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #fff;
-  pointer-events: none;
-}
-
-.tool:hover { scale: 1.08; }
-.tool.is-grabbed { cursor: grabbing; scale: 1.15; z-index: 5; }
-.tool.is-popped { pointer-events: none; }
-
-.tool--lg { --size: 144px; }
-.tool--sm { --size: 88px; }
-
-@keyframes bob {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50%      { transform: translateY(-12px) rotate(2deg); }
-}
-@keyframes icon-float {
-  50% { transform: translate(2px, -3px) rotate(3deg); }
-}
-
-/* Little droplets when a bubble pops (made by js/home.js) */
-.droplet {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 2px solid var(--color-blue);
-  pointer-events: none;
-  animation: droplet 0.5s ease-out forwards;
-}
-@keyframes droplet {
-  to { transform: translate(var(--dx), var(--dy)) scale(0.3); opacity: 0; }
-}
-
-@keyframes tool-pop { from { opacity: 0; scale: 0; } }
-
 
 /* ---------- Wavy marquee (built and moved by js/marquee.js) ----------
    Two ribbons that follow a sine wave. Each ribbon = a thick ink stroke (outline)
@@ -261,8 +130,8 @@
 .wave path { fill: none; stroke-linejoin: round; }
 .wave--main .wave__edge { stroke: var(--color-ink); stroke-width: 67px; }
 .wave--main .wave__fill { stroke: var(--color-blue); stroke-width: 62px; }
-.wave--alt .wave__edge  { stroke: var(--color-ink); stroke-width: 49px; }
-.wave--alt .wave__fill  { stroke: var(--color-pink); stroke-width: 44px; }
+.wave--alt .wave__edge  { stroke: var(--color-ink); stroke-width: 55px; }
+.wave--alt .wave__fill  { stroke: var(--color-pink); stroke-width: 50px; }
 
 .wave__text {
   font-family: var(--font-display);
@@ -272,6 +141,11 @@
 .wave--main .wave__text { font-size: 40px; }
 .wave--alt .wave__text  { font-size: 19px; }
 .wave__star { font-size: 0.6em; }
+
+/* Program icons on the pink ribbon (placed along the wave by js/marquee.js).
+   --icon-size: icon bubble size, --icon-gap: distance from one icon to the next (px). */
+.wave--alt { --icon-size: 36; --icon-gap: 100; }
+.wave__icon circle { fill: var(--color-white); stroke: var(--color-ink); stroke-width: 2px; }
 
 /* ---------- Scroll cue ---------- */
 .scroll-cue {
@@ -383,33 +257,13 @@
 }
 
 /* ===== Responsive (breakpoints explained in style.css) ===== */
-@media (max-width: 900px) {
-  .tool { --size: 92px; }
-  .tool--lg { --size: 116px; }
-  .tool--sm { --size: 72px; }
-}
-
 @media (max-width: 640px) {
   .hero { min-height: auto; }
   .hero__inner { grid-template-columns: 1fr; grid-template-rows: auto; gap: var(--space-3); }
-  .hero__title { font-size: clamp(2.25rem, 12vw, 3.5rem); }
+  .hero__title { font-size: clamp(2.25rem, 12vw, 3.5rem); white-space: normal; }
 
-  /* Bubbles get a full-width strip above the portrait.
-     --mx / --my take over from the desktop --x / --y set inline in index.html. */
-  .tools { min-height: 210px; }
-  .tool { left: var(--mx); top: var(--my); --size: 70px; }
-  .tool--lg { --size: 88px; }
-  .tool--sm { --size: 56px; }
-  .tool:nth-child(1) { --mx: 2%;  --my: 6%; }
-  .tool:nth-child(2) { --mx: 30%; --my: 34%; }
-  .tool:nth-child(3) { --mx: 56%; --my: 2%; }
-  .tool:nth-child(4) { --mx: 78%; --my: 30%; }
-  .tool:nth-child(5) { --mx: 6%;  --my: 62%; }
-  .tool:nth-child(6) { --mx: 56%; --my: 62%; }
-
-  .hero__open, .hero__title, .hero__intro, .tools, .hero__portrait-wrap { grid-column: 1; grid-row: auto; }
+  .hero__open, .hero__title, .hero__intro, .hero__portrait-wrap { grid-column: 1; grid-row: auto; }
   .hero__portrait-wrap { width: min(100%, 360px); }
-  .hero__hint { left: auto; right: 0; top: -2%; }
 
   .wave-marquee { --wave-amp: 10; --wave-length: 340; --wave-gap: 50; --wave-top: 42; --wave-bottom: 26; }
   .wave--main .wave__edge { stroke-width: 51px; }
@@ -417,7 +271,7 @@
   .wave--alt .wave__edge  { stroke-width: 39px; }
   .wave--alt .wave__fill  { stroke-width: 34px; }
   .wave--main .wave__text { font-size: 28px; }
-  .wave--alt .wave__text  { font-size: 16px; }
+  .wave--alt { --icon-size: 28; --icon-gap: 76; }
 
   .work { padding-block: var(--space-7) var(--space-5); }
   .work__grid { grid-template-columns: 1fr; gap: var(--space-5); }
