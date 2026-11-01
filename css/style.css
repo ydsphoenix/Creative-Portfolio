@@ -297,6 +297,12 @@ body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
 .site-footer h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: var(--space-3); }
 .site-footer__text > p { margin: 0; max-width: 46ch; opacity: 0.9; }
 
+/* Email me button: logo blue on the navy footer */
+.site-footer__btn { margin-top: var(--space-4); }
+.site-footer .btn--primary { background: #00c0f6; color: var(--color-footer); border-color: #fff8ee; box-shadow: 4px 4px 0 #fff8ee; }
+.site-footer .btn--primary:hover { box-shadow: 6px 6px 0 #fff8ee; }
+.site-footer .btn--primary:active { box-shadow: 1px 1px 0 #fff8ee; }
+
 /* the shark stands on the divider line */
 .site-footer__shark { width: min(100%, 280px); height: auto; justify-self: center; margin-bottom: -2px; }
 
