@@ -322,6 +322,14 @@ body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
 .site-footer__top { display: inline-flex; align-items: center; gap: var(--space-2); text-decoration: none; }
 .site-footer__top img { width: 40px; height: auto; transition: transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1); }
 .site-footer__top:hover img { transform: translateY(-6px) rotate(-12deg); }
+/* While the page scrolls up (js/main.js), the shark shoots up and comes back */
+.site-footer__top.is-launching img { animation: shark-launch 0.9s cubic-bezier(0.3, 1.4, 0.5, 1); }
+@keyframes shark-launch {
+  0%   { transform: translateY(0) rotate(0); }
+  25%  { transform: translateY(4px) rotate(8deg); }          /* crouch */
+  55%  { transform: translateY(-28px) rotate(-20deg); opacity: 0.6; }
+  100% { transform: translateY(0) rotate(0); opacity: 1; }
+}
 
 @media (max-width: 900px) {
   .site-footer__cta { grid-template-columns: 1fr; padding-top: var(--space-6); }

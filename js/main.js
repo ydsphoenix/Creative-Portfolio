@@ -198,11 +198,57 @@
   }
 
   /* ------------------------------------------------------------------
+     Back to top: eased scroll up while the footer shark "launches".
+     Without JS the plain href="#" link still jumps to the top.
+     Reduced motion: instant jump, no launch.
+     ------------------------------------------------------------------ */
+  function backToTop() {
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); // ease-in-out cubic
+
+    document.querySelectorAll('.site-footer__top').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const done = () => {
+          link.classList.remove('is-launching');
+          // put keyboard focus back at the top of the page (without scrolling again)
+          document.querySelector('.site-header a, .case-header a')?.focus({ preventScroll: true });
+        };
+
+        const startY = window.scrollY;
+        if (reduceMotion || startY === 0) { window.scrollTo(0, 0); done(); return; }
+
+        // longer pages scroll a bit longer, but always between 0.6s and 1.4s
+        const duration = Math.min(1400, Math.max(600, startY * 0.35));
+        const startTime = performance.now();
+        let cancelled = false;
+        const cancel = () => { cancelled = true; };   // the visitor scrolls themselves: stop
+        window.addEventListener('wheel', cancel, { once: true, passive: true });
+        window.addEventListener('touchstart', cancel, { once: true, passive: true });
+
+        link.classList.add('is-launching');
+        const step = (now) => {
+          if (cancelled) { link.classList.remove('is-launching'); return; }
+          const t = Math.min(1, (now - startTime) / duration);
+          window.scrollTo(0, startY * (1 - ease(t)));
+          if (t < 1) requestAnimationFrame(step);
+          else {
+            window.removeEventListener('wheel', cancel);
+            window.removeEventListener('touchstart', cancel);
+            done();
+          }
+        };
+        requestAnimationFrame(step);
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Run
      ------------------------------------------------------------------ */
   document.querySelectorAll('[data-split]').forEach(splitLetters);
   revealOnScroll();
   heroVideos();
+  backToTop();
 
   if (!reduceMotion) {
     addBoilFilters();
