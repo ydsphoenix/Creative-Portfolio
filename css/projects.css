@@ -42,6 +42,7 @@
 .art--low { margin-top: var(--space-4); } /* uneven hanging heights */
 
 .art a {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -81,7 +82,6 @@
 .art__label strong { font-family: var(--font-display); font-weight: 600; margin-right: var(--space-1); }
 
 /* Each frame hangs from a nail on a string (drawn with gradients) */
-.art a { position: relative; }
 .art a::before {
   content: "";
   position: absolute;

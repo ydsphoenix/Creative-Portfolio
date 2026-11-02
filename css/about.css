@@ -70,10 +70,10 @@
 .strip {
   position: relative;
   aspect-ratio: 930 / 2262; /* size of the frame image */
+  transform-origin: 50% 0;
 }
 /* Strips drop in, then sway gently like they're hanging.
    rotate/translate are separate properties so the sway (transform) adds on top. */
-.strip { transform-origin: 50% 0; }
 .strip--front {
   z-index: 1;
   rotate: 6deg;

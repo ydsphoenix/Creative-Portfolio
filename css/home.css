@@ -1,6 +1,7 @@
 /* ===== Home ===== */
 
 .hero {
+  position: relative;
   min-height: calc(100vh - var(--header-h));
   display: flex;
   flex-direction: column;
@@ -83,8 +84,6 @@
 
 .hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-2); }
 .nowrap { white-space: nowrap; }
-.hero__cv { font-weight: 700; text-underline-offset: 4px; text-decoration-thickness: 2px; }
-.hero__cv:hover { color: var(--color-blue-deep); }
 
 /* The drawing sits ON the blue marquee band.
    Her seat is at 75% of the drawing's height, so the part below it is
@@ -141,8 +140,6 @@
 .marquee__icons { padding-block: var(--space-4) 0; }
 .marquee__icons .marquee__set { gap: var(--space-7); padding-right: var(--space-7); }
 .marquee__icons img { width: 48px; height: 48px; object-fit: contain; }
-
-.hero { position: relative; }
 
 /* ---------- Selected work: 2x2 grid ---------- */
 .work { padding-block: var(--space-7); }

@@ -27,7 +27,6 @@
   --text-lg: 1.25rem;
   --text-xl: 1.75rem;
   --text-2xl: 2.5rem;
-  --text-hero: clamp(3rem, 6vw, 5.5rem);
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -148,16 +147,12 @@ a { color: inherit; }
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border-radius: var(--radius-pill);
-  transition: background-color 0.2s, color 0.2s;
 }
 
 .nav-pill a:hover { background: var(--color-mint); }
 
 /* Active page: aria-current="page" is set in each page's HTML */
-.nav-pill a[aria-current="page"] {
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
+.nav-pill a[aria-current="page"] { color: var(--color-paper); }  /* dark background = .nav-blob below */
 
 /* ---------- Case-study header: back button left, logo right ---------- */
 .case-header {
@@ -365,7 +360,6 @@ body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
 
 /* ---------- Nav highlight blob ---------- */
 .nav-pill a { position: relative; isolation: isolate; transition: translate 0.2s ease-out, background-color 0.2s; }
-.nav-pill a[aria-current="page"] { background: transparent; }
 .nav-blob {
   position: absolute;
   inset: 0;

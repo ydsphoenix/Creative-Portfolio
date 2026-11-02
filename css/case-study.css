@@ -94,7 +94,6 @@ body.theme-ecomarkt {
   align-items: center;
 }
 .case__intro-text { min-width: 0; }
-.case__facts { grid-column: 1 / -1; }  /* facts row sits under both columns */
 
 /* Hero media: calm, sits in the right column. The <img> inside gets width/height
    attributes in the HTML so the page doesn't jump while it loads. */
@@ -122,6 +121,7 @@ body.theme-ecomarkt {
 
 /* Quick facts row: easy for recruiters to skim */
 .case__facts {
+  grid-column: 1 / -1;   /* facts row sits under both columns */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-3);

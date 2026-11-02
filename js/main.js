@@ -127,9 +127,6 @@
   }
 
   /* ------------------------------------------------------------------
-     Run
-     ------------------------------------------------------------------ */
-  /* ------------------------------------------------------------------
      6. Loading screen: once the page has loaded (and at least ~1.6s has
         passed so the logo can finish), the blue background turns into a
         grid of overlapping bubbles that pop outward from the centre.
@@ -200,6 +197,9 @@
     });
   }
 
+  /* ------------------------------------------------------------------
+     Run
+     ------------------------------------------------------------------ */
   document.querySelectorAll('[data-split]').forEach(splitLetters);
   revealOnScroll();
   heroVideos();
