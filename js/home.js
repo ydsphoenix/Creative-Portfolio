@@ -14,7 +14,8 @@
     });
 
     const tick = () => {
-      portrait.style.translate = `${(mouse.x * 10).toFixed(1)}px ${(mouse.y * 6).toFixed(1)}px`;
+      // sideways only, so she stays seated on the marquee
+      portrait.style.translate = `${(mouse.x * 10).toFixed(1)}px 0px`;
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);

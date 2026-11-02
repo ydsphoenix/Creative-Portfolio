@@ -86,19 +86,28 @@
 .hero__cv { font-weight: 700; text-underline-offset: 4px; text-decoration-thickness: 2px; }
 .hero__cv:hover { color: var(--color-blue-deep); }
 
+/* The drawing sits ON the blue marquee band.
+   Her seat is at 75% of the drawing's height, so the part below it is
+   0.25 x 1.829 (height/width ratio) = 0.457 x the width. The negative margin
+   pulls the drawing down past the hero padding (1.5rem) and the marquee's top
+   padding (1rem) until her seat rests on the band's top edge. */
 .hero__portrait-wrap {
+  --pw: 340px;                /* drawing width */
   position: relative;
+  z-index: 2;                 /* in front of the marquee */
   grid-column: 2;
   grid-row: 1 / -1;
   align-self: end;
   justify-self: center;
-  width: min(100%, 340px);   /* tall, sitting drawing: width keeps it about one screen high */
+  width: var(--pw);
+  max-width: 100%;
+  margin-bottom: calc(-0.457 * var(--pw) - 2.5rem - 4px);
 }
 
 .hero__portrait {
   width: 100%;
   height: auto;
-  transform-origin: 50% 100%;
+  transform-origin: 50% 75%;   /* breathe from her seat, so she stays on the band */
   animation: breathe 4.5s ease-in-out infinite;   /* placeholder until the layered animation */
 }
 
@@ -236,7 +245,7 @@
   .hero__title { font-size: clamp(2.25rem, 12vw, 3.5rem); white-space: normal; }
 
   .hero__open, .hero__title, .hero__intro, .hero__portrait-wrap { grid-column: 1; grid-row: auto; }
-  .hero__portrait-wrap { width: min(70%, 250px); }
+  .hero__portrait-wrap { --pw: min(70vw, 250px); }
 
   .marquee__star { margin-inline: var(--space-4); font-size: 1rem; }
   .marquee__icons img { width: 38px; height: 38px; }
