@@ -48,3 +48,92 @@
     requestAnimationFrame(tick);
   }
 }
+
+// Little shark stickers scattered around the museum wall.
+// Each visit they land somewhere new: random spots are tried until a sticker
+// fits without touching a frame, the sign, the big shark, the sketchbook or
+// another sticker. Spots that don't fit are skipped, so it never covers your work.
+{
+  const wall = document.querySelector('.wall');
+
+  if (wall) {
+    const STICKERS = ['sleep', 'knife', 'kiss', 'hug'];
+    const COUNT = 9;          // how many to try to place
+    const GAP = 24;           // px of air around frames and other stickers (stickers are tilted, so a bit extra)
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // a fingerprint of the wall's and the frames' sizes when the stickers were placed
+    const watched = [wall, ...wall.querySelectorAll('.art__frame')];
+    const wallSize = () => watched.map((el) => `${el.offsetWidth}x${el.offsetHeight}`).join();
+    let placedAt = '';
+
+    const scatter = () => {
+      wall.querySelectorAll('.wall-sticker').forEach((s) => s.remove());
+      placedAt = wallSize();
+      const box = { width: wall.clientWidth, height: wall.clientHeight };
+      const small = box.width < 700;
+
+      // Position of an element inside the wall, from its layout box. (Not
+      // getBoundingClientRect: that includes animations, and the frames are still
+      // swinging into place when this runs.)
+      // (The big shark is centred with translate, which offsets ignore, and it
+      // doesn't animate in, so it and the sketchbook are measured on screen.)
+      const wallRect = wall.getBoundingClientRect();
+      const layoutBox = (el) => {
+        if (el.matches('.visitor, .minibook')) {
+          const r = el.getBoundingClientRect();
+          return { x: r.left - wallRect.left - wall.clientLeft, y: r.top - wallRect.top - wall.clientTop, w: r.width, h: r.height };
+        }
+        let x = 0;
+        let y = 0;
+        for (let n = el; n && n !== wall; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+        return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+      };
+
+      // everything a sticker must not overlap
+      const taken = [...wall.querySelectorAll('.art a, .art__frame, .art__label, .wall__sign, .visitor, .minibook')].map((el) => {
+        const b = layoutBox(el);
+        const string = el.matches('.art a, .art__frame') ? 24 : 0;   // the hanging string above each frame
+        return { x: b.x, y: b.y - string, w: b.w, h: b.h + string };
+      });
+      const hits = (a) => taken.some((b) =>
+        a.x < b.x + b.w + GAP && a.x + a.w + GAP > b.x && a.y < b.y + b.h + GAP && a.y + a.h + GAP > b.y);
+
+      for (let n = 0, placed = 0; n < 400 && placed < COUNT; n++) {
+        const size = (small ? 34 : 46) + Math.random() * (small ? 16 : 26);
+        const spot = {
+          x: 8 + Math.random() * (box.width - size - 16),
+          y: 8 + Math.random() * (box.height - size - 16),
+          w: size,
+          h: size,
+        };
+        if (hits(spot)) continue;
+        taken.push(spot);
+
+        const name = STICKERS[placed % STICKERS.length];
+        const el = document.createElement('span');
+        el.className = 'wall-sticker';
+        el.setAttribute('aria-hidden', 'true');
+        el.style.cssText = `left:${spot.x.toFixed(0)}px; top:${spot.y.toFixed(0)}px;
+          --size:${size.toFixed(0)}px; --tilt:${(Math.random() * 40 - 20).toFixed(1)}deg;
+          --delay:${reduceMotion ? 0 : 600 + placed * 90}ms;`;
+        el.innerHTML = `<img src="assets/img/playground/sticker-${name}.webp" alt="" loading="lazy">`;
+        wall.append(el);
+        placed++;
+      }
+    };
+
+    // Place them once the page has loaded, and again whenever the wall or a frame
+    // changes size (late images or fonts, window resize), so they never end up on a frame.
+    let timer;
+    const rescatter = () => { clearTimeout(timer); timer = setTimeout(scatter, 150); };
+    if (document.readyState === 'complete') scatter();
+    else window.addEventListener('load', scatter, { once: true });
+    if ('ResizeObserver' in window) {
+      const watcher = new ResizeObserver(() => {
+        if (placedAt && wallSize() !== placedAt) rescatter();
+      });
+      watched.forEach((el) => watcher.observe(el));
+    }
+  }
+}

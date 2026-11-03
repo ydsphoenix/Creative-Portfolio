@@ -11,15 +11,6 @@
   overflow-x: clip;        /* sideways only, so the shark's tail can hang over the footer */
 }
 
-/* The "floor" line the shark stands on */
-.wall::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 70px;
-  border-top: var(--border);
-}
 
 /* 12-column grid; tiles span columns (width) and rows (height). */
 .gallery {
@@ -155,7 +146,7 @@
 .visitor {
   position: absolute;
   left: 50%;
-  bottom: -20px;           /* standing at the front edge of the floor; the tail hangs over the footer */
+  bottom: -20px;           /* standing at the bottom edge; the tail hangs over the footer */
   z-index: 3;
   width: 250px;
   rotate: var(--lean, 0deg);
@@ -222,14 +213,14 @@
 
 
 /* ---------- Mini sketchbook: the way into The Playground (playground.html) ----------
-   A small closed copy of the Playground sketchbook leaning on the floor line.
+   A small closed copy of the Playground sketchbook, bottom right of the wall.
    On hover/focus it lifts and the cover opens a crack on its spiral.
    Reduced motion: only the sign changes colour. */
 .minibook {
   position: absolute;
   z-index: 2;
   right: var(--space-6);
-  bottom: 90px;                         /* standing a little above the floor line (.wall::after) */
+  bottom: 90px;
   display: grid;
   justify-items: center;
   gap: var(--space-3);
@@ -283,3 +274,21 @@
   .minibook { right: var(--space-2); bottom: 62px; width: 130px; }
   .minibook__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
 }
+
+/* ---------- Little shark stickers stuck around the museum ----------
+   js/projects.js drops them in random empty spots on every visit (never on a frame).
+   Purely decoration: hidden from screen readers. */
+.wall-sticker {
+  position: absolute;
+  z-index: 1;
+  width: var(--size);
+  rotate: var(--tilt);
+  filter: drop-shadow(1px 2px 0 rgba(59, 42, 30, 0.18));
+  transition: rotate 0.3s cubic-bezier(0.3, 1.8, 0.5, 1), scale 0.3s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+.wall-sticker img { display: block; width: 100%; height: auto; }
+.wall-sticker:hover { rotate: calc(var(--tilt) * -1); scale: 1.15; }
+@media (prefers-reduced-motion: no-preference) {
+  .wall-sticker { animation: sticker-pop 0.5s cubic-bezier(0.3, 1.8, 0.5, 1) backwards; animation-delay: var(--delay); }
+}
+@keyframes sticker-pop { from { scale: 0; } }
