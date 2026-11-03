@@ -8,7 +8,7 @@
   border: var(--border);
   border-bottom: 0;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
-  overflow: hidden;
+  overflow-x: clip;        /* sideways only, so the shark's tail can hang over the footer */
 }
 
 /* The "floor" line the shark stands on */
@@ -155,7 +155,7 @@
 .visitor {
   position: absolute;
   left: 50%;
-  bottom: 60px;            /* feet on the floor line */
+  bottom: -20px;           /* standing at the front edge of the floor; the tail hangs over the footer */
   z-index: 3;
   width: 250px;
   rotate: var(--lean, 0deg);
@@ -206,7 +206,7 @@
   .art:nth-child(even) { margin-left: 10%; }
   .art__label { white-space: normal; text-align: center; }
 
-  .visitor { width: 170px; bottom: 40px; }
+  .visitor { width: 170px; bottom: -14px; }
 }
 
 /* Touch screens have no mouse to follow, so the shark waves its fin instead.
