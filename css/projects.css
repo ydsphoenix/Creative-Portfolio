@@ -221,25 +221,22 @@
 }
 
 
-/* ---------- Doorway to the next room (projects.html <-> playground.html) ----------
-   An arched door standing on the floor line. The panel swings open on hover/focus,
-   showing the light of the other room behind it. Off for reduced motion (it just
-   changes colour). */
-.door {
+/* ---------- Mini sketchbook: the way into The Playground (playground.html) ----------
+   A small closed copy of the Playground sketchbook leaning on the floor line.
+   On hover/focus it lifts and the cover opens a crack on its spiral.
+   Reduced motion: only the sign changes colour. */
+.minibook {
   position: absolute;
   z-index: 2;
-  bottom: 70px;                         /* on the floor line (.wall::after) */
+  right: var(--space-6);
+  bottom: 66px;                         /* on the floor line (.wall::after) */
   display: grid;
   justify-items: center;
-  gap: var(--space-2);
-  width: 150px;
+  gap: var(--space-3);
+  width: 210px;
   text-decoration: none;
 }
-.door[hidden] { display: none; }        /* a door can be hidden until its room is ready */
-.door--right { right: var(--space-6); }
-.door--left  { left: var(--space-6); }
-
-.door__sign {
+.minibook__sign {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
@@ -251,62 +248,38 @@
   background: var(--color-ink);
   color: var(--color-paper);
   border-radius: var(--radius-sm);
+  position: relative;
+  z-index: 1;                           /* stays above the cover when it opens */
   transition: background-color 0.2s, color 0.2s;
 }
-.door__sign svg { width: 1.1em; height: 1.1em; }
+.minibook__sign svg { width: 1.1em; height: 1.1em; }
 
-.door__frame {
+.minibook__book {
   position: relative;
   display: block;
-  width: 120px;
-  height: 190px;
-  border: var(--border);
-  border-bottom: 0;
-  border-radius: 60px 60px 0 0;
-  /* the other room, seen through the open door */
-  background:
-    radial-gradient(circle at 50% 35%, #fff 0 18%, transparent 60%),
-    var(--color-mint);
-  perspective: 500px;
+  width: 100%;
+  aspect-ratio: 480 / 298;
+  rotate: -5deg;
+  perspective: 700px;
+  filter: drop-shadow(3px 4px 0 rgba(59, 42, 30, 0.2));
+  transition: translate 0.4s cubic-bezier(0.3, 1.6, 0.5, 1), rotate 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
-.door__panel {
-  position: absolute;
-  inset: 0;
-  border-radius: 57px 57px 0 0;
-  background:
-    linear-gradient(transparent 48%, rgba(0, 0, 0, 0.08) 48% 50%, transparent 50%),
-    var(--color-pink);
-  box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.35);
-  transform-origin: 0 50%;              /* hinge on the left */
+.minibook__book img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.minibook__cover {
+  transform-origin: 7.3% 50%;           /* the spiral, same as the big sketchbook */
   transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.5, 1);
 }
-.door--left .door__panel { transform-origin: 100% 50%; }   /* hinge on the right */
-.door__knob {
-  position: absolute;
-  top: 55%;
-  right: 14px;
-  width: 12px;
-  height: 12px;
-  background: var(--color-blue);
-  border: 2px solid var(--color-ink);
-  border-radius: 50%;
-}
-.door--left .door__knob { right: auto; left: 14px; }
 
-.door:hover .door__sign,
-.door:focus-visible .door__sign { background: var(--color-blue); color: var(--color-ink); }
+.minibook:hover .minibook__sign,
+.minibook:focus-visible .minibook__sign { background: var(--color-blue); color: var(--color-ink); }
 @media (prefers-reduced-motion: no-preference) {
-  .door:hover .door__panel,
-  .door:focus-visible .door__panel { transform: rotateY(-62deg); }
-  .door--left:hover .door__panel,
-  .door--left:focus-visible .door__panel { transform: rotateY(62deg); }
+  .minibook:hover .minibook__book,
+  .minibook:focus-visible .minibook__book { translate: 0 -5px; rotate: -1deg; }
+  .minibook:hover .minibook__cover,
+  .minibook:focus-visible .minibook__cover { transform: rotateY(-38deg); }
 }
 
 @media (max-width: 640px) {
-  .door { bottom: 50px; width: 96px; }
-  .door--right { right: var(--space-2); }
-  .door--left  { left: var(--space-2); }
-  .door__frame { width: 74px; height: 118px; }
-  .door__panel { border-radius: 35px 35px 0 0; }
-  .door__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
+  .minibook { right: var(--space-2); bottom: 46px; width: 130px; }
+  .minibook__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
 }

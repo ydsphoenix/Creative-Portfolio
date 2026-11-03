@@ -110,11 +110,15 @@
         </li>
       </ul>
 
-      <!-- Doorway to the other room. The door swings open on hover/focus (css/projects.css).
-           HIDDEN until The Playground has projects: remove the "hidden" attribute to show it. -->
-      <a class="door door--right" hidden href="playground.html" aria-label="Next room: The Playground, side projects just for fun">
-        <span class="door__sign" aria-hidden="true">The Playground<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="door__frame" aria-hidden="true"><span class="door__panel"><span class="door__knob"></span></span></span>
+      <!-- Way into the next room: a mini version of the Playground sketchbook.
+           The cover opens a crack on hover/focus (css/projects.css). -->
+      <a class="minibook" href="playground.html" aria-label="Next room: The Playground, a sketchbook of side projects">
+        <span class="minibook__sign" aria-hidden="true">The Playground<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="minibook__book" aria-hidden="true">
+          <img class="minibook__back" src="assets/img/playground/mini-back.webp" alt="" width="480" height="298" loading="lazy">
+          <img class="minibook__cover" src="assets/img/playground/mini-cover.webp" alt="" width="480" height="298" loading="lazy">
+          <img class="minibook__rings" src="assets/img/playground/mini-rings.webp" alt="" width="480" height="298" loading="lazy">
+        </span>
       </a>
 
       <!-- Mascot looking at the wall. The fin is a separate image layered
