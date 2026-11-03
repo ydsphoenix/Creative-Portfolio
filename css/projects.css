@@ -227,6 +227,7 @@
   width: 210px;
   text-decoration: none;
 }
+.minibook[hidden] { display: none; }   /* hidden until The Playground is ready */
 .minibook__sign {
   display: inline-flex;
   align-items: center;
