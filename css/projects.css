@@ -302,16 +302,6 @@
   .door--left:focus-visible .door__panel { transform: rotateY(62deg); }
 }
 
-/* Room 2 gets a brighter wall so you can tell the rooms apart */
-.wall--playground {
-  background:
-    radial-gradient(color-mix(in srgb, var(--color-blue) 22%, transparent) 2px, transparent 2.5px) 0 0 / 28px 28px,
-    #fffdf7;
-}
-.wall--playground .wall__sign { background: var(--color-blue); color: var(--color-ink); }
-.wall--playground .art__frame { border-color: var(--color-blue); box-shadow: inset 0 0 0 3px var(--color-ink), var(--shadow-pop); }
-.wall--playground .art:nth-child(even) .art__frame { border-color: var(--color-pink); }
-
 @media (max-width: 640px) {
   .door { bottom: 50px; width: 96px; }
   .door--right { right: var(--space-2); }

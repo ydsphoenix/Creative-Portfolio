@@ -1,0 +1,194 @@
+/* ===== The Playground: sketchbook of side projects =====
+   Two layouts:
+   1. Default (no JS, reduced motion, small screens): every page is stacked
+      one under the other, nothing moves except the stickers when dragged.
+   2. .is-flipping (added by js/playground.js): the book is pinned on screen
+      and scrolling turns the pages around the spiral.
+   All book images share one 1532 × 951 box, so every layer lines up. */
+
+.sketchbook {
+  --book-ratio: 1532 / 951;
+  --spine: 7.3%;            /* x of the spiral holes: the pages turn around this line */
+}
+
+.sketchbook__stage {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--gutter) var(--space-7);
+}
+
+/* ---------- Intro above the book ---------- */
+.sketchbook__intro {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+.sketchbook__back { justify-self: start; font-size: var(--text-base); padding: var(--space-1) var(--space-3); }
+.sketchbook__back svg { width: 1.1em; height: 1.1em; }
+.sketchbook__lede { margin: 0; font: 600 var(--text-xl) var(--font-display); }
+.sketchbook__hint { margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); }
+.sketchbook__hint span:last-child { color: color-mix(in srgb, var(--color-ink) 65%, transparent); font-weight: 600; }
+/* the "scroll to flip" part only makes sense when pages actually flip */
+.sketchbook:not(.is-flipping) .sketchbook__hint-flip { display: none; }
+
+/* ---------- Faces (one side of a sheet) ---------- */
+.face {
+  position: relative;
+  aspect-ratio: var(--book-ratio);
+}
+.face__img,
+.book__edges,
+.book__rings,
+.cover__rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Content area on a paper page, clear of the spiral holes */
+.page__content {
+  position: absolute;
+  inset: 10% 7% 10% 15%;
+  display: grid;
+  place-items: center;
+  gap: var(--space-2);
+}
+.page__content > img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.page__content .placeholder {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed color-mix(in srgb, var(--color-ink) 30%, transparent);
+  border-radius: var(--radius-md);
+}
+.page__caption { margin: 0; font: 600 var(--text-sm) var(--font-display); }
+.page__end { margin: 0; text-align: center; font: 600 var(--text-xl) var(--font-display); }
+
+/* ---------- Cover ---------- */
+.cover__title { position: absolute; left: 21.67%; top: 36.91%; width: 49.41%; height: auto; pointer-events: none; }
+.cover__tab   { position: absolute; left: 85.57%; top: 35.23%; width: 14.16%; height: auto; pointer-events: none; }
+
+/* ---------- Stickers: drag to move, click to hop (js/playground.js) ---------- */
+.sticker {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: grab;
+  touch-action: none;          /* dragging a sticker must not scroll the page */
+  filter: drop-shadow(2px 3px 0 rgba(59, 42, 30, 0.18));
+  transition: scale 0.2s cubic-bezier(0.3, 1.8, 0.5, 1), rotate 0.2s, filter 0.2s;
+}
+.sticker img { display: block; width: 100%; height: auto; pointer-events: none; user-select: none; }
+.sticker:hover { scale: 1.05; rotate: -3deg; }
+.sticker:focus-visible { outline: 3px dashed var(--color-focus); outline-offset: 4px; border-radius: var(--radius-md); }
+/* peeled off the page while dragging: bigger, tilted, higher shadow */
+.sticker.is-dragging {
+  cursor: grabbing;
+  scale: 1.12;
+  rotate: -6deg;
+  filter: drop-shadow(8px 12px 0 rgba(59, 42, 30, 0.22));
+}
+.sticker.is-hopping img { animation: sticker-hop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.sticker.is-stuck img   { animation: sticker-stick 0.35s ease-out; }
+
+@keyframes sticker-hop {
+  0%   { transform: none; }
+  30%  { transform: translateY(-22%) rotate(-10deg) scale(1.04, 0.96); }
+  60%  { transform: translateY(0) scale(1.12, 0.88); }
+  80%  { transform: scale(0.96, 1.04); }
+  100% { transform: none; }
+}
+@keyframes sticker-stick {
+  0%   { transform: scale(1.06, 0.94); }
+  60%  { transform: scale(0.98, 1.02); }
+  100% { transform: none; }
+}
+
+/* ==========================================================================
+   1. Stacked layout (default)
+   ========================================================================== */
+.book {
+  display: grid;
+  gap: var(--space-5);
+  width: min(100%, 860px);
+}
+.book .leaf,
+.book .book__back { display: contents; }
+.book .page--last { order: 99; }
+/* only needed when the book is closed and pages turn */
+.book .book__edges,
+.book .book__rings,
+.book .leaf--cover .face--back { display: none; }
+
+/* ==========================================================================
+   2. Flipping layout
+   ========================================================================== */
+.sketchbook.is-flipping {
+  /* one screen of scrolling per sheet, plus one for the pinned stage */
+  height: calc((var(--leaves, 4) + 1) * 100vh);
+}
+.is-flipping .sketchbook__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  align-content: center;
+  padding-block: var(--space-3);
+  overflow-x: clip;
+}
+.is-flipping .book {
+  /* the open book is ~1.86× as wide as a page, so the page is kept under half the screen */
+  --book-w: min(46vw, (100vh - 240px) * 1.61, 680px);
+  position: relative;
+  display: block;
+  width: var(--book-w);
+  aspect-ratio: var(--book-ratio);
+  perspective: 2400px;
+  /* the closed book is centred; as the cover opens it slides right so the open
+     spread (left page + right page) is centred on the spine */
+  transform: translateX(calc(var(--open, 0) * (50% - var(--spine))));
+}
+.is-flipping .book .book__back,
+.is-flipping .book .leaf {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.is-flipping .book .book__edges,
+.is-flipping .book .book__rings { display: block; }
+.is-flipping .book .book__rings { z-index: 100; }
+.is-flipping .cover__rings { display: none; }   /* the shared spiral is on top instead */
+.is-flipping .page--last { position: absolute; inset: 0; }
+
+.is-flipping .leaf {
+  transform-origin: var(--spine) 50%;
+  transform: rotateY(var(--angle, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.is-flipping .face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  /* a page darkens a little while it's standing up mid-turn */
+  filter: brightness(calc(1 - var(--shade, 0) * 0.18));
+}
+.is-flipping .leaf--cover .face--back { display: block; }
+.is-flipping .face--back { transform: rotateY(180deg); }
+/* the back of a sheet has its holes on the right (next to the spine), so the paper is mirrored */
+.is-flipping .face--back .face__img { transform: scaleX(-1); }
+.is-flipping .face--back .page__content { inset: 10% 15% 10% 7%; }
+
+/* While the book is open the cover is turned away, so its stickers can't be grabbed */
+.is-flipping.is-open .sticker { pointer-events: none; }
+
+@media (max-width: 760px) {
+  .sketchbook__back { justify-self: center; }
+}

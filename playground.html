@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Playground · Yuki</title>
-  <meta name="description" content="The Playground: Yuki's side projects, made just for fun outside of school.">
+  <meta name="description" content="The Playground: Yuki's sketchbook of side projects, made just for fun outside of school.">
   <!-- Link preview (iMessage, WhatsApp, LinkedIn…): the Yuki logo on cream -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yukijurado-portfolio.vercel.app/playground.html">
   <meta property="og:title" content="The Playground · Yuki">
-  <meta property="og:description" content="The Playground: Yuki's side projects, made just for fun outside of school.">
+  <meta property="og:description" content="The Playground: Yuki's sketchbook of side projects, made just for fun outside of school.">
   <meta property="og:image" content="https://yukijurado-portfolio.vercel.app/assets/img/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -33,8 +33,8 @@
     } catch (e) { /* storage blocked: just skip the loader */ }
   </script>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/projects.css">
-  <script src="js/projects.js" defer></script>
+  <link rel="stylesheet" href="css/playground.css">
+  <script src="js/playground.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -61,62 +61,119 @@
     </nav>
   </header>
 
-  <main id="main" class="container">
-    
-    <!-- ===== The Playground: second room of the museum =====
-         Side projects made just for fun, outside of school. Same museum wall as
-         projects.html (css/projects.css), with a brighter wall colour.
-         PLACEHOLDER: replace each .placeholder with <img class="art__img" src="..." alt="...">,
-         point href at the case study or live link, and fill in the plaque. -->
-    <section class="wall wall--playground" aria-labelledby="wall-title">
-      <header class="wall__sign">
-        <h1 id="wall-title" data-split>The Playground</h1>
-        <p>Room 2 · side projects, just for fun</p>
-      </header>
-      <ul class="gallery">
-        <li class="art art--w4 art--h3">
-          <a href="case-study-example.html">
-            <span class="art__frame"><span class="art__img placeholder">Extra 1</span></span>
-            <span class="art__label"><strong>Extra one</strong> Just for fun</span>
+  <main id="main">
+    <!-- ===== The Playground: a sketchbook of side projects =====
+         - Scrolling flips the pages (js/playground.js). The book stays pinned on screen
+           while the section scrolls past; each .leaf is one sheet of paper (front + back).
+         - The shark stickers on the cover can be dragged around, or clicked to make them hop.
+         - Reduced motion, small screens and no-JS: the pages are simply stacked
+           one under the other, nothing flips.
+         - To add a sheet: copy a whole <div class="leaf">…</div> block. -->
+    <section class="sketchbook" aria-labelledby="pg-title">
+      <div class="sketchbook__stage">
+        <header class="sketchbook__intro">
+          <a class="btn sketchbook__back" href="projects.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            The collection
           </a>
-        </li>
-        <li class="art art--w3 art--h2 art--low">
-          <a href="case-study-example.html">
-            <span class="art__frame"><span class="art__img placeholder">Extra 2</span></span>
-            <span class="art__label"><strong>Extra two</strong> Just for fun</span>
-          </a>
-        </li>
-        <li class="art art--w5 art--h3">
-          <a href="case-study-example.html">
-            <span class="art__frame"><span class="art__img placeholder">Extra 3</span></span>
-            <span class="art__label"><strong>Extra three</strong> Just for fun</span>
-          </a>
-        </li>
-        <li class="art art--w4 art--h2">
-          <a href="case-study-example.html">
-            <span class="art__frame"><span class="art__img placeholder">Extra 4</span></span>
-            <span class="art__label"><strong>Extra four</strong> Just for fun</span>
-          </a>
-        </li>
-        <li class="art art--w4 art--h2 art--low">
-          <a href="case-study-example.html">
-            <span class="art__frame"><span class="art__img placeholder">Extra 5</span></span>
-            <span class="art__label"><strong>Extra five</strong> Just for fun</span>
-          </a>
-        </li>
-      </ul>
+          <h1 id="pg-title" class="visually-hidden">The Playground</h1>
+          <p class="sketchbook__lede">Side projects, just for fun.</p>
+          <p class="sketchbook__hint" aria-hidden="true"><span class="sketchbook__hint-flip">scroll to flip ↓ · </span><span>psst, the stickers move!</span></p>
+        </header>
 
-      <!-- Doorway to the other room. The door swings open on hover/focus (css/projects.css). -->
-      <a class="door door--left" href="projects.html" aria-label="Back to room 1: the main collection">
-        <span class="door__sign" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>The collection</span>
-        <span class="door__frame" aria-hidden="true"><span class="door__panel"><span class="door__knob"></span></span></span>
-      </a>
+        <div class="book">
+          <!-- Back of the book: page edges + the last page (shown once every sheet is turned) -->
+          <div class="book__back">
+            <img class="book__edges" src="assets/img/playground/book-back.webp" alt="" width="1532" height="951">
+            <div class="face page page--last">
+              <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+              <div class="page__content"><p class="page__end">That's all for now!<br>More doodles soon 🦈</p></div>
+            </div>
+          </div>
 
-      <!-- Mascot looking at the wall. The fin is a separate image layered
-           behind the body; js/projects.js rotates it toward the mouse. -->
-      <div class="visitor" aria-hidden="true">
-        <img class="visitor__fin" src="assets/img/shark-museum-fin.webp" alt="" width="1211" height="1150">
-        <img class="visitor__body" src="assets/img/shark-museum-body.webp" alt="" width="1211" height="1150">
+          <!-- Cover -->
+          <div class="leaf leaf--cover">
+            <div class="face face--front cover">
+              <img class="face__img" src="assets/img/playground/book-cover.webp" alt="" width="1532" height="951">
+              <img class="cover__rings" src="assets/img/playground/book-rings.webp" alt="" width="1532" height="951">
+              <img class="cover__title boil" src="assets/img/playground/book-title.webp" alt="" width="757" height="140">
+              <img class="cover__tab" src="assets/img/playground/book-tab.webp" alt="" width="217" height="169">
+          <button class="sticker" type="button" style="--x:25.59%; --y:10.2%; --w:18.73%;"
+                  aria-label="Sleepy shark sticker. Drag it, or use the arrow keys, to move it.">
+            <img src="assets/img/playground/sticker-sleep.webp" alt="" width="287" height="203" draggable="false">
+          </button>
+          <button class="sticker" type="button" style="--x:59.33%; --y:11.25%; --w:23.5%;"
+                  aria-label="Grumpy shark with a knife sticker. Drag it, or use the arrow keys, to move it.">
+            <img src="assets/img/playground/sticker-knife.webp" alt="" width="360" height="253" draggable="false">
+          </button>
+          <button class="sticker" type="button" style="--x:24.22%; --y:54.68%; --w:20.23%;"
+                  aria-label="Kissy shark sticker. Drag it, or use the arrow keys, to move it.">
+            <img src="assets/img/playground/sticker-kiss.webp" alt="" width="310" height="315" draggable="false">
+          </button>
+          <button class="sticker" type="button" style="--x:60.51%; --y:46.48%; --w:28.0%;"
+                  aria-label="Cuddly shark sticker. Drag it, or use the arrow keys, to move it.">
+            <img src="assets/img/playground/sticker-hug.webp" alt="" width="429" height="308" draggable="false">
+          </button>
+            </div>
+            <div class="face face--back">
+              <img class="face__img face__img--inside" src="assets/img/playground/book-inside.webp" alt="" width="1532" height="951">
+            </div>
+          </div>
+
+      <div class="leaf">
+        <div class="face face--front page">
+          <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+          <!-- PLACEHOLDER page 1: swap the span for your work, e.g.
+               <img src="assets/img/playground/page-1.webp" alt="what it is" loading="lazy">
+               and add a caption with <p class="page__caption">Title · year</p> -->
+          <div class="page__content"><span class="placeholder">Page 1</span></div>
+        </div>
+        <div class="face face--back page">
+          <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+          <!-- PLACEHOLDER page 2: swap the span for your work, e.g.
+               <img src="assets/img/playground/page-2.webp" alt="what it is" loading="lazy">
+               and add a caption with <p class="page__caption">Title · year</p> -->
+          <div class="page__content"><span class="placeholder">Page 2</span></div>
+        </div>
+      </div>
+
+      <div class="leaf">
+        <div class="face face--front page">
+          <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+          <!-- PLACEHOLDER page 3: swap the span for your work, e.g.
+               <img src="assets/img/playground/page-3.webp" alt="what it is" loading="lazy">
+               and add a caption with <p class="page__caption">Title · year</p> -->
+          <div class="page__content"><span class="placeholder">Page 3</span></div>
+        </div>
+        <div class="face face--back page">
+          <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+          <!-- PLACEHOLDER page 4: swap the span for your work, e.g.
+               <img src="assets/img/playground/page-4.webp" alt="what it is" loading="lazy">
+               and add a caption with <p class="page__caption">Title · year</p> -->
+          <div class="page__content"><span class="placeholder">Page 4</span></div>
+        </div>
+      </div>
+
+      <div class="leaf">
+        <div class="face face--front page">
+          <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+          <!-- PLACEHOLDER page 5: swap the span for your work, e.g.
+               <img src="assets/img/playground/page-5.webp" alt="what it is" loading="lazy">
+               and add a caption with <p class="page__caption">Title · year</p> -->
+          <div class="page__content"><span class="placeholder">Page 5</span></div>
+        </div>
+        <div class="face face--back page">
+          <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
+          <!-- PLACEHOLDER page 6: swap the span for your work, e.g.
+               <img src="assets/img/playground/page-6.webp" alt="what it is" loading="lazy">
+               and add a caption with <p class="page__caption">Title · year</p> -->
+          <div class="page__content"><span class="placeholder">Page 6</span></div>
+        </div>
+      </div>
+
+          <!-- Spiral binding: stays on top while the pages turn -->
+          <img class="book__rings" src="assets/img/playground/book-rings.webp" alt="" width="1532" height="951">
+        </div>
       </div>
     </section>
   </main>

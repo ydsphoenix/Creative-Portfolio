@@ -10,6 +10,7 @@ Plain HTML, CSS and vanilla JavaScript — no build step.
 | `about.html` | About: intro, photobooth strips, experience/education, software/languages |
 | `projects.html` | Projects: museum wall gallery; the shark's fin follows the mouse |
 | `contact.html` | Contact: email and socials |
+| `playground.html` | The Playground: sketchbook of side projects (pages flip on scroll, shark stickers can be dragged). Behind the hidden door on Projects |
 | `case-study-example.html` | Template for a case study (copy it for each project) |
 | `case-letsdive.html` | Case study: Let's Dive |
 | `case-lilbao.html` | Case study: Lil Bāo |
@@ -22,6 +23,8 @@ Plain HTML, CSS and vanilla JavaScript — no build step.
 css/style.css      shared styles + design tokens (colors, fonts, spacing)
 css/<page>.css     page-specific styles
 js/projects.js     fin-follows-mouse on the Projects page
+js/playground.js   sketchbook page flips + draggable stickers (Playground)
+assets/img/playground/  sketchbook layers (all 1532×951 so they line up) + stickers
 assets/img/        illustrations (cropped WebP)
 assets/icons/      logo + logo mark SVGs
 assets/docs/       CV (add yuki-cv.pdf)
