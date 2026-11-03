@@ -229,7 +229,7 @@
   position: absolute;
   z-index: 2;
   right: var(--space-6);
-  bottom: 66px;                         /* on the floor line (.wall::after) */
+  bottom: 90px;                         /* standing a little above the floor line (.wall::after) */
   display: grid;
   justify-items: center;
   gap: var(--space-3);
@@ -280,6 +280,6 @@
 }
 
 @media (max-width: 640px) {
-  .minibook { right: var(--space-2); bottom: 46px; width: 130px; }
+  .minibook { right: var(--space-2); bottom: 62px; width: 130px; }
   .minibook__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
 }
