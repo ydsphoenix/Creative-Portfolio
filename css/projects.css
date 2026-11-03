@@ -274,21 +274,3 @@
   .minibook { right: var(--space-2); bottom: 62px; width: 130px; }
   .minibook__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
 }
-
-/* ---------- Little shark stickers stuck around the museum ----------
-   js/projects.js drops them in random empty spots on every visit (never on a frame).
-   Purely decoration: hidden from screen readers. */
-.wall-sticker {
-  position: absolute;
-  z-index: 1;
-  width: var(--size);
-  rotate: var(--tilt);
-  filter: drop-shadow(1px 2px 0 rgba(59, 42, 30, 0.18));
-  transition: rotate 0.3s cubic-bezier(0.3, 1.8, 0.5, 1), scale 0.3s cubic-bezier(0.3, 1.8, 0.5, 1);
-}
-.wall-sticker img { display: block; width: 100%; height: auto; }
-.wall-sticker:hover { rotate: calc(var(--tilt) * -1); scale: 1.15; }
-@media (prefers-reduced-motion: no-preference) {
-  .wall-sticker { animation: sticker-pop 0.5s cubic-bezier(0.3, 1.8, 0.5, 1) backwards; animation-delay: var(--delay); }
-}
-@keyframes sticker-pop { from { scale: 0; } }
