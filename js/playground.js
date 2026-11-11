@@ -227,6 +227,16 @@
     singleQuery.addEventListener('change', setLayout);
     setLayout();
 
+    // The videos on the pages loop silently. With reduced motion they stay on their
+    // first picture instead (the poster).
+    const videos = [...section.querySelectorAll('video.page__media')];
+    const syncVideos = () => videos.forEach((v) => {
+      if (reduceMotion.matches) { v.pause(); v.removeAttribute('autoplay'); } else { v.play().catch(() => {}); }
+    });
+    reduceMotion.addEventListener('change', syncVideos);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) syncVideos(); });   // browsers pause them in background tabs
+    syncVideos();
+
     /* ------------------------------------------------------------------
        2. Stickers
        - Drag: the sticker "peels off", follows the pointer and sticks where you drop it.
