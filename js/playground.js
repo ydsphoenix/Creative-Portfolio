@@ -120,7 +120,7 @@
     const across = (e) => (single ? e.clientX : e.clientY);
 
     book.addEventListener('pointerdown', (e) => {
-      if (e.button !== 0 || e.target.closest('.sticker, .cover__tab')) return;
+      if (e.button !== 0 || e.target.closest('.sticker, .cover__tab, .page__watch')) return;
       if (items[0].target < 0.5 && items[0].cur < 0.5) return;   // closed: only the tab opens it
       const sp = spiral();
       drag = { start: along(e), cross: across(e), spiral: sp, moved: false, item: null, id: e.pointerId, hist: [],
@@ -236,6 +236,36 @@
     reduceMotion.addEventListener('change', syncVideos);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) syncVideos(); });   // browsers pause them in background tabs
     syncVideos();
+
+    /* ------------------------------------------------------------------
+       Popup player: "Click to watch" opens the full film, with sound.
+       ------------------------------------------------------------------ */
+    const watch = document.querySelector('.watch');
+    if (watch && watch.showModal) {
+      const player = watch.querySelector('.watch__video');
+      const title = watch.querySelector('.watch__title');
+
+      section.querySelectorAll('.page__watch').forEach((btn) => {
+        btn.addEventListener('pointerdown', (e) => e.stopPropagation());   // not a page drag
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          title.textContent = btn.dataset.title;
+          player.src = btn.dataset.watch;
+          videos.forEach((v) => v.pause());        // the little loops wait in the meantime
+          watch.showModal();
+          player.play().catch(() => {});           // starts with sound: the click allows it
+        });
+      });
+
+      watch.querySelector('.watch__close').addEventListener('click', () => watch.close());
+      watch.addEventListener('click', (e) => { if (e.target === watch) watch.close(); });   // click outside
+      watch.addEventListener('close', () => {
+        player.pause();
+        player.removeAttribute('src');
+        player.load();
+        syncVideos();
+      });
+    }
 
     /* ------------------------------------------------------------------
        2. Stickers

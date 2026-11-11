@@ -134,6 +134,7 @@
           <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
           <div class="page__content">
             <video class="page__media" muted loop playsinline autoplay preload="metadata" poster="assets/img/playground/mama.webp" width="640" height="360" aria-label="Mama: a hand-drawn short film in black and white, with teddy bears, a child and her mother"><source src="assets/img/playground/mama.mp4" type="video/mp4"></video>
+            <button class="page__watch" type="button" data-watch="assets/img/playground/mama-full.mp4" data-title="Mama"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>Click to watch<span class="visually-hidden"> Mama</span></button>
             <p class="page__caption"><strong>Mama</strong> · short film, LUCA 2022–2023</p>
           </div>
         </div>
@@ -141,6 +142,7 @@
           <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
           <div class="page__content">
             <video class="page__media" muted loop playsinline autoplay preload="metadata" poster="assets/img/playground/tea-room.webp" width="640" height="360" aria-label="A painted Japanese tea room with a low table, cushions and a garden behind the open screens; a little light drifts through"><source src="assets/img/playground/tea-room.mp4" type="video/mp4"></video>
+            <button class="page__watch" type="button" data-watch="assets/img/playground/tea-room-full.mp4" data-title="Japanese tea room"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>Click to watch<span class="visually-hidden"> Japanese tea room</span></button>
             <p class="page__caption"><strong>Japanese tea room</strong> · animated background</p>
           </div>
         </div>
@@ -151,6 +153,7 @@
           <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
           <div class="page__content">
             <video class="page__media" muted loop playsinline autoplay preload="metadata" poster="assets/img/playground/cloud-city.webp" width="640" height="360" aria-label="A city of towers and lamp posts above the clouds; a small purple robot walks toward the camera"><source src="assets/img/playground/cloud-city.mp4" type="video/mp4"></video>
+            <button class="page__watch" type="button" data-watch="assets/img/playground/cloud-city-full.mp4" data-title="Above the clouds"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>Click to watch<span class="visually-hidden"> Above the clouds</span></button>
             <p class="page__caption"><strong>Above the clouds</strong> · exam film</p>
           </div>
         </div>
@@ -158,6 +161,7 @@
           <img class="face__img" src="assets/img/playground/book-page.webp" alt="" width="1532" height="951" loading="lazy">
           <div class="page__content">
             <video class="page__media" muted loop playsinline autoplay preload="metadata" poster="assets/img/playground/morph.webp" width="640" height="360" aria-label="A bottle morphs into a rocket, then into a koi fish that curls up into a dot, on blue"><source src="assets/img/playground/morph.mp4" type="video/mp4"></video>
+            <button class="page__watch" type="button" data-watch="assets/img/playground/morph-full.mp4" data-title="Bottle, rocket, koi"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>Click to watch<span class="visually-hidden"> Bottle, rocket, koi</span></button>
             <p class="page__caption"><strong>Bottle, rocket, koi</strong> · morph animation</p>
           </div>
         </div>
@@ -185,6 +189,18 @@
         </div>
       </div>
     </section>
+
+    <!-- Popup player: "Click to watch" on a page opens the full film here, with sound
+         (js/playground.js fills in the video and the title). -->
+    <dialog class="watch" aria-labelledby="watch-title">
+      <div class="watch__bar">
+        <h2 id="watch-title" class="watch__title"></h2>
+        <button class="watch__close" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <video class="watch__video" controls playsinline preload="none"></video>
+    </dialog>
   </main>
 
   <!-- ===== Footer: same on every page (copy changes to all .html files).
