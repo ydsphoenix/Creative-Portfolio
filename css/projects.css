@@ -4,27 +4,18 @@
    rises in on load, bobs gently, and shows its title on hover/focus.
    Reduced motion: everything stands still (see the bottom of this file). */
 
-/* The whole page is the ocean: the same water colours fill the screen edge to edge,
-   from sunlit blue under the header down to the deep navy of the footer. */
-body:has(.ocean) {
-  background-color: #04173a;
-  background-image:
-    radial-gradient(ellipse 60% 420px at 50% 0, rgba(210, 245, 255, 0.6), transparent 70%),
-    radial-gradient(ellipse 90% 700px at 50% 0, rgba(60, 170, 235, 0.55), transparent 72%),
-    linear-gradient(to bottom, #1474c4 0, #0b4c96 700px, #072c63 1400px, #04173a 100%);
-  background-size: auto;
-}
-/* the blue logo would vanish on blue water, so it turns white here */
-body:has(.ocean) .site-header .logo img { filter: brightness(0) invert(1); }
-
 .wall {
   position: relative;
   isolation: isolate;
   margin-block: var(--space-3) 0;
   padding: var(--space-6) var(--space-5) 330px; /* bottom room for the shark */
   color: var(--color-white);
-  /* the deep water fades into the navy footer, so there's no hard line between them */
-  background: linear-gradient(to bottom, transparent 45%, var(--color-footer) 100%);
+  /* the ocean lives inside the frame: sunlit at the top, deep navy at the bottom,
+     ending in the footer's navy so the water runs straight into it */
+  background:
+    radial-gradient(ellipse 55% 38% at 50% -4%, rgba(210, 245, 255, 0.75), transparent 70%),
+    radial-gradient(ellipse 85% 60% at 50% 8%, rgba(60, 170, 235, 0.65), transparent 72%),
+    linear-gradient(to bottom, #1474c4 0%, #0b4c96 35%, #072c63 70%, var(--color-footer) 100%);
   /* the hand-drawn frame from the museum wall: thick ink border, rounded top,
      open at the bottom so the water runs into the footer */
   border: var(--border);
