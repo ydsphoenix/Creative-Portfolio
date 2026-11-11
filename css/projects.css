@@ -7,20 +7,18 @@
 .wall {
   position: relative;
   isolation: isolate;
+  z-index: 1;              /* above the footer, so the shark's tail can hang over it */
   margin-block: var(--space-3) 0;
-  padding: var(--space-6) var(--space-5) 330px; /* bottom room for the shark */
+  padding: var(--space-6) var(--space-5) 260px; /* bottom room for the shark */
   color: var(--color-white);
-  /* the ocean lives inside the frame: sunlit at the top, deep navy at the bottom,
-     ending in the footer's navy so the water runs straight into it */
+  /* the ocean lives inside the frame: sunlit at the top, deep navy at the bottom */
   background:
     radial-gradient(ellipse 55% 38% at 50% -4%, rgba(210, 245, 255, 0.75), transparent 70%),
     radial-gradient(ellipse 85% 60% at 50% 8%, rgba(60, 170, 235, 0.65), transparent 72%),
-    linear-gradient(to bottom, #1474c4 0%, #0b4c96 35%, #072c63 70%, var(--color-footer) 100%);
-  /* the hand-drawn frame from the museum wall: thick ink border, rounded top,
-     open at the bottom so the water runs into the footer */
+    linear-gradient(to bottom, #1474c4 0%, #0b4c96 35%, #072c63 70%, #04173a 100%);
+  /* the hand-drawn frame from the museum wall: thick ink border all round, rounded corners */
   border: var(--border);
-  border-bottom: 0;
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border-radius: var(--radius-md);
   overflow-x: clip;        /* sideways only, so the shark's tail can hang over the footer */
 }
 
@@ -315,7 +313,9 @@
 .visitor {
   position: absolute;
   left: 50%;
-  bottom: -20px;           /* standing at the bottom edge; the tail hangs over the footer */
+  /* stands at the bottom of the water and steps out of the frame: the tail reaches
+     across the gap (the footer's top margin) and 20px onto the footer */
+  bottom: calc(-20px - var(--space-7));
   z-index: 3;
   width: 250px;
   rotate: var(--lean, 0deg);
@@ -351,7 +351,7 @@
 }
 
 @media (max-width: 640px) {
-  .wall { padding: var(--space-5) var(--space-4) 240px; }
+  .wall { padding: var(--space-5) var(--space-4) 190px; }
   .wall__sign { margin-bottom: var(--space-6); padding-inline: var(--space-4); }
 
   /* One orb per row, zigzagging left and right */
@@ -360,7 +360,7 @@
   .orb:nth-child(odd)  { justify-self: start; margin-top: 0; }
   .orb:nth-child(even) { justify-self: end;   margin-top: 0; }
 
-  .visitor { width: 170px; bottom: -14px; }
+  .visitor { width: 170px; bottom: calc(-14px - var(--space-7)); }
 }
 
 /* Touch screens have no mouse to follow, so the shark waves its fin instead.

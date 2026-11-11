@@ -273,8 +273,8 @@ a { color: inherit; }
   color: #fff8ee;
   border-radius: 28px 28px 0 0;
 }
-/* Projects: the museum wall stands right on the footer */
-body:has(.wall) .site-footer { margin-top: 0; border-radius: 0; }
+/* Projects: the shark steps out of the ocean frame and its tail hangs over the footer
+   (the gap above the footer is the normal margin-top; see .visitor in projects.css) */
 
 .site-footer__inner {
   width: min(100% - 2 * var(--gutter), var(--page-max));
