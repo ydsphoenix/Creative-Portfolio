@@ -101,10 +101,10 @@ main:has(> .ocean) { width: 100%; max-width: none; }
   padding: 0;
   list-style: none;
 }
-.orb--sm { --size: 170px; }
-.orb--md { --size: 210px; }
-.orb--lg { --size: 250px; }
-.orb--xl { --size: 290px; }
+.orb--sm { --size: 220px; }
+.orb--md { --size: 260px; }
+.orb--lg { --size: 300px; }
+.orb--xl { --size: 350px; }
 
 .orb:nth-child(1) { --i: 0; margin-top: 0;      justify-self: end; }
 .orb:nth-child(2) { --i: 1; margin-top: 120px; }
@@ -120,28 +120,29 @@ main:has(> .ocean) { width: 100%; max-width: none; }
   gap: var(--space-3);
   color: inherit;
   text-decoration: none;
-  border-radius: 50%;
+  border-radius: 28px;
 }
 .orb a:focus-visible { outline: none; }   /* the glass gets the ring instead */
 .orb a:focus-visible .orb__glass { outline: 3px dashed var(--color-blue); outline-offset: 8px; }
 
-/* The glass ball. Built in layers, like a real bubble:
-   1. the picture, a little magnified, fading out toward the edge so the water shows through
+/* The glass panel. Built in layers, like a pane of thick glass:
+   1. the picture, slightly magnified, fading toward the edges so the water shows through
    2. ::before  the rim: blurs and bends what's under it (fake refraction) + thin rainbow film
    3. ::after   the light: bright wash on top, softer bounce below, coloured edges,
-                a sharp inner rim, an angled glare and a pin-point highlight */
+                a sharp inner rim, a diagonal sheen and a pin-point highlight */
 .orb__glass {
+  --radius: 28px;
   position: relative;
   isolation: isolate;
   display: block;
   width: min(var(--size), 100%);
-  aspect-ratio: 1;
-  border-radius: 50%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
   overflow: hidden;
-  /* the water seen through the clear edge of the bubble */
-  background: radial-gradient(circle at 50% 38%, rgba(140, 210, 255, 0.22), rgba(6, 40, 100, 0.35) 75%);
+  /* the water seen through the clear edge of the glass */
+  background: radial-gradient(ellipse at 50% 38%, rgba(140, 210, 255, 0.22), rgba(6, 40, 100, 0.35) 75%);
   box-shadow:
-    0 0 0 1.5px rgba(255, 255, 255, 0.55),       /* outer meniscus */
+    0 0 0 1.5px rgba(255, 255, 255, 0.55),       /* outer edge */
     0 0 28px rgba(130, 215, 255, 0.18),          /* glow in the water */
     0 20px 40px rgba(0, 12, 40, 0.4);            /* shadow below */
   transition: scale 0.45s cubic-bezier(0.3, 1.6, 0.5, 1), box-shadow 0.3s;
@@ -150,12 +151,19 @@ main:has(> .ocean) { width: 100%; max-width: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* which part of the picture stays in the circle: set --focus on the <li>,
+  /* which part of the picture stays in view: set --focus on the <li>,
      e.g. style="--focus: 20% 50%" to keep a logo on the left in view */
   object-position: var(--focus, 50% 50%);
-  scale: 1.12;                                    /* a sphere magnifies what's inside */
-  -webkit-mask-image: radial-gradient(circle, #000 50%, rgba(0, 0, 0, 0.6) 66%, rgba(0, 0, 0, 0.15) 100%);
-          mask-image: radial-gradient(circle, #000 50%, rgba(0, 0, 0, 0.6) 66%, rgba(0, 0, 0, 0.15) 100%);
+  scale: 1.06;                                    /* thick glass magnifies a little */
+  /* fade out toward all four edges (two fades, kept where both overlap) */
+  -webkit-mask-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.3), #000 14% 86%, rgba(0, 0, 0, 0.3)),
+    linear-gradient(0deg,  rgba(0, 0, 0, 0.3), #000 14% 86%, rgba(0, 0, 0, 0.3));
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.3), #000 14% 86%, rgba(0, 0, 0, 0.3)),
+    linear-gradient(0deg,  rgba(0, 0, 0, 0.3), #000 14% 86%, rgba(0, 0, 0, 0.3));
+          mask-composite: intersect;
   transition: scale 0.6s ease-out;
 }
 .orb__glass::before,
@@ -163,33 +171,36 @@ main:has(> .ocean) { width: 100%; max-width: none; }
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: var(--radius);
   pointer-events: none;
 }
-/* rim: refraction + soap-film colours, only in the outer ring */
+/* rim: refraction + soap-film colours, only in a band along the edge
+   (the content box is cut out of the full box, leaving a 14px frame) */
 .orb__glass::before {
+  padding: 14px;
   -webkit-backdrop-filter: blur(3px) saturate(1.5) brightness(1.08);
           backdrop-filter: blur(3px) saturate(1.5) brightness(1.08);
   background: linear-gradient(0deg,
-    rgba(255, 255, 255, 0.35) 0%, rgba(0, 255, 255, 0.18) 12%, rgba(255, 0, 200, 0.14) 24%,
-    transparent 36% 64%,
-    rgba(255, 230, 0, 0.12) 76%, rgba(0, 255, 180, 0.14) 88%, rgba(255, 255, 255, 0.3) 100%);
-  -webkit-mask-image: radial-gradient(circle, transparent 58%, #000 76%);
-          mask-image: radial-gradient(circle, transparent 58%, #000 76%);
+    rgba(255, 255, 255, 0.35) 0%, rgba(0, 255, 255, 0.18) 10%, rgba(255, 0, 200, 0.14) 20%,
+    transparent 30% 70%,
+    rgba(255, 230, 0, 0.12) 80%, rgba(0, 255, 180, 0.14) 90%, rgba(255, 255, 255, 0.3) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
-/* light: the whole layer is turned so the light falls from the top left */
+/* light falling from the top left */
 .orb__glass::after {
-  rotate: -22deg;
   box-shadow:
-    inset 0 34px 44px -14px rgba(255, 255, 255, 0.5),   /* wash of light on top */
-    inset 0 -26px 38px -14px rgba(255, 255, 255, 0.25), /* bounce at the bottom */
-    inset 14px 0 24px -8px rgba(255, 0, 150, 0.22),     /* magenta edge */
-    inset -14px 0 24px -8px rgba(0, 200, 255, 0.3),     /* cyan edge */
+    inset 0 30px 40px -16px rgba(255, 255, 255, 0.45),  /* wash of light on top */
+    inset 0 -24px 34px -16px rgba(255, 255, 255, 0.22), /* bounce at the bottom */
+    inset 14px 0 24px -10px rgba(255, 0, 150, 0.22),    /* magenta edge */
+    inset -14px 0 24px -10px rgba(0, 200, 255, 0.3),    /* cyan edge */
     inset 0 0 6px rgba(255, 255, 255, 0.85);            /* sharp inner rim */
   background:
-    radial-gradient(ellipse 24% 9% at 50% 11%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 100%),   /* main glare */
-    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.95) 0 2.2%, transparent 3.4%),             /* pin-point */
-    radial-gradient(ellipse 20% 6% at 50% 90%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 100%);  /* bottom bounce */
+    radial-gradient(circle at 9% 13%, rgba(255, 255, 255, 0.95) 0 1.4%, transparent 2.4%),           /* pin-point */
+    radial-gradient(ellipse 22% 7% at 24% 7%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0)),    /* glare along the top */
+    linear-gradient(118deg, transparent 22%, rgba(255, 255, 255, 0.16) 27%, transparent 34%,
+                            transparent 38%, rgba(255, 255, 255, 0.08) 41%, transparent 45%);       /* diagonal sheen */
 }
 
 /* Title: a little glass tag that floats up under the orb on hover/focus */
@@ -221,7 +232,7 @@ main:has(> .ocean) { width: 100%; max-width: none; }
     0 26px 50px rgba(0, 12, 40, 0.5);
 }
 .orb a:hover .orb__img,
-.orb a:focus-visible .orb__img { scale: 1.2; }
+.orb a:focus-visible .orb__img { scale: 1.12; }
 .orb a:hover .orb__label,
 .orb a:focus-visible .orb__label { opacity: 1; translate: 0 0; }
 
