@@ -1,146 +1,246 @@
-/* ===== Projects: museum wall ===== */
+/* ===== Projects: under the ocean =====
+   The wall is a deep-sea scene: light from the surface at the top, dark water
+   at the bottom where the shark stands. Every project is a glass orb that
+   rises in on load, bobs gently, and shows its title on hover/focus.
+   Reduced motion: everything stands still (see the bottom of this file). */
+
+/* The whole page is the ocean: the same water colours fill the screen edge to edge,
+   from sunlit blue under the header down to the deep navy of the footer. */
+body:has(.ocean) {
+  background-color: #04173a;
+  background-image:
+    radial-gradient(ellipse 60% 420px at 50% 0, rgba(210, 245, 255, 0.6), transparent 70%),
+    radial-gradient(ellipse 90% 700px at 50% 0, rgba(60, 170, 235, 0.55), transparent 72%),
+    linear-gradient(to bottom, #1474c4 0, #0b4c96 700px, #072c63 1400px, #04173a 100%);
+  background-size: auto;
+}
+/* the blue logo would vanish on blue water, so it turns white here */
+body:has(.ocean) .site-header .logo img { filter: brightness(0) invert(1); }
 
 .wall {
   position: relative;
-  margin-block: var(--space-3) 0;
+  isolation: isolate;
   padding: var(--space-6) var(--space-5) 330px; /* bottom room for the shark */
-  background: var(--color-white);
-  border: var(--border);
-  border-bottom: 0;
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  color: var(--color-white);
+  /* the deep water fades into the navy footer, so there's no hard line between them */
+  background: linear-gradient(to bottom, transparent 45%, var(--color-footer) 100%);
   overflow-x: clip;        /* sideways only, so the shark's tail can hang over the footer */
 }
+/* the water is the page itself, so the wall takes the full width (no card) */
+main:has(> .ocean) { width: 100%; max-width: none; }
+.wall > .wall__sign,
+.wall > .gallery { max-width: var(--page-max); margin-inline: auto; }
 
+/* Light rays fanning down from the surface */
+.ocean__rays {
+  position: absolute;
+  z-index: -1;
+  inset: 0 -20% 0;
+  background: repeating-conic-gradient(from 150deg at 50% -12%,
+    transparent 0deg 5deg, rgba(200, 240, 255, 0.10) 7deg, transparent 10deg 15deg);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 65%);
+          mask-image: linear-gradient(to bottom, #000 0%, transparent 65%);
+  transform-origin: 50% 0;
+  pointer-events: none;
+}
 
-/* 12-column grid; tiles span columns (width) and rows (height). */
+/* Little bubbles rising through the water */
+.ocean__fizz { position: absolute; z-index: -1; inset: 0; pointer-events: none; }
+.ocean__fizz span {
+  position: absolute;
+  bottom: -20px;
+  left: var(--x);
+  width: var(--s);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px solid rgba(220, 245, 255, 0.55);
+  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.7) 0 18%, transparent 30%);
+  opacity: 0;
+}
+.ocean__fizz span:nth-child(1)  { --x: 6%;  --s: 10px; --t: 11s; --d: 0s; }
+.ocean__fizz span:nth-child(2)  { --x: 13%; --s: 6px;  --t: 9s;  --d: 3s; }
+.ocean__fizz span:nth-child(3)  { --x: 21%; --s: 14px; --t: 13s; --d: 6s; }
+.ocean__fizz span:nth-child(4)  { --x: 29%; --s: 8px;  --t: 10s; --d: 1.5s; }
+.ocean__fizz span:nth-child(5)  { --x: 37%; --s: 5px;  --t: 8s;  --d: 4.5s; }
+.ocean__fizz span:nth-child(6)  { --x: 46%; --s: 12px; --t: 12s; --d: 8s; }
+.ocean__fizz span:nth-child(7)  { --x: 53%; --s: 7px;  --t: 9.5s; --d: 2s; }
+.ocean__fizz span:nth-child(8)  { --x: 61%; --s: 16px; --t: 14s; --d: 5s; }
+.ocean__fizz span:nth-child(9)  { --x: 68%; --s: 6px;  --t: 8.5s; --d: 7s; }
+.ocean__fizz span:nth-child(10) { --x: 75%; --s: 11px; --t: 11.5s; --d: 0.5s; }
+.ocean__fizz span:nth-child(11) { --x: 82%; --s: 8px;  --t: 10s; --d: 3.5s; }
+.ocean__fizz span:nth-child(12) { --x: 88%; --s: 13px; --t: 13s; --d: 9s; }
+.ocean__fizz span:nth-child(13) { --x: 94%; --s: 6px;  --t: 9s;  --d: 6.5s; }
+.ocean__fizz span:nth-child(14) { --x: 42%; --s: 9px;  --t: 10.5s; --d: 10s; }
+
+/* ---------- Sign: a glass plaque ---------- */
+.wall__sign {
+  width: fit-content;
+  margin: 0 auto var(--space-7);
+  padding: var(--space-2) var(--space-5);
+  text-align: center;
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.14);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-pill);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 10px 30px rgba(0, 20, 60, 0.25);
+}
+.wall__sign h1 { font-size: var(--text-2xl); text-transform: uppercase; letter-spacing: 0.08em; text-shadow: 0 2px 12px rgba(0, 40, 90, 0.4); }
+.wall__sign p { margin: 0; font-size: var(--text-sm); opacity: 0.9; }
+
+/* ---------- Bubbles ---------- */
+/* 3 per row, nudged up and down so they look like they're drifting, not lined up */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 90px;
-  gap: var(--space-5) var(--space-4);
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: start;
+  gap: var(--space-4) var(--space-5);
   margin: 0;
   padding: 0;
   list-style: none;
 }
+.orb--sm { --size: 170px; }
+.orb--md { --size: 210px; }
+.orb--lg { --size: 250px; }
+.orb--xl { --size: 290px; }
 
-.art--w2 { grid-column: span 2; }
-.art--w3 { grid-column: span 3; }
-.art--w4 { grid-column: span 4; }
-.art--w5 { grid-column: span 5; }
-.art--h1 { grid-row: span 1; }
-.art--h2 { grid-row: span 2; }
-.art--h3 { grid-row: span 3; }
-.art--low { margin-top: var(--space-4); } /* uneven hanging heights */
+.orb:nth-child(1) { --i: 0; margin-top: 0;      justify-self: end; }
+.orb:nth-child(2) { --i: 1; margin-top: 120px; }
+.orb:nth-child(3) { --i: 2; margin-top: 30px;   justify-self: start; }
+.orb:nth-child(4) { --i: 3; margin-top: -10px;  justify-self: center; }
+.orb:nth-child(5) { --i: 4; margin-top: 40px; }
+.orb:nth-child(6) { --i: 5; margin-top: -30px;  justify-self: start; }
 
-.art a {
+.orb a {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  color: inherit;
   text-decoration: none;
+  border-radius: 50%;
 }
+.orb a:focus-visible { outline: none; }   /* the glass gets the ring instead */
+.orb a:focus-visible .orb__glass { outline: 3px dashed var(--color-blue); outline-offset: 8px; }
 
-/* PLACEHOLDER frame: swap for your drawn frame with border-image, e.g.
-   border-image: url(../assets/img/frame-1.webp) 40 / 20px stretch; */
-.art__frame {
-  flex: 1;
+/* The glass ball: picture inside, rim and shine on top */
+.orb__glass {
+  position: relative;
   display: block;
-  padding: 10px;
-  background: #fdfaf4;
-  border: 10px solid var(--color-ink);
-  box-shadow: inset 0 0 0 3px #c9a46a, var(--shadow-pop);
-  transition: transform 0.2s;
+  width: min(var(--size), 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0b3f80;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.45),          /* thin bright rim */
+    0 0 0 8px rgba(170, 220, 255, 0.14),          /* soft outer ring */
+    0 22px 45px rgba(0, 12, 40, 0.45);
+  transition: scale 0.45s cubic-bezier(0.3, 1.6, 0.5, 1), box-shadow 0.3s;
 }
-.art:nth-child(3n) .art__frame { border-color: #c9a46a; box-shadow: inset 0 0 0 3px var(--color-ink), var(--shadow-pop); }
-
-.art__img {
+.orb__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* which part of the picture stays in the circle: set --focus on the <li>,
+     e.g. style="--focus: 20% 50%" to keep a logo on the left in view */
+  object-position: var(--focus, 50% 50%);
+  transition: scale 0.6s ease-out, filter 0.3s;
+  filter: saturate(0.9) brightness(0.92);
 }
-
-/* Little museum plaque under each piece */
-.art__label {
-  align-self: center;
-  margin-top: var(--space-2);
-  padding: 2px var(--space-3);
-  font-size: var(--text-sm);
-  background: var(--color-paper);
-  border: 2px solid var(--color-ink);
-  border-radius: 4px;
-  white-space: nowrap;
-}
-.art__label strong { font-family: var(--font-display); font-weight: 600; margin-right: var(--space-1); }
-
-/* Each frame hangs from a nail on a string (drawn with gradients) */
-.art a::before {
+/* rim tint + big soft shine (top left) */
+.orb__glass::before,
+.orb__glass::after {
   content: "";
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 46%;
-  height: 22px;
-  translate: -50% 0;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.orb__glass::before {
   background:
-    radial-gradient(circle at 50% 3px, var(--color-ink) 0 3.5px, transparent 4.5px),
-    linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink) 50%, transparent calc(50% + 1px)) left / 50% 100% no-repeat,
-    linear-gradient(to top left,  transparent calc(50% - 1px), var(--color-ink) 50%, transparent calc(50% + 1px)) right / 50% 100% no-repeat;
+    radial-gradient(ellipse 26% 14% at 32% 18%, rgba(255, 255, 255, 0.85), transparent 70%),
+    radial-gradient(circle at 50% 50%, transparent 62%, rgba(160, 215, 255, 0.35) 84%, rgba(235, 248, 255, 0.7) 98%);
+}
+/* little reflections bottom right, with a hint of rainbow like a soap bubble */
+.orb__glass::after {
+  background:
+    radial-gradient(circle at 74% 78%, rgba(255, 255, 255, 0.7) 0 3%, transparent 4.5%),
+    conic-gradient(from 200deg at 50% 50%, transparent 0 60%, rgba(255, 190, 230, 0.22) 70%, rgba(160, 240, 255, 0.25) 80%, transparent 90%);
+  -webkit-mask-image: radial-gradient(circle, transparent 60%, #000 75%);
+          mask-image: radial-gradient(circle, transparent 60%, #000 75%);
 }
 
-/* Frames swing into place on load, staggered, then swing again on hover */
-.art__frame {
-  transform-origin: 50% -22px;          /* the nail */
-  animation: hang-in 1.4s cubic-bezier(0.3, 1.2, 0.4, 1) backwards, boil 0.5s steps(1) infinite;
-  animation-delay: calc(var(--i, 0) * 90ms), 0s;
-}
-.art:nth-child(1) { --i: 0; } .art:nth-child(2) { --i: 1; } .art:nth-child(3) { --i: 2; }
-.art:nth-child(4) { --i: 3; } .art:nth-child(5) { --i: 4; } .art:nth-child(6) { --i: 5; }
-.art:nth-child(7) { --i: 6; }
-
-/* Hover adds "swing" as a third animation. hang-in and boil stay in the same
-   positions with the same settings, so the browser keeps them running instead of
-   restarting them. Restarting hang-in made the frame vanish and drop in again
-   when the mouse left. */
-.art a:hover .art__frame,
-.art a:focus-visible .art__frame {
-  animation:
-    hang-in 1.4s cubic-bezier(0.3, 1.2, 0.4, 1) backwards,
-    boil 0.5s steps(1) infinite,
-    swing 1.6s ease-out;
-  animation-delay: calc(var(--i, 0) * 90ms), 0s, 0s;
-}
-
-@keyframes hang-in {
-  0%   { opacity: 0; transform: translateY(-40px) rotate(-14deg); }
-  30%  { opacity: 1; transform: rotate(9deg); }
-  55%  { transform: rotate(-5deg); }
-  75%  { transform: rotate(2.5deg); }
-  100% { transform: rotate(0deg); }
-}
-@keyframes swing {
-  15% { transform: rotate(6deg) scale(1.03); }
-  35% { transform: rotate(-4deg) scale(1.03); }
-  55% { transform: rotate(2deg) scale(1.03); }
-  75% { transform: rotate(-1deg) scale(1.03); }
-  100% { transform: rotate(0deg) scale(1.03); }
-}
-
-.art__label { transition: background-color 0.2s, translate 0.25s cubic-bezier(0.3, 1.8, 0.5, 1); }
-.art a:hover .art__label { background: var(--color-blue); translate: 0 4px; }
-
-/* ---------- Museum sign ---------- */
-.wall__sign {
-  width: fit-content;
-  margin: 0 auto var(--space-6);
-  padding: var(--space-2) var(--space-5);
+/* Title: a little glass tag that floats up under the orb on hover/focus */
+.orb__label {
+  display: grid;
+  justify-items: center;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  line-height: 1.3;
   text-align: center;
-  background: var(--color-ink);
-  color: var(--color-paper);
-  border-radius: var(--radius-sm);
-  box-shadow: 0 0 0 4px var(--color-white), 0 0 0 6.5px var(--color-ink);
+  background: rgba(4, 23, 58, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-pill);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  opacity: 0;
+  translate: 0 -10px;
+  transition: opacity 0.25s, translate 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
-.wall__sign h1 { font-size: var(--text-2xl); text-transform: uppercase; letter-spacing: 0.08em; }
-.wall__sign p { margin: 0; font-size: var(--text-sm); opacity: 0.85; }
+.orb__label strong { font: 600 var(--text-base) var(--font-display); }
+
+.orb a:hover .orb__glass,
+.orb a:focus-visible .orb__glass {
+  scale: 1.07;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.8),
+    0 0 0 10px rgba(170, 220, 255, 0.22),
+    0 0 40px rgba(140, 220, 255, 0.45),
+    0 26px 50px rgba(0, 12, 40, 0.5);
+}
+.orb a:hover .orb__img,
+.orb a:focus-visible .orb__img { scale: 1.06; filter: none; }
+.orb a:hover .orb__label,
+.orb a:focus-visible .orb__label { opacity: 1; translate: 0 0; }
+
+/* Touch screens can't hover: titles are always shown */
+@media (hover: none), (pointer: coarse) {
+  .orb__label { opacity: 1; translate: 0 0; }
+}
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* each orb rises in from the deep, one after the other... */
+  .orb { animation: orb-rise 1.3s cubic-bezier(0.25, 1, 0.4, 1) backwards; animation-delay: calc(var(--i) * 120ms); }
+  /* ...then keeps bobbing, each at its own pace */
+  .orb a { animation: orb-bob calc(5s + var(--i) * 0.7s) ease-in-out infinite alternate; animation-delay: calc(var(--i) * -1.3s); }
+  .ocean__fizz span { animation: fizz-rise var(--t) linear infinite; animation-delay: var(--d); }
+  .ocean__rays { animation: rays-sway 14s ease-in-out infinite alternate; }
+}
+@keyframes orb-rise {
+  from { opacity: 0; transform: translateY(160px) scale(0.6); }
+  60%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes orb-bob {
+  from { translate: 0 -8px; rotate: -1.5deg; }
+  to   { translate: 0 10px; rotate: 1.5deg; }
+}
+@keyframes fizz-rise {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  10%  { opacity: 1; }
+  50%  { transform: translate(14px, -60cqh); }
+  85%  { opacity: 0.8; }
+  100% { opacity: 0; transform: translate(-6px, -115cqh); }
+}
+@keyframes rays-sway {
+  from { rotate: -3deg; opacity: 0.8; }
+  to   { rotate: 3deg;  opacity: 1; }
+}
+.ocean__fizz { container-type: size; }   /* so cqh = the height of the water */
 
 /* ---------- Shark visitor ---------- */
 .visitor {
@@ -173,39 +273,23 @@
 
 /* ===== Responsive (breakpoints explained in style.css) ===== */
 @media (max-width: 900px) {
-  /* Tablet: two pieces per row. The frame shape comes from aspect-ratio instead of
-     fixed grid rows, so frames and plaques never run into the next row. */
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: auto;
-    gap: var(--space-6) var(--space-5);
-    align-items: start;
-  }
-  .gallery > .art { grid-column: auto; grid-row: auto; }
-  .art--low { margin-top: 0; }
-  .art:nth-child(even) { margin-top: var(--space-6); }   /* uneven hanging heights */
-  .art__frame { flex: none; aspect-ratio: 4 / 3; }
-  .art--h1 .art__frame { aspect-ratio: 16 / 9; }
-  .art__label { white-space: normal; text-align: center; }
+  /* Tablet: two bubbles per row, still drifting up and down */
+  .gallery { grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-4); }
+  .orb { --size-max: 36vw; }
+  .orb:nth-child(odd)  { justify-self: end; margin-top: 0; }
+  .orb:nth-child(even) { justify-self: start; margin-top: 90px; }
+  .orb__glass { width: min(var(--size), var(--size-max)); }
 }
 
 @media (max-width: 640px) {
   .wall { padding: var(--space-5) var(--space-4) 240px; }
-  .wall::after { bottom: 50px; }
-  .wall__sign { margin-bottom: var(--space-5); padding-inline: var(--space-4); }
+  .wall__sign { margin-bottom: var(--space-6); padding-inline: var(--space-4); }
 
-  /* One piece per row. Frame shape comes from aspect-ratio instead of grid rows. */
-  .gallery { grid-template-columns: 1fr; grid-auto-rows: auto; gap: var(--space-6); }
-  .gallery > .art { grid-column: 1; grid-row: auto; }
-  .art--low { margin-top: 0; }
-  .art__frame { flex: none; aspect-ratio: 4 / 3; }
-  .art--h1 .art__frame { aspect-ratio: 16 / 9; }
-  .art--w3.art--h3 .art__frame { aspect-ratio: 4 / 5; }
-
-  /* salon-style hanging: pieces alternate a little left and right */
-  .art:nth-child(odd)  { margin-right: 10%; }
-  .art:nth-child(even) { margin-left: 10%; margin-top: 0; }
-  .art__label { white-space: normal; text-align: center; }
+  /* One orb per row, zigzagging left and right */
+  .gallery { grid-template-columns: 1fr; gap: var(--space-4); }
+  .orb { --size-max: 62vw; }
+  .orb:nth-child(odd)  { justify-self: start; margin-top: 0; }
+  .orb:nth-child(even) { justify-self: end;   margin-top: 0; }
 
   .visitor { width: 170px; bottom: -14px; }
 }
