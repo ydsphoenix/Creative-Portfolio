@@ -22,6 +22,7 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
     const SPINE = 0.073;          // the spiral line, as a fraction of the book (--spine)
+    const SWIPE = 30;             // px a finger has to travel for a swipe to turn the page
 
     section.classList.add('is-flipping');
     book.tabIndex = 0;
@@ -64,7 +65,7 @@
       book.style.setProperty('--open', single ? '0' : open.toFixed(3));
       section.classList.toggle('is-open', open > 0.01);
       // (only touched when it changes: the hint is read out by screen readers)
-      const hint = open > 0.5 ? (single ? 'drag a page up to turn it' : 'drag a page to turn it') : 'click the purple tab to open · ';
+      const hint = open > 0.5 ? (single ? 'swipe up to turn the page' : 'drag a page to turn it') : 'click the purple tab to open · ';
       if (hintFlip && hintFlip.textContent !== hint) hintFlip.textContent = hint;
     };
 
@@ -107,6 +108,7 @@
        so the angle is acos(position / r). Spread: sideways (x). Notepad: up and down (y).
        Let go after pulling it about a third of the way (or with a flick) and the page
        finishes turning; otherwise it falls back. A press without moving is a click.
+       Touch screens skip the dragging: a short swipe turns the page.
        ------------------------------------------------------------------ */
     const spiral = () => {
       const b = book.getBoundingClientRect();
@@ -121,7 +123,8 @@
       if (e.button !== 0 || e.target.closest('.sticker, .cover__tab')) return;
       if (items[0].target < 0.5 && items[0].cur < 0.5) return;   // closed: only the tab opens it
       const sp = spiral();
-      drag = { start: along(e), cross: across(e), spiral: sp, moved: false, item: null, id: e.pointerId, hist: [] };
+      drag = { start: along(e), cross: across(e), spiral: sp, moved: false, item: null, id: e.pointerId, hist: [],
+               swipe: e.pointerType === 'touch' };
     });
 
     const pick = (d) => {
@@ -142,6 +145,15 @@
     book.addEventListener('pointermove', (e) => {
       if (!drag || e.pointerId !== drag.id) return;
       const d = along(e) - drag.start;
+      // Touch screens: a quick swipe is enough. As soon as the finger has travelled a little
+      // way, the page turns by itself (up / left = next, down / right = back).
+      if (drag.swipe) {
+        if (Math.abs(d) < SWIPE) return;
+        if (Math.abs(across(e) - drag.cross) > Math.abs(d)) { drag = null; return; }   // not a page turn
+        drag = null;
+        if (d < 0) next(); else prev();
+        return;
+      }
       if (!drag.moved) {
         if (Math.abs(d) < 6) return;
         if (Math.abs(across(e) - drag.cross) > Math.abs(d)) { drag = null; return; }   // not a page turn
@@ -159,6 +171,7 @@
 
     const endDrag = (e) => {
       if (!drag || e.pointerId !== drag.id) return;
+      if (drag.swipe && Math.abs(along(e) - drag.start) > 6) { drag = null; return; }   // a short swipe: nothing
       if (!drag.moved) {
         // a click: spread = side of the spiral; notepad = top half back, bottom half next
         const back = single ? e.clientY < drag.spiral.mid : e.clientX < drag.spiral.at;
