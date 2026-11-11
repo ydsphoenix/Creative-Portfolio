@@ -20,16 +20,18 @@ body:has(.ocean) .site-header .logo img { filter: brightness(0) invert(1); }
 .wall {
   position: relative;
   isolation: isolate;
+  margin-block: var(--space-3) 0;
   padding: var(--space-6) var(--space-5) 330px; /* bottom room for the shark */
   color: var(--color-white);
   /* the deep water fades into the navy footer, so there's no hard line between them */
   background: linear-gradient(to bottom, transparent 45%, var(--color-footer) 100%);
+  /* the hand-drawn frame from the museum wall: thick ink border, rounded top,
+     open at the bottom so the water runs into the footer */
+  border: var(--border);
+  border-bottom: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   overflow-x: clip;        /* sideways only, so the shark's tail can hang over the footer */
 }
-/* the water is the page itself, so the wall takes the full width (no card) */
-main:has(> .ocean) { width: 100%; max-width: none; }
-.wall > .wall__sign,
-.wall > .gallery { max-width: var(--page-max); margin-inline: auto; }
 
 /* Light rays fanning down from the surface */
 .ocean__rays {
