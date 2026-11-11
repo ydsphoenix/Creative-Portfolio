@@ -32,7 +32,7 @@
     const spreadItems = leaves.map((el) => ({ el, cur: 0, target: 0 }));
     const padItems = [
       leaves[0].querySelector('.face--front'),
-      ...leaves.slice(1).flatMap((leaf) => [...leaf.querySelectorAll('.face')]),
+      ...leaves.slice(1).flatMap((leaf) => [...leaf.querySelectorAll('.face:not(.page--blank)')]),
     ].map((el) => ({ el, cur: 0, target: 0 }));
 
     let single = singleQuery.matches;

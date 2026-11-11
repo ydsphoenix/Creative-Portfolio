@@ -103,6 +103,10 @@
 video.page__media { border: 2px solid var(--color-ink); background: #000; }
 picture.page__media { display: contents; }   /* the <img> inside is what gets sized */
 
+/* an empty side of paper: plain in the open book, left out where pages show one by one */
+.sketchbook:not(.is-flipping) .page--blank,
+.is-flipping.is-single .page--blank { display: none; }
+
 /* "Click to watch": sits on top of the looping preview and opens the popup player */
 .page__content > .page__media,
 .page__content > picture > img { grid-area: 1 / 1; place-self: center; }
