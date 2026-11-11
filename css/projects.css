@@ -203,6 +203,17 @@ main:has(> .ocean) { width: 100%; max-width: none; }
                             transparent 38%, rgba(255, 255, 255, 0.08) 41%, transparent 45%);       /* diagonal sheen */
 }
 
+/* A moving version of the picture that plays while you hover (Let's Dive: letsdive-mini.webp).
+   Sits exactly over the still, with the same edge fade and magnification. */
+.orb__img--play {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.25s, scale 0.6s ease-out;
+}
+.orb a:hover .orb__img--play,
+.orb a:focus-visible .orb__img--play { opacity: 1; }
+
 /* EcoMarkt: Egg sits on top of the picture as its own layer.
    Still by default, turning around while you hover (egg-spin.webp is an animated loop).
    Touch screens: always turning. Reduced motion: always still (bottom of this file). */
@@ -267,10 +278,12 @@ main:has(> .ocean) { width: 100%; max-width: none; }
   .orb__label { opacity: 1; translate: 0 0; }
   .orb__egg--spin { opacity: 1; }
   .orb__egg--still { opacity: 0; }
+  .orb__img--play { opacity: 1; }
 }
 /* reduced motion: Egg stays still, even on hover */
 @media (prefers-reduced-motion: reduce) {
-  .orb__egg--spin { display: none; }
+  .orb__egg--spin,
+  .orb__img--play { display: none; }
   .orb .orb__egg--still { opacity: 1; }
 }
 
