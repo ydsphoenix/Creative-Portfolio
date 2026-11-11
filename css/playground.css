@@ -2,8 +2,9 @@
    Two layouts:
    1. Default (no JS): every page is stacked one under the other.
    2. .is-flipping (added by js/playground.js): a real little book. Click the purple
-      tab to open it, then drag a page around the spiral to turn it (click a page or
-      use the arrow keys too). .is-single = phones held upright: one page at a time.
+      tab to open it, then drag a page sideways around the spiral to turn it (click a
+      page or use the arrow keys too).
+   3. .is-single (phones held upright): a tall notepad, spiral on top, pages flip up.
    All book images share one 1532 × 951 box, so every layer lines up. */
 
 .sketchbook {
@@ -184,8 +185,7 @@
    js/playground.js sets on each sheet (.leaf):
      --angle  how far it has turned around the spiral (0 = lying right, -180deg = lying left)
      --bend   0 → 1 → 0 while it turns: drives the paper bending and shading
-   and on the book --open (0 closed → 1 open) to slide the open spread into the middle,
-   and --shift (single-page mode) to slide between the left and right page.
+   and on the book --open (0 closed → 1 open) to slide the open spread into the middle.
    ========================================================================== */
 .is-flipping .sketchbook__stage {
   min-height: min(100svh, 860px);
@@ -267,14 +267,51 @@
 /* While the book is open the cover is turned away, so its stickers can't be grabbed */
 .is-flipping.is-open .sticker { pointer-events: none; }
 
-/* Single-page mode (phones held upright): no room for a spread, so you see one page
-   of it at a time. --shift (0 → 1) slides the book right to show the left page
-   (the back of the sheet you just turned); the stage clips the other half. */
+/* ==========================================================================
+   3. Notepad (.is-single = phones held upright)
+   The book stands tall with the spiral on top. The drawings are landscape, so the
+   paper images are turned a quarter turn, while everything on them (title, stickers,
+   your work) stays upright. Every side of paper is its own page and flips up over
+   the spiral (--flip). js/playground.js
+   ========================================================================== */
 .is-flipping.is-single .book {
-  --book-w: min(100%, 560px);
-  transform: translateX(calc(var(--shift, 0) * (100% - 2 * var(--spine))));
+  --book-w: min(100%, 400px, (100svh - 390px) * 951 / 1532);   /* the whole book, tab included, fits above the floating nav */
+  aspect-ratio: 951 / 1532;
+  transform: none;
+  perspective: 1800px;
 }
+/* once open, up/down drags on the book turn pages instead of scrolling */
+.is-flipping.is-single.is-open .book { touch-action: none; }
 .is-flipping.is-single .sketchbook__stage { min-height: 0; padding-bottom: var(--space-7); }
+
+.is-flipping.is-single .book .leaf { display: contents; }
+.is-flipping.is-single .leaf--cover .face--back { display: none; }   /* inside of the cover: skipped */
+.is-flipping.is-single .face,
+.is-flipping.is-single .face--back {
+  aspect-ratio: auto;                  /* fill the tall book, not the landscape shape */
+  transform-origin: 50% var(--spine);
+  transform: rotateX(var(--flip, 0deg));
+  will-change: transform;
+}
+.is-flipping.is-single .face::after { display: none; }   /* the edge shading is drawn for sideways pages */
+
+/* turn the landscape paper images a quarter turn: the spiral side ends up on top.
+   Before rotating, the image box is (book height × book width). */
+.is-flipping.is-single :is(.face__img, .book__edges, .book__rings),
+.is-flipping.is-single .face--back .face__img {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: calc(100% * 1532 / 951);
+  height: calc(100% * 951 / 1532);
+  max-width: none;                     /* the global img rule would squash it */
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.is-flipping.is-single .page__content,
+.is-flipping.is-single .face--back .page__content { inset: 15% 9% 8% 9%; }
+.is-flipping.is-single .cover__title { left: 8%; top: 44%; width: 84%; }
+/* the purple tab moves from the right edge to the bottom edge */
+.is-flipping.is-single .cover__tab { left: 55.9%; top: 92.6%; width: 22.8%; translate: -50% -50%; rotate: 90deg; }
 
 /* Phones held sideways: very little height, so the intro becomes one short row
    and the book is sized by the screen height */
