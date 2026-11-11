@@ -459,12 +459,10 @@
   pointer-events: none;
 }
 @media (prefers-reduced-motion: no-preference) {
-  /* the arrow keeps nudging toward the book, and the arrow in the sign does too */
+  /* the arrow keeps nudging toward the book */
   .minibook__arrow { animation: arrow-nudge 1.6s ease-in-out infinite; }
-  .minibook__sign svg { animation: arrow-nudge-x 1.6s ease-in-out infinite; }
 }
-@keyframes arrow-nudge   { 50% { translate: 6px 4px; } }
-@keyframes arrow-nudge-x { 50% { translate: 3px 0; } }
+@keyframes arrow-nudge { 50% { translate: 6px 4px; } }
 
 @media (max-width: 640px) {
   .minibook { right: var(--space-2); bottom: 62px; width: 130px; }
