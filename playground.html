@@ -69,8 +69,16 @@
          - Reduced motion, small screens and no-JS: the pages are simply stacked
            one under the other, nothing flips.
          - To add a sheet: copy a whole <div class="leaf">…</div> block. -->
-    <section class="sketchbook" aria-labelledby="pg-title">
+    <section class="sketchbook ocean" aria-labelledby="pg-title">
       <div class="sketchbook__stage">
+        <!-- Under the ocean, like Projects. The light, rays and bubbles sit in the stage
+             so they stay on screen while the pages flip (css/playground.css). -->
+        <div class="sketchbook__glow" aria-hidden="true"></div>
+        <div class="ocean__rays" aria-hidden="true"></div>
+        <div class="ocean__fizz" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
         <header class="sketchbook__intro">
           <a class="btn sketchbook__back" href="projects.html">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>

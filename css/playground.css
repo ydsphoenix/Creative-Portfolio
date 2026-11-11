@@ -14,7 +14,27 @@
   --spine: 7.3%;            /* x of the spiral holes: the pages turn around this line */
 }
 
+/* ---------- Under the ocean, framed like the Projects wall ----------
+   The section is very tall while pages flip, so it only carries the frame and the water.
+   The sunlight, rays and bubbles live in the stage, which stays pinned on screen. */
+.sketchbook.ocean {
+  width: min(100% - 2 * var(--gutter), var(--page-max));
+  margin: var(--space-3) auto 0;
+  background: linear-gradient(to bottom, #0f5fae 0%, #0a428a 50%, #072c63 100%);
+}
+.sketchbook__glow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% -6%, rgba(210, 245, 255, 0.7), transparent 70%),
+    radial-gradient(ellipse 85% 65% at 50% 6%, rgba(60, 170, 235, 0.55), transparent 72%);
+}
+
 .sketchbook__stage {
+  position: relative;
+  isolation: isolate;
   display: grid;
   justify-items: center;
   gap: var(--space-4);
@@ -28,15 +48,15 @@
   gap: var(--space-2);
   text-align: center;
 }
-.sketchbook__back { justify-self: start; font-size: var(--text-base); padding: var(--space-1) var(--space-3); }
+.sketchbook__back { justify-self: start; font-size: var(--text-base); padding: var(--space-1) var(--space-3); color: var(--color-ink); }  /* white button: ink text, not the water's white */
 .sketchbook__back svg { width: 1.1em; height: 1.1em; }
-.sketchbook__lede { margin: 0; font: 600 var(--text-xl) var(--font-display); }
-.sketchbook__hint { margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); }
-.sketchbook__hint span:last-child { color: color-mix(in srgb, var(--color-ink) 65%, transparent); font-weight: 600; }
+.sketchbook__lede { margin: 0; font: 600 var(--text-xl) var(--font-display); text-shadow: 0 2px 12px rgba(0, 40, 90, 0.4); }
+.sketchbook__hint { margin: 0; font-size: var(--text-sm); font-weight: 700; color: #bfeaff; }
+.sketchbook__hint span:last-child { color: rgba(255, 255, 255, 0.8); font-weight: 600; }
 /* the "scroll to flip" part only makes sense when pages actually flip */
 .sketchbook:not(.is-flipping, .is-notepad) .sketchbook__hint-flip { display: none; }
 /* nudge on upright phones: sideways shows the full open book */
-.sketchbook__turn { display: none; margin: 0; font-size: var(--text-sm); font-weight: 600; color: var(--color-blue-deep); }
+.sketchbook__turn { display: none; margin: 0; font-size: var(--text-sm); font-weight: 600; color: #bfeaff; }
 .is-notepad .sketchbook__turn { display: block; }
 
 /* ---------- Faces (one side of a sheet) ---------- */

@@ -5,63 +5,13 @@
    Reduced motion: everything stands still (see the bottom of this file). */
 
 .wall {
-  position: relative;
-  isolation: isolate;
+  /* the water, the frame, the light rays and the rising bubbles come from .ocean
+     in style.css (shared with the Playground) */
   z-index: 1;              /* above the footer, so the shark's tail can hang over it */
   margin-block: var(--space-3) 0;
   padding: var(--space-6) var(--space-5) 260px; /* bottom room for the shark */
-  color: var(--color-white);
-  /* the ocean lives inside the frame: sunlit at the top, deep navy at the bottom */
-  background:
-    radial-gradient(ellipse 55% 38% at 50% -4%, rgba(210, 245, 255, 0.75), transparent 70%),
-    radial-gradient(ellipse 85% 60% at 50% 8%, rgba(60, 170, 235, 0.65), transparent 72%),
-    linear-gradient(to bottom, #1474c4 0%, #0b4c96 35%, #072c63 70%, #04173a 100%);
-  /* the hand-drawn frame from the museum wall: thick ink border all round, rounded corners */
-  border: var(--border);
-  border-radius: var(--radius-md);
-  overflow-x: clip;        /* sideways only, so the shark's tail can hang over the footer */
 }
 
-/* Light rays fanning down from the surface */
-.ocean__rays {
-  position: absolute;
-  z-index: -1;
-  inset: 0 -20% 0;
-  background: repeating-conic-gradient(from 150deg at 50% -12%,
-    transparent 0deg 5deg, rgba(200, 240, 255, 0.10) 7deg, transparent 10deg 15deg);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 65%);
-          mask-image: linear-gradient(to bottom, #000 0%, transparent 65%);
-  transform-origin: 50% 0;
-  pointer-events: none;
-}
-
-/* Little bubbles rising through the water */
-.ocean__fizz { position: absolute; z-index: -1; inset: 0; pointer-events: none; }
-.ocean__fizz span {
-  position: absolute;
-  bottom: -20px;
-  left: var(--x);
-  width: var(--s);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1.5px solid rgba(220, 245, 255, 0.55);
-  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.7) 0 18%, transparent 30%);
-  opacity: 0;
-}
-.ocean__fizz span:nth-child(1)  { --x: 6%;  --s: 10px; --t: 11s; --d: 0s; }
-.ocean__fizz span:nth-child(2)  { --x: 13%; --s: 6px;  --t: 9s;  --d: 3s; }
-.ocean__fizz span:nth-child(3)  { --x: 21%; --s: 14px; --t: 13s; --d: 6s; }
-.ocean__fizz span:nth-child(4)  { --x: 29%; --s: 8px;  --t: 10s; --d: 1.5s; }
-.ocean__fizz span:nth-child(5)  { --x: 37%; --s: 5px;  --t: 8s;  --d: 4.5s; }
-.ocean__fizz span:nth-child(6)  { --x: 46%; --s: 12px; --t: 12s; --d: 8s; }
-.ocean__fizz span:nth-child(7)  { --x: 53%; --s: 7px;  --t: 9.5s; --d: 2s; }
-.ocean__fizz span:nth-child(8)  { --x: 61%; --s: 16px; --t: 14s; --d: 5s; }
-.ocean__fizz span:nth-child(9)  { --x: 68%; --s: 6px;  --t: 8.5s; --d: 7s; }
-.ocean__fizz span:nth-child(10) { --x: 75%; --s: 11px; --t: 11.5s; --d: 0.5s; }
-.ocean__fizz span:nth-child(11) { --x: 82%; --s: 8px;  --t: 10s; --d: 3.5s; }
-.ocean__fizz span:nth-child(12) { --x: 88%; --s: 13px; --t: 13s; --d: 9s; }
-.ocean__fizz span:nth-child(13) { --x: 94%; --s: 6px;  --t: 9s;  --d: 6.5s; }
-.ocean__fizz span:nth-child(14) { --x: 42%; --s: 9px;  --t: 10.5s; --d: 10s; }
 
 /* ---------- Sign: a glass plaque ---------- */
 .wall__sign {
@@ -284,8 +234,6 @@
   .orb { animation: orb-rise 1.3s cubic-bezier(0.25, 1, 0.4, 1) backwards; animation-delay: calc(var(--i) * 120ms); }
   /* ...then keeps bobbing, each at its own pace */
   .orb a { animation: orb-bob calc(5s + var(--i) * 0.7s) ease-in-out infinite alternate; animation-delay: calc(var(--i) * -1.3s); }
-  .ocean__fizz span { animation: fizz-rise var(--t) linear infinite; animation-delay: var(--d); }
-  .ocean__rays { animation: rays-sway 14s ease-in-out infinite alternate; }
 }
 @keyframes orb-rise {
   from { opacity: 0; transform: translateY(160px) scale(0.6); }
@@ -296,18 +244,6 @@
   from { translate: 0 -8px; rotate: -1.5deg; }
   to   { translate: 0 10px; rotate: 1.5deg; }
 }
-@keyframes fizz-rise {
-  0%   { opacity: 0; transform: translate(0, 0); }
-  10%  { opacity: 1; }
-  50%  { transform: translate(14px, -60cqh); }
-  85%  { opacity: 0.8; }
-  100% { opacity: 0; transform: translate(-6px, -115cqh); }
-}
-@keyframes rays-sway {
-  from { rotate: -3deg; opacity: 0.8; }
-  to   { rotate: 3deg;  opacity: 1; }
-}
-.ocean__fizz { container-type: size; }   /* so cqh = the height of the water */
 
 /* ---------- Shark visitor ---------- */
 .visitor {
