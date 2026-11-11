@@ -434,8 +434,7 @@
   .minibook:focus-visible .minibook__cover { transform: rotateY(-38deg); }
 }
 
-/* Under the ocean: the sign is a glass tag like the wall sign, and a hand-drawn
-   arrow (left of the book) points the way into the sketchbook */
+/* Under the ocean: the sign is a glass tag like the wall sign */
 .ocean .minibook { bottom: 70px; right: var(--space-7); }
 .ocean .minibook__sign {
   padding: var(--space-1) var(--space-3);
@@ -448,29 +447,18 @@
 }
 .ocean .minibook:hover .minibook__sign,
 .ocean .minibook:focus-visible .minibook__sign { background: var(--color-blue); color: var(--color-ink); border-color: var(--color-blue); }
-.minibook__arrow {
-  position: absolute;
-  right: 100%;
-  top: 6px;
-  width: 110px;
-  height: auto;
-  margin-right: -14px;
-  color: rgba(255, 255, 255, 0.85);
-  pointer-events: none;
-}
 @media (prefers-reduced-motion: no-preference) {
-  /* the arrow keeps nudging toward the book */
-  .minibook__arrow { animation: arrow-nudge 1.6s ease-in-out infinite; }
+  /* the arrow in the sign keeps nudging toward the next room */
+  .minibook__sign svg { animation: arrow-nudge 1.6s ease-in-out infinite; }
 }
-@keyframes arrow-nudge { 50% { translate: 6px 4px; } }
+@keyframes arrow-nudge { 50% { translate: 4px 0; } }
 
 @media (max-width: 640px) {
   .minibook { right: var(--space-2); bottom: 62px; width: 130px; }
   .minibook__sign { font-size: 0.7rem; padding-inline: var(--space-2); }
-  .minibook__arrow { width: 80px; top: -10px; }
 }
 /* tablets and phones: no room beside the shark, so the book gets its own row
-   under the last project, with the arrow pointing at it from the left */
+   under the last project */
 @media (max-width: 900px) {
   .ocean .minibook {
     position: relative;
