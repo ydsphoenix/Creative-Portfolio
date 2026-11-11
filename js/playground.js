@@ -1,7 +1,6 @@
-// The Playground: a sketchbook whose pages turn as you scroll,
-// with shark stickers on the cover that can be dragged around or clicked to hop.
-// Wide screens and sideways phones get an open book; upright phones get a notepad
-// (spiral on top). With reduced motion the pages just stay stacked (see css/playground.css).
+// The Playground: a sketchbook you open by its purple tab and leaf through by dragging
+// the pages around the spiral, with shark stickers on the cover that can be dragged
+// around or clicked to hop. Without JS the pages just stay stacked (css/playground.css).
 
 // Wrapped in { } so this file's variables don't clash with the other scripts.
 {
@@ -10,109 +9,189 @@
   if (section) {
     const book = section.querySelector('.book');
     const leaves = [...section.querySelectorAll('.leaf')];
-    // Three layouts (see css/playground.css):
-    // - "book": the open book, pages turn sideways around the spiral.
-    //   Wider screens, and phones held sideways.
-    // - "notepad": phones held upright. The book is turned so the spiral is on top,
-    //   and every page flips up over the spiral, one after the other.
-    // - stacked (no class): reduced motion, tiny screens, no JS.
-    const motionOk = '(prefers-reduced-motion: no-preference)';
-    const bookQuery = window.matchMedia(
-      `(min-width: 761px) and ${motionOk}, (orientation: landscape) and (min-width: 560px) and ${motionOk}`);
-    const padQuery = window.matchMedia(`(max-width: 760px) and (orientation: portrait) and ${motionOk}`);
+    // Layouts (see css/playground.css):
+    // - "book" (.is-flipping): click the purple tab to open the book, then drag a page
+    //   around the spiral to turn it. Also: click a page, or the arrow keys.
+    // - single-page (.is-flipping.is-single): phones held upright, one page at a time.
+    // - stacked (no class): no JS. Everything else in this block is the book.
+    const tab = section.querySelector('.cover__tab');
+    const hintFlip = section.querySelector('.sketchbook__hint-flip');
+    const singleQuery = window.matchMedia('(max-width: 760px) and (orientation: portrait)');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
-    const smooth = (t) => t * t * (3 - 2 * t);   // ease in and out
+    const SPINE = 0.073;          // x of the spiral holes, as a fraction of the book width (--spine)
 
-    // Notepad: every side of paper is its own sheet (the inside of the cover is skipped).
-    const sheets = [
-      leaves[0].querySelector('.face--front'),
-      ...leaves.slice(1).flatMap((leaf) => [...leaf.querySelectorAll('.face')]),
-    ];
+    section.classList.add('is-flipping');
+    book.tabIndex = 0;
 
-    section.style.setProperty('--leaves', leaves.length);
-    section.style.setProperty('--sheets', sheets.length);
+    // Each sheet: cur = where it is now, target = where it's going (0 = unturned, 1 = turned).
+    const sheets = leaves.map((el) => ({ el, cur: 0, target: 0 }));
+    const n = sheets.length;
+    let single = singleQuery.matches;
+    let drag = null;
+    let raf = 0;
+    // Single-page mode shows one side of the open spread at a time. 'right' = the page
+    // lying on the right (front of the next sheet), 'left' = the back of the sheet you
+    // just turned. The book slides (shift 0 → 1) to show the left one.
+    let view = 'right';
+    const shift = { cur: 0, target: 0 };
 
     /* ------------------------------------------------------------------
-       1. Scroll → page turns
-       The section is a few screens tall and the book is pinned (sticky).
-       Each sheet gets an equal slice of scrolling: it rests for the first and last 15%
-       so a page stays still for a moment, and turns in between.
+       1. Drawing: turn the numbers into CSS variables
        ------------------------------------------------------------------ */
-    let ticking = false;
-    let mode = null;   // 'book' | 'notepad' | 'stacked'
-
-    const update = () => {
-      ticking = false;
-      if (mode === 'stacked') return;
-
-      const rect = section.getBoundingClientRect();
-      const scrollable = rect.height - window.innerHeight;
-      const items = mode === 'book' ? leaves : sheets;
-      const progress = clamp(-rect.top / scrollable) * items.length;   // 0 … number of sheets
-
-      items.forEach((item, i) => {
-        const t = smooth(clamp((progress - i - 0.15) / 0.7));             // 0 = closed, 1 = turned
-        item.style.setProperty('--shade', Math.sin(Math.PI * t).toFixed(3));
-        if (mode === 'book') {
-          item.style.setProperty('--angle', `${(-180 * t).toFixed(2)}deg`);
-          // unturned sheets: the cover on top. Turned sheets: the last one turned on top.
-          item.style.zIndex = t > 0.5 ? i + 1 : items.length * 2 - i;
-        } else {
-          // flips up over the spiral and disappears behind the book
-          item.style.setProperty('--angle', `${(180 * t).toFixed(2)}deg`);
-          item.style.zIndex = items.length - i;
-        }
-        if (i === 0) {
-          if (mode === 'book') book.style.setProperty('--open', t.toFixed(3));
-          section.classList.toggle('is-open', t > 0.01);
-        }
+    const render = () => {
+      sheets.forEach((s, i) => {
+        const t = s.cur;
+        const css = s.el.style;
+        css.setProperty('--angle', `${(-180 * t).toFixed(2)}deg`);
+        css.setProperty('--bend', Math.sin(Math.PI * t).toFixed(3));
+        // unturned sheets: the cover on top. Turned sheets: the last one turned on top.
+        // The sheet in your hand is always on top.
+        s.el.style.zIndex = drag && drag.sheet === s ? n * 3 : t > 0.5 ? i + 1 : n * 2 - i;
       });
+      const open = sheets[0].cur;
+      book.style.setProperty('--open', open.toFixed(3));
+      book.style.setProperty('--shift', shift.cur.toFixed(3));
+      section.classList.toggle('is-open', open > 0.01);
+      // (only touched when it changes: the hint is read out by screen readers)
+      const hint = open > 0.5 ? 'drag a page to turn it' : 'click the purple tab to open · ';
+      if (hintFlip && hintFlip.textContent !== hint) hintFlip.textContent = hint;
     };
 
-    const requestUpdate = () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    };
-
-    const reset = (el) => {
-      el.style.removeProperty('--angle');
-      el.style.removeProperty('--shade');
-      el.style.zIndex = '';
-    };
-
-    const setMode = () => {
-      const next = bookQuery.matches ? 'book' : padQuery.matches ? 'notepad' : 'stacked';
-      if (next === mode) return;
-      mode = next;
-      section.classList.toggle('is-flipping', mode === 'book');
-      section.classList.toggle('is-notepad', mode === 'notepad');
-      section.classList.remove('is-open');
-      book.style.removeProperty('--open');
-      leaves.forEach(reset);
-      sheets.forEach(reset);
-      placeStickers();
-      update();
-    };
-
-    // The tall notepad cover needs its own sticker layout: data-tall="x y width" (in %).
-    const placeStickers = () => {
-      section.querySelectorAll('.sticker').forEach((sticker) => {
-        const css = sticker.style;
-        if (!sticker.dataset.wide) {
-          sticker.dataset.wide = ['--x', '--y', '--w'].map((v) => css.getPropertyValue(v).trim()).join(' ');
-        }
-        const pos = (mode === 'notepad' && sticker.dataset.tall) || sticker.dataset.wide;
-        const [x, y, w] = pos.split(' ').map((v) => (v.endsWith('%') ? v : `${v}%`));
-        css.setProperty('--x', x);
-        css.setProperty('--y', y);
-        css.setProperty('--w', w);
+    // Ease every sheet toward its target. While dragging, follow the hand quickly but
+    // smoothly; once let go, glide to rest like a page settling.
+    const tick = () => {
+      let moving = false;
+      const step = (s, goal, ease) => {
+        const diff = goal - s.cur;
+        if (Math.abs(diff) > 0.0008) { s.cur += diff * (reduceMotion.matches ? 1 : ease); moving = true; } else { s.cur = goal; }
+      };
+      sheets.forEach((s) => {
+        const held = drag && drag.sheet === s;
+        step(s, held ? drag.t : s.target, held ? 0.35 : 0.12);
       });
+      shift.target = single && view === 'left' ? 1 : 0;
+      step(shift, shift.target, 0.1);
+      render();
+      raf = moving || drag ? requestAnimationFrame(tick) : 0;
+    };
+    const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
+
+    /* ------------------------------------------------------------------
+       2. Turning: next / previous (tab, clicks, keys)
+       ------------------------------------------------------------------ */
+    const firstUnturned = () => sheets.find((x) => x.target < 0.5);
+    const lastTurned = () => [...sheets].reverse().find((x) => x.target > 0.5);
+
+    // after a sheet turns forward you look at its back (left), except the cover:
+    // its back is just the inside of the cover, so you go straight to page 1
+    const turned = (s) => { view = s === sheets[0] ? 'right' : 'left'; };
+
+    const next = () => {
+      if (single && view === 'left') { view = 'right'; wake(); return; }   // slide to the facing page
+      const s = firstUnturned();
+      if (s) { s.target = 1; if (single) turned(s); wake(); }
+    };
+    const prev = () => {
+      const s = lastTurned();
+      if (!s) return;
+      if (single && view === 'right' && s !== sheets[0]) { view = 'left'; wake(); return; }   // slide back
+      s.target = 0; view = 'right'; wake();
     };
 
-    bookQuery.addEventListener('change', setMode);
-    padQuery.addEventListener('change', setMode);
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    setMode();
+    tab.addEventListener('click', (e) => { e.stopPropagation(); if (sheets[0].target < 0.5) next(); });
+    tab.addEventListener('pointerdown', (e) => e.stopPropagation());   // a click on the tab is never a page drag
+
+    book.addEventListener('keydown', (e) => {
+      if (e.target !== book) return;   // stickers and the tab handle their own keys
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    });
+
+    /* ------------------------------------------------------------------
+       3. Dragging a page
+       You grab a point on the page; that point follows your pointer around the spiral.
+       Seen from the front, a point at distance r from the spiral sits at
+       x = r · cos(angle), so the angle is acos(x / r).
+       Let go after pulling it about a third of the way (or with a flick) and the page
+       finishes turning; otherwise it falls back. A press without moving is a click: right half = next, left = back.
+       ------------------------------------------------------------------ */
+    const spineX = () => {
+      const b = book.getBoundingClientRect();
+      return { x: b.left + b.width * SPINE, w: b.width * (1 - SPINE) };
+    };
+
+    book.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 || e.target.closest('.sticker, .cover__tab')) return;
+      if (sheets[0].target < 0.5 && sheets[0].cur < 0.5) return;   // closed: only the tab opens it
+      const { x, w } = spineX();
+      drag = { startX: e.clientX, startY: e.clientY, spine: x, w, moved: false, sheet: null, id: e.pointerId, hist: [] };
+    });
+
+    const pickSheet = (dx) => {
+      // which sheet did you grab? The side of the spiral you pressed on.
+      const forward = drag.startX > drag.spine;
+      // single page: pulling the "wrong" way just slides to the other page on release
+      if (single && (forward ? dx > 0 : dx < 0)) { drag.slide = forward ? prev : next; return null; }
+      const s = forward ? firstUnturned() : lastTurned();
+      if (!s) return null;
+      // where the grabbed point is, measured from the spiral
+      let r = Math.abs(drag.startX - drag.spine);
+      r = Math.max(r, drag.w * 0.35);                // grabbing right next to the spiral is still controllable
+      drag.r = r;
+      drag.p0 = Math.cos(Math.PI * s.cur) * r;       // the grabbed point's starting x
+      drag.forward = forward;
+      return s;
+    };
+
+    book.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.startX;
+      if (!drag.moved) {
+        if (Math.abs(dx) < 6) return;
+        if (Math.abs(e.clientY - drag.startY) > Math.abs(dx)) { drag = null; return; }   // that's a scroll
+        drag.moved = true;
+        drag.sheet = pickSheet(dx);
+        if (!drag.sheet) { if (!drag.slide) drag = null; return; }
+        book.setPointerCapture(e.pointerId);
+        book.classList.add('is-dragging');
+        wake();
+      }
+      if (!drag.sheet) return;
+      drag.t = Math.acos(clamp((drag.p0 + dx) / drag.r, -1, 1)) / Math.PI;
+      drag.hist.push({ x: e.clientX, time: e.timeStamp });
+      if (drag.hist.length > 6) drag.hist.shift();
+    });
+
+    const endDrag = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (drag.slide) { const go = drag.slide; drag = null; go(); return; }
+      if (!drag.moved) {
+        // a click: right half of the book = next page, left half = back
+        const b = book.parentElement.getBoundingClientRect();
+        const back = single ? e.clientX < b.left + b.width / 2 : e.clientX < drag.spine;
+        drag = null;
+        if (back) prev(); else next();
+        return;
+      }
+      const s = drag.sheet;
+      const h = drag.hist;
+      const v = h.length > 1 ? (h[h.length - 1].x - h[0].x) / Math.max(1, h[h.length - 1].time - h[0].time) : 0;
+      s.cur = clamp(s.cur);
+      // a flick wins; otherwise a page that's been pulled about a third of the way goes over
+      const committed = drag.forward ? drag.t > 0.35 : drag.t < 0.65;
+      s.target = v < -0.35 ? 1 : v > 0.35 ? 0 : (committed === drag.forward ? 1 : 0);
+      if (single) { if (s.target === 1) turned(s); else view = 'right'; }
+      drag = null;
+      book.classList.remove('is-dragging');
+      wake();
+    };
+    book.addEventListener('pointerup', endDrag);
+    book.addEventListener('pointercancel', endDrag);
+
+    singleQuery.addEventListener('change', () => { single = singleQuery.matches; view = 'right'; section.classList.toggle('is-single', single); wake(); });
+    section.classList.toggle('is-single', single);
+    render();
 
     /* ------------------------------------------------------------------
        2. Stickers

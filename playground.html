@@ -63,11 +63,11 @@
 
   <main id="main">
     <!-- ===== The Playground: a sketchbook of side projects =====
-         - Scrolling flips the pages (js/playground.js). The book stays pinned on screen
-           while the section scrolls past; each .leaf is one sheet of paper (front + back).
+         - Click the purple tab to open the book, then drag a page around the spiral to turn it
+           (or click a page, or use the arrow keys). js/playground.js. Each .leaf is one sheet
+           of paper (front + back).
          - The shark stickers on the cover can be dragged around, or clicked to make them hop.
-         - Reduced motion, small screens and no-JS: the pages are simply stacked
-           one under the other, nothing flips.
+         - Phones held upright show one page at a time. No JS: the pages are simply stacked.
          - To add a sheet: copy a whole <div class="leaf">…</div> block. -->
     <section class="sketchbook ocean" aria-labelledby="pg-title">
       <div class="sketchbook__stage">
@@ -86,11 +86,11 @@
           </a>
           <h1 id="pg-title" class="visually-hidden">The Playground</h1>
           <p class="sketchbook__lede">Side projects, just for fun.</p>
-          <p class="sketchbook__hint" aria-hidden="true"><span class="sketchbook__hint-flip">scroll to flip ↓ · </span><span>psst, the stickers move!</span></p>
+          <p class="sketchbook__hint" aria-live="polite"><span class="sketchbook__hint-flip">click the purple tab to open · </span><span class="sketchbook__hint-stickers">psst, the stickers move!</span></p>
           <p class="sketchbook__turn" aria-hidden="true">↻ turn your phone sideways for the full book</p>
         </header>
 
-        <div class="book">
+        <div class="book" aria-label="Sketchbook. Use the left and right arrow keys to turn the pages.">
           <!-- Back of the book: page edges + the last page (shown once every sheet is turned) -->
           <div class="book__back">
             <img class="book__edges" src="assets/img/playground/book-back.webp" alt="" width="1532" height="951">
@@ -106,20 +106,20 @@
               <img class="face__img" src="assets/img/playground/book-cover.webp" alt="" width="1532" height="951">
               <img class="cover__rings" src="assets/img/playground/book-rings.webp" alt="" width="1532" height="951">
               <img class="cover__title boil" src="assets/img/playground/book-title.webp" alt="" width="757" height="140">
-              <img class="cover__tab" src="assets/img/playground/book-tab.webp" alt="" width="217" height="169">
-          <button class="sticker" type="button" style="--x:25.59%; --y:10.2%; --w:18.73%;" data-tall="10 19 38"
+              <button class="cover__tab" type="button" aria-label="Open the sketchbook"><img src="assets/img/playground/book-tab.webp" alt="" width="217" height="169" draggable="false"></button>
+          <button class="sticker" type="button" style="--x:25.59%; --y:10.2%; --w:18.73%;"
                   aria-label="Sleepy shark sticker. Drag it, or use the arrow keys, to move it.">
             <img src="assets/img/playground/sticker-sleep.webp" alt="" width="287" height="203" draggable="false">
           </button>
-          <button class="sticker" type="button" style="--x:59.33%; --y:11.25%; --w:23.5%;" data-tall="50 21 42"
+          <button class="sticker" type="button" style="--x:59.33%; --y:11.25%; --w:23.5%;"
                   aria-label="Grumpy shark with a knife sticker. Drag it, or use the arrow keys, to move it.">
             <img src="assets/img/playground/sticker-knife.webp" alt="" width="360" height="253" draggable="false">
           </button>
-          <button class="sticker" type="button" style="--x:24.22%; --y:54.68%; --w:20.23%;" data-tall="10 58 36"
+          <button class="sticker" type="button" style="--x:24.22%; --y:54.68%; --w:20.23%;"
                   aria-label="Kissy shark sticker. Drag it, or use the arrow keys, to move it.">
             <img src="assets/img/playground/sticker-kiss.webp" alt="" width="310" height="315" draggable="false">
           </button>
-          <button class="sticker" type="button" style="--x:60.51%; --y:46.48%; --w:28.0%;" data-tall="48 60 44"
+          <button class="sticker" type="button" style="--x:60.51%; --y:46.48%; --w:28.0%;"
                   aria-label="Cuddly shark sticker. Drag it, or use the arrow keys, to move it.">
             <img src="assets/img/playground/sticker-hug.webp" alt="" width="429" height="308" draggable="false">
           </button>
