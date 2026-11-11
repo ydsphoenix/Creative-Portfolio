@@ -1,7 +1,7 @@
 // The Playground: a sketchbook whose pages turn as you scroll,
 // with shark stickers on the cover that can be dragged around or clicked to hop.
-// Page flipping only runs on wider screens and when the visitor hasn't asked for
-// reduced motion; otherwise the pages stay stacked (see css/playground.css).
+// Wide screens and sideways phones get an open book; upright phones get a notepad
+// (spiral on top). With reduced motion the pages just stay stacked (see css/playground.css).
 
 // Wrapped in { } so this file's variables don't clash with the other scripts.
 {
@@ -10,36 +10,60 @@
   if (section) {
     const book = section.querySelector('.book');
     const leaves = [...section.querySelectorAll('.leaf')];
-    const flipQuery = window.matchMedia('(min-width: 761px) and (prefers-reduced-motion: no-preference)');
+    // Three layouts (see css/playground.css):
+    // - "book": the open book, pages turn sideways around the spiral.
+    //   Wider screens, and phones held sideways.
+    // - "notepad": phones held upright. The book is turned so the spiral is on top,
+    //   and every page flips up over the spiral, one after the other.
+    // - stacked (no class): reduced motion, tiny screens, no JS.
+    const motionOk = '(prefers-reduced-motion: no-preference)';
+    const bookQuery = window.matchMedia(
+      `(min-width: 761px) and ${motionOk}, (orientation: landscape) and (min-width: 560px) and ${motionOk}`);
+    const padQuery = window.matchMedia(`(max-width: 760px) and (orientation: portrait) and ${motionOk}`);
     const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
     const smooth = (t) => t * t * (3 - 2 * t);   // ease in and out
 
+    // Notepad: every side of paper is its own sheet (the inside of the cover is skipped).
+    const sheets = [
+      leaves[0].querySelector('.face--front'),
+      ...leaves.slice(1).flatMap((leaf) => [...leaf.querySelectorAll('.face')]),
+    ];
+
     section.style.setProperty('--leaves', leaves.length);
+    section.style.setProperty('--sheets', sheets.length);
 
     /* ------------------------------------------------------------------
        1. Scroll → page turns
-       The section is (sheets + 1) screens tall and the book is pinned (sticky).
-       Each sheet gets one screen of scrolling: it rests for the first and last 15%
-       so an open spread stays still for a moment, and turns in between.
+       The section is a few screens tall and the book is pinned (sticky).
+       Each sheet gets an equal slice of scrolling: it rests for the first and last 15%
+       so a page stays still for a moment, and turns in between.
        ------------------------------------------------------------------ */
     let ticking = false;
+    let mode = null;   // 'book' | 'notepad' | 'stacked'
 
     const update = () => {
       ticking = false;
-      if (!section.classList.contains('is-flipping')) return;
+      if (mode === 'stacked') return;
 
       const rect = section.getBoundingClientRect();
       const scrollable = rect.height - window.innerHeight;
-      const progress = clamp(-rect.top / scrollable) * leaves.length;   // 0 … number of sheets
+      const items = mode === 'book' ? leaves : sheets;
+      const progress = clamp(-rect.top / scrollable) * items.length;   // 0 … number of sheets
 
-      leaves.forEach((leaf, i) => {
-        const t = smooth(clamp((progress - i - 0.15) / 0.7));            // 0 = closed, 1 = turned
-        leaf.style.setProperty('--angle', `${(-180 * t).toFixed(2)}deg`);
-        leaf.style.setProperty('--shade', Math.sin(Math.PI * t).toFixed(3));
-        // unturned sheets: the cover on top. Turned sheets: the last one turned on top.
-        leaf.style.zIndex = t > 0.5 ? i + 1 : leaves.length * 2 - i;
+      items.forEach((item, i) => {
+        const t = smooth(clamp((progress - i - 0.15) / 0.7));             // 0 = closed, 1 = turned
+        item.style.setProperty('--shade', Math.sin(Math.PI * t).toFixed(3));
+        if (mode === 'book') {
+          item.style.setProperty('--angle', `${(-180 * t).toFixed(2)}deg`);
+          // unturned sheets: the cover on top. Turned sheets: the last one turned on top.
+          item.style.zIndex = t > 0.5 ? i + 1 : items.length * 2 - i;
+        } else {
+          // flips up over the spiral and disappears behind the book
+          item.style.setProperty('--angle', `${(180 * t).toFixed(2)}deg`);
+          item.style.zIndex = items.length - i;
+        }
         if (i === 0) {
-          book.style.setProperty('--open', t.toFixed(3));
+          if (mode === 'book') book.style.setProperty('--open', t.toFixed(3));
           section.classList.toggle('is-open', t > 0.01);
         }
       });
@@ -49,22 +73,43 @@
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
     };
 
+    const reset = (el) => {
+      el.style.removeProperty('--angle');
+      el.style.removeProperty('--shade');
+      el.style.zIndex = '';
+    };
+
     const setMode = () => {
-      const flipping = flipQuery.matches;
-      section.classList.toggle('is-flipping', flipping);
-      if (!flipping) {
-        section.classList.remove('is-open');
-        book.style.removeProperty('--open');
-        leaves.forEach((leaf) => {
-          leaf.style.removeProperty('--angle');
-          leaf.style.removeProperty('--shade');
-          leaf.style.zIndex = '';
-        });
-      }
+      const next = bookQuery.matches ? 'book' : padQuery.matches ? 'notepad' : 'stacked';
+      if (next === mode) return;
+      mode = next;
+      section.classList.toggle('is-flipping', mode === 'book');
+      section.classList.toggle('is-notepad', mode === 'notepad');
+      section.classList.remove('is-open');
+      book.style.removeProperty('--open');
+      leaves.forEach(reset);
+      sheets.forEach(reset);
+      placeStickers();
       update();
     };
 
-    flipQuery.addEventListener('change', setMode);
+    // The tall notepad cover needs its own sticker layout: data-tall="x y width" (in %).
+    const placeStickers = () => {
+      section.querySelectorAll('.sticker').forEach((sticker) => {
+        const css = sticker.style;
+        if (!sticker.dataset.wide) {
+          sticker.dataset.wide = ['--x', '--y', '--w'].map((v) => css.getPropertyValue(v).trim()).join(' ');
+        }
+        const pos = (mode === 'notepad' && sticker.dataset.tall) || sticker.dataset.wide;
+        const [x, y, w] = pos.split(' ').map((v) => (v.endsWith('%') ? v : `${v}%`));
+        css.setProperty('--x', x);
+        css.setProperty('--y', y);
+        css.setProperty('--w', w);
+      });
+    };
+
+    bookQuery.addEventListener('change', setMode);
+    padQuery.addEventListener('change', setMode);
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate);
     setMode();

@@ -1,9 +1,12 @@
 /* ===== The Playground: sketchbook of side projects =====
    Two layouts:
-   1. Default (no JS, reduced motion, small screens): every page is stacked
-      one under the other, nothing moves except the stickers when dragged.
+   1. Default (no JS, reduced motion): every page is stacked one under the
+      other, nothing moves except the stickers when dragged.
    2. .is-flipping (added by js/playground.js): the book is pinned on screen
-      and scrolling turns the pages around the spiral.
+      and scrolling turns the pages around the spiral. Wide screens and
+      phones held sideways.
+   3. .is-notepad (phones held upright): the book is turned so the spiral is
+      on top, and scrolling flips each page up over the spiral.
    All book images share one 1532 × 951 box, so every layer lines up. */
 
 .sketchbook {
@@ -31,7 +34,10 @@
 .sketchbook__hint { margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--color-blue-deep); }
 .sketchbook__hint span:last-child { color: color-mix(in srgb, var(--color-ink) 65%, transparent); font-weight: 600; }
 /* the "scroll to flip" part only makes sense when pages actually flip */
-.sketchbook:not(.is-flipping) .sketchbook__hint-flip { display: none; }
+.sketchbook:not(.is-flipping, .is-notepad) .sketchbook__hint-flip { display: none; }
+/* nudge on upright phones: sideways shows the full open book */
+.sketchbook__turn { display: none; margin: 0; font-size: var(--text-sm); font-weight: 600; color: var(--color-blue-deep); }
+.is-notepad .sketchbook__turn { display: block; }
 
 /* ---------- Faces (one side of a sheet) ---------- */
 .face {
@@ -187,7 +193,89 @@
 .is-flipping .face--back .page__content { inset: 10% 15% 10% 7%; }
 
 /* While the book is open the cover is turned away, so its stickers can't be grabbed */
-.is-flipping.is-open .sticker { pointer-events: none; }
+:is(.is-flipping, .is-notepad).is-open .sticker { pointer-events: none; }
+
+/* Phones held sideways: very little height, so the intro becomes one short row
+   and the book is sized by the screen height */
+@media (orientation: landscape) and (max-height: 500px) {
+  .is-flipping .sketchbook__stage { gap: var(--space-2); padding-block: var(--space-2); }
+  .is-flipping .sketchbook__intro {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+  }
+  .is-flipping .sketchbook__lede { font-size: 1.25rem; }
+  .is-flipping .book { --book-w: min(44vw, (100svh - 110px) * 1.61, 680px); }
+}
+/* …and on smaller ones the nav pill floats at the bottom, so leave room for it */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 760px) {
+  .is-flipping .sketchbook__stage { padding-bottom: 4.5rem; }
+  .is-flipping .book { --book-w: min(44vw, (100svh - 170px) * 1.61); }
+}
+
+/* ==========================================================================
+   3. Notepad layout (phones held upright)
+   The drawings are landscape, so the paper images are turned 90° (spiral on top)
+   while everything on them (title, stickers, your work) stays upright.
+   ========================================================================== */
+.sketchbook.is-notepad {
+  /* a bit less than one screen of scrolling per page */
+  height: calc((var(--sheets, 7) + 1) * 80svh);
+}
+.is-notepad .sketchbook__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  align-content: center;
+  gap: var(--space-3);
+  /* bottom: room for the floating nav pill */
+  padding: var(--space-3) var(--gutter) calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  overflow-x: clip;
+}
+.is-notepad .book {
+  --book-w: min(100%, 400px, (100svh - 260px) * 951 / 1532);
+  position: relative;
+  display: block;
+  width: var(--book-w);
+  aspect-ratio: 951 / 1532;
+  perspective: 1800px;
+}
+.is-notepad .book .book__back { display: block; position: absolute; inset: 0; }
+.is-notepad .book .book__edges,
+.is-notepad .book .book__rings { display: block; }
+.is-notepad .book .book__rings { z-index: 100; }
+.is-notepad .cover__rings { display: none; }   /* the shared spiral is on top instead */
+
+/* each side of paper is its own sheet, hinged on the spiral line */
+.is-notepad .face {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;
+  transform-origin: 50% var(--spine);
+  transform: rotateX(var(--angle, 0deg));
+  backface-visibility: hidden;
+  filter: brightness(calc(1 - var(--shade, 0) * 0.18));
+  will-change: transform;
+}
+
+/* turn the landscape paper images a quarter turn: the spiral side ends up on top.
+   Before rotating, the image box is (book height × book width). */
+.is-notepad :is(.face__img, .book__edges, .book__rings) {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: calc(100% * 1532 / 951);
+  height: calc(100% * 951 / 1532);
+  transform: translate(-50%, -50%) rotate(90deg);
+  max-width: none;   /* the global img rule would squash it */
+}
+
+.is-notepad .page__content { inset: 15% 9% 8% 9%; }
+.is-notepad .cover__title { left: 8%; top: 44%; width: 84%; }
+/* the purple tab moves from the right edge to the bottom edge */
+.is-notepad .cover__tab { left: 55.9%; top: 92.6%; width: 22.8%; translate: -50% -50%; rotate: 90deg; }
 
 @media (max-width: 760px) {
   .sketchbook__back { justify-self: center; }
